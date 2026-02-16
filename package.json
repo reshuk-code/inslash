@@ -1,16 +1,38 @@
 {
   "name": "inslash",
-  "version": "1.0.2",
+  "version": "1.0.3",  
+  "description": "A modern, upgradeable, and secure password hashing utility with passport encoding and hash ancestry.",
   "main": "index.js",
+  "types": "index.d.ts", 
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node cstest.js"
   },
-  "keywords": [],
+  "keywords": [
+    "password",
+    "hash",
+    "security",
+    "crypto",
+    "salt",
+    "pepper",
+    "upgradeable",
+    "nodejs"
+  ],
   "author": "Reshuk Sapkota",
   "license": "MIT",
-  "description": "",
-  "dependencies": {
-    "crypto": "^1.0.1",
-    "inslash": "^1.0.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reshuk-code/inslash"
+  },
+  "bugs": {
+    "url": "https://github.com/reshuk-code/inslash/issues"
+  },
+  "homepage": "https://github.com/reshuk-code/inslash#readme",
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16"
   }
 }
