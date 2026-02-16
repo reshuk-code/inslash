@@ -1,8 +1,13 @@
 {
   "name": "inslash",
+<<<<<<< HEAD
   "version": "1.0.3",
+=======
+  "version": "1.0.3",  
+>>>>>>> f6a0dbb54f2405ab39f6f69bb432439a99b0e7f1
   "description": "A modern, upgradeable, and secure password hashing utility with passport encoding and hash ancestry.",
   "main": "index.js",
+  "types": "index.d.ts", 
   "scripts": {
     "test": "node cstest.js"
   },
@@ -14,7 +19,10 @@
     "salt",
     "pepper",
     "upgradeable",
+<<<<<<< HEAD
     "passport",
+=======
+>>>>>>> f6a0dbb54f2405ab39f6f69bb432439a99b0e7f1
     "nodejs"
   ],
   "author": "Reshuk Sapkota",
