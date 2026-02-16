@@ -1,4 +1,4 @@
-const { hash, verify } = require("./script");
+const { hash, verify } = require("./index");
 
 const SECRET_KEY = "supersecret";
 

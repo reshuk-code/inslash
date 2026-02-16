@@ -1,4 +1,4 @@
-const { hash, verify } = require("./script");
+const { hash, verify } = require(".");
 
 const SECRET_KEY = process.env.HASH_SECRET || "abcd";
 

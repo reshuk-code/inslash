@@ -10,6 +10,7 @@
   "license": "MIT",
   "description": "",
   "dependencies": {
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.1",
+    "inslash": "^1.0.2"
   }
 }
