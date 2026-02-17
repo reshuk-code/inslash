@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - Inslash</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,120 +15,157 @@
     </style>
 </head>
 
-<body class="bg-gray-950 text-gray-100 antialiased">
+<body class="bg-gray-950 text-gray-100 antialiased" x-data="{ 
+    showError: <%= typeof error !== 'undefined' && error && error.length > 0 ? 'true' : 'false' %>,
+    showSuccess: <%= typeof success !== 'undefined' && success && success.length > 0 ? 'true' : 'false' %>
+}">
+
+    <!-- Toast Notifications -->
+    <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
+
+        <!-- Error Toast -->
+        <template x-if="showError">
+            <div x-show="showError" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
+                x-init="setTimeout(() => showError = false, 5000)"
+                class="pointer-events-auto flex items-center w-full max-w-xs p-4 text-gray-400 bg-gray-800 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border border-red-500/20"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800/30 dark:text-red-400">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
+                    </svg>
+                </div>
+                <div class="ml-3 text-sm font-normal text-red-200">
+                    <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+                        <%- error[0] %>
+                            <% } %>
+                </div>
+                <button type="button" @click="showError = false"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-gray-800 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-700 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        </template>
+
+        <!-- Success Toast -->
+        <template x-if="showSuccess">
+            <div x-show="showSuccess" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
+                x-init="setTimeout(() => showSuccess = false, 5000)"
+                class="pointer-events-auto flex items-center w-full max-w-xs p-4 text-gray-400 bg-gray-800 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border border-green-500/20"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800/30 dark:text-green-400">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                    </svg>
+                </div>
+                <div class="ml-3 text-sm font-normal text-green-200">
+                    <% if (typeof success !=='undefined' && success && success.length> 0) { %>
+                        <%- success[0] %>
+                            <% } %>
+                </div>
+                <button type="button" @click="showSuccess = false"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-gray-800 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-700 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        </template>
+    </div>
 
     <%- include('partials/auth-navbar') %>
 
         <div class="min-h-[calc(100vh-8rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div class="w-full max-w-md">
 
-                <!-- Flash Messages -->
-                <% if (typeof messages !=='undefined' ) { %>
-                    <% if (messages.error && messages.error.length> 0) { %>
-                        <div class="mb-4 p-4 bg-red-900/20 border border-red-500/50 rounded-lg">
-                            <div class="flex items-start">
-                                <svg class="w-5 h-5 text-red-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                <p class="text-sm text-red-200"><%- messages.error[0] %></p>
-                            </div>
+
+
+                <div class="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 sm:p-10">
+
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-white">Welcome back</h2>
+                        <p class="mt-2 text-sm text-gray-400">
+                            Don't have an account?
+                            <a href="/signup"
+                                class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Sign
+                                up</a>
+                        </p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form class="space-y-6" action="/login" method="POST" id="loginForm">
+                        <!-- Username -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-300 mb-2">
+                                Username or Email
+                            </label>
+                            <input id="username" name="username" type="text" required
+                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                                placeholder="Enter your username">
                         </div>
-                        <% } %>
-                            <% if (messages.success && messages.success.length> 0) { %>
-                                <div class="mb-4 p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
-                                    <div class="flex items-start">
-                                        <svg class="w-5 h-5 text-green-400 mt-0.5 mr-3 flex-shrink-0"
-                                            fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <p class="text-sm text-green-200">
-                                            <%= messages.success[0] %>
-                                        </p>
-                                    </div>
-                                </div>
-                                <% } %>
-                                    <% } %>
 
-                                        <div
-                                            class="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 sm:p-10">
+                        <!-- Password -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label for="password" class="block text-sm font-medium text-gray-300">
+                                    Password
+                                </label>
+                                <a href="/forgot-password"
+                                    class="text-xs font-medium text-gray-400 hover:text-indigo-400 transition-colors">
+                                    Forgot password?
+                                </a>
+                            </div>
+                            <input id="password" name="password" type="password" required
+                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                                placeholder="Enter your password">
+                        </div>
 
-                                            <!-- Header -->
-                                            <div class="text-center mb-8">
-                                                <h2 class="text-3xl font-bold text-white">Welcome back</h2>
-                                                <p class="mt-2 text-sm text-gray-400">
-                                                    Don't have an account?
-                                                    <a href="/signup"
-                                                        class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Sign
-                                                        up</a>
-                                                </p>
-                                            </div>
+                        <!-- Remember Me -->
+                        <div class="flex items-center">
+                            <input id="rememberMe" name="rememberMe" type="checkbox"
+                                class="h-4 w-4 text-indigo-500 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500 cursor-pointer">
+                            <label for="rememberMe" class="ml-2 block text-sm text-gray-400 cursor-pointer">
+                                Keep me signed in
+                            </label>
+                        </div>
 
-                                            <!-- Login Form -->
-                                            <form class="space-y-6" action="/login" method="POST" id="loginForm">
-                                                <!-- Username -->
-                                                <div>
-                                                    <label for="username"
-                                                        class="block text-sm font-medium text-gray-300 mb-2">
-                                                        Username or Email
-                                                    </label>
-                                                    <input id="username" name="username" type="text" required
-                                                        class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                                        placeholder="Enter your username">
-                                                </div>
+                        <!-- Submit Button -->
+                        <button type="submit" id="submitBtn"
+                            class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            <span id="buttonText">Sign In</span>
+                        </button>
+                    </form>
 
-                                                <!-- Password -->
-                                                <div>
-                                                    <div class="flex items-center justify-between mb-2">
-                                                        <label for="password"
-                                                            class="block text-sm font-medium text-gray-300">
-                                                            Password
-                                                        </label>
-                                                        <a href="/forgot-password"
-                                                            class="text-xs font-medium text-gray-400 hover:text-indigo-400 transition-colors">
-                                                            Forgot password?
-                                                        </a>
-                                                    </div>
-                                                    <input id="password" name="password" type="password" required
-                                                        class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                                        placeholder="Enter your password">
-                                                </div>
-
-                                                <!-- Remember Me -->
-                                                <div class="flex items-center">
-                                                    <input id="rememberMe" name="rememberMe" type="checkbox"
-                                                        class="h-4 w-4 text-indigo-500 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500 cursor-pointer">
-                                                    <label for="rememberMe"
-                                                        class="ml-2 block text-sm text-gray-400 cursor-pointer">
-                                                        Keep me signed in
-                                                    </label>
-                                                </div>
-
-                                                <!-- Submit Button -->
-                                                <button type="submit" id="submitBtn"
-                                                    class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                                                    <span id="buttonText">Sign In</span>
-                                                </button>
-                                            </form>
-
-                                            <!-- Security Badge -->
-                                            <div class="mt-6 pt-6 border-t border-gray-800 text-center">
-                                                <p class="text-xs text-gray-600">
-                                                    <svg class="w-3 h-3 inline" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                                        </path>
-                                                    </svg>
-                                                    Secured by Inslash
-                                                </p>
-                                            </div>
-                                        </div>
+                    <!-- Security Badge -->
+                    <div class="mt-6 pt-6 border-t border-gray-800 text-center">
+                        <p class="text-xs text-gray-600">
+                            <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                            Secured by Inslash
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
