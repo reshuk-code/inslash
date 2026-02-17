@@ -1,0 +1,359 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">API Console</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Interactive testing environment</p>
+        </div>
+        <div>
+            <span
+                class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-mono font-medium rounded-lg border border-green-200 dark:border-green-800">
+                ENV: LIVE
+            </span>
+        </div>
+    </div>
+
+    <% if (!defaultKey) { %>
+        <!-- Enhanced Empty State -->
+        <div
+            class="mt-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-12 text-center max-w-3xl mx-auto shadow-xl">
+            <div
+                class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 mb-6 shadow-lg shadow-indigo-500/50">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Authentication Required</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+                You need an API Key to send requests. Create a project to generate your credentials.
+            </p>
+            <a href="/projects/new"
+                class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/50 transition-all duration-300 hover:scale-105">
+                Generate API Key
+            </a>
+        </div>
+        <% } else { %>
+
+            <!-- Dark Console Interface -->
+            <div
+                class="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden shadow-2xl bg-white dark:bg-[#0d1117]">
+
+                <!-- Left Panel: Config -->
+                <div
+                    class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0d1117] p-6 flex flex-col h-full">
+                    <div class="mb-6 flex items-center justify-between">
+                        <h3 class="text-xs font-mono font-bold text-gray-500 uppercase tracking-wider">Request Config
+                        </h3>
+                    </div>
+
+                    <form id="sandboxForm" onsubmit="sendRequest(event)" class="space-y-6 flex-grow">
+
+                        <!-- API Key -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-2 font-mono">X-API-KEY</label>
+                            <input type="text" id="apiKey" value="<%= defaultKey %>"
+                                class="w-full bg-[#161b22] border border-gray-700 rounded px-3 py-2 text-sm text-gray-300 font-mono focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-colors"
+                                placeholder="inslash_..." required>
+                        </div>
+
+                        <!-- Endpoint -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-2 font-mono">ENDPOINT</label>
+                            <div class="relative">
+                                <select id="endpoint" onchange="updateForm()"
+                                    class="w-full bg-[#161b22] border border-gray-700 rounded px-3 py-2 text-sm text-gray-300 font-mono focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none appearance-none cursor-pointer">
+                                    <option value="hash">POST /api/hash</option>
+                                    <option value="verify">POST /api/verify</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-800 my-6"></div>
+
+                        <!-- Hash Fields -->
+                        <div id="hashFields" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-2 font-mono">PASSWORD</label>
+                                <input type="text" id="hashPassword"
+                                    class="w-full bg-[#161b22] border border-gray-700 rounded px-3 py-2 text-sm text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                                    value="superSecret123">
+                            </div>
+
+                            <div class="p-3 rounded bg-[#161b22] border border-gray-700">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] text-gray-500 mb-1 font-mono uppercase">Iterations</label>
+                                        <input type="number" id="hashIterations"
+                                            class="w-full bg-transparent border-b border-gray-700 py-1 text-xs text-gray-300 focus:border-indigo-500 outline-none"
+                                            placeholder="150000">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] text-gray-500 mb-1 font-mono uppercase">Algorithm</label>
+                                        <select id="hashAlgo"
+                                            class="w-full bg-transparent border-b border-gray-700 py-1 text-xs text-gray-300 focus:border-indigo-500 outline-none">
+                                            <option value="">Default</option>
+                                            <option value="sha256">SHA-256</option>
+                                            <option value="sha512">SHA-512</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Verify Fields -->
+                        <div id="verifyFields" class="space-y-4 hidden">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-2 font-mono">PASSWORD</label>
+                                <input type="text" id="verifyPassword"
+                                    class="w-full bg-[#161b22] border border-gray-700 rounded px-3 py-2 text-sm text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                                    value="superSecret123">
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-2">
+                                    <label class="block text-xs font-medium text-gray-400 font-mono">PASSPORT</label>
+                                    <button type="button" onclick="pasteLastPassport()"
+                                        class="text-[10px] font-mono text-indigo-400 hover:text-indigo-300">
+                                        PASTE LAST
+                                    </button>
+                                </div>
+                                <textarea id="verifyPassport" rows="4"
+                                    class="w-full bg-[#161b22] border border-gray-700 rounded px-3 py-2 text-xs text-gray-300 font-mono focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none resize-none leading-relaxed"
+                                    placeholder="$inslash$v1$..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 mt-auto">
+                            <button type="submit" id="sendBtn"
+                                class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded transition-colors shadow-lg shadow-indigo-900/50 flex items-center justify-center gap-2">
+                                <span id="btnText">Send Request</span>
+                                <svg id="btnSpinner" class="animate-spin h-4 w-4 text-white hidden"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Panel: Response -->
+                <div class="lg:col-span-7 bg-[#0d1117] flex flex-col h-full border-l border-gray-800">
+                    <div class="px-6 py-6 border-b border-gray-800 flex justify-between items-center bg-[#0d1117]">
+                        <div class="flex items-center gap-4">
+                            <h3 class="text-xs font-mono font-bold text-gray-500 uppercase tracking-wider">Response Data
+                            </h3>
+                        </div>
+                        <div id="statusBadge" class="hidden px-2 py-0.5 rounded text-[10px] font-mono font-bold">
+                            WAITING
+                        </div>
+                    </div>
+
+                    <!-- Code Area -->
+                    <div class="flex-grow p-6 overflow-auto custom-scrollbar bg-[#0d1117]">
+                        <pre id="responseOutput" class="font-mono text-sm leading-relaxed text-gray-400">
+// Send a request to see the response...
+</pre>
+                    </div>
+
+                    <!-- API Response Guide -->
+                    <div class="border-t border-gray-800 bg-[#161b22]/50 p-6">
+                        <h4 class="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-wider mb-4">Field
+                            Guide</h4>
+                        <div class="grid grid-cols-2 gap-y-4 gap-x-8 text-xs font-mono text-gray-500">
+                            <div>
+                                <span class="text-gray-300 block mb-1">valid</span>
+                                <span class="text-[10px] leading-tight block">Boolean. True if password matches the
+                                    hash.</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-300 block mb-1">needsUpgrade</span>
+                                <span class="text-[10px] leading-tight block">Boolean. True if algorithm is
+                                    outdated.</span>
+                            </div>
+                            <div class="col-span-2">
+                                <span class="text-gray-300 block mb-1">upgradedPassport</span>
+                                <span class="text-[10px] leading-tight block">String. New hash to save to DB (replaces
+                                    old one).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="px-6 py-3 border-t border-gray-800 bg-[#161b22] flex justify-between text-[10px] text-gray-500 font-mono">
+                        <span id="latencyDisplay">LATENCY: -- ms</span>
+                        <span>application/json</span>
+                    </div>
+                </div>
+            </div>
+</div>
+<% } %>
+    </div>
+
+    <script>
+        let lastPassport = '';
+
+        function updateForm() {
+            const endpoint = document.getElementById('endpoint').value;
+            const hashFields = document.getElementById('hashFields');
+            const verifyFields = document.getElementById('verifyFields');
+
+            if (endpoint === 'hash') {
+                hashFields.classList.remove('hidden');
+                verifyFields.classList.add('hidden');
+            } else {
+                hashFields.classList.add('hidden');
+                verifyFields.classList.remove('hidden');
+            }
+        }
+
+        function pasteLastPassport() {
+            const field = document.getElementById('verifyPassport');
+            if (lastPassport) {
+                field.value = lastPassport;
+                field.classList.add('border-indigo-500');
+                setTimeout(() => field.classList.remove('border-indigo-500'), 500);
+            } else {
+                alert('No hash generated yet.');
+            }
+        }
+
+        async function sendRequest(e) {
+            e.preventDefault();
+
+            const apiKey = document.getElementById('apiKey').value;
+            if (!apiKey) {
+                alert('API Key is required');
+                return;
+            }
+
+            const endpoint = document.getElementById('endpoint').value;
+            const btn = document.getElementById('sendBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+            const output = document.getElementById('responseOutput');
+            const statusBadge = document.getElementById('statusBadge');
+            const latencyDisplay = document.getElementById('latencyDisplay');
+
+            // Loading
+            btn.disabled = true;
+            btnText.textContent = 'Sending...';
+            spinner.classList.remove('hidden');
+            output.innerHTML = '<span class="text-gray-500 animate-pulse">// Processing request...</span>';
+
+            const startTime = performance.now();
+            // Target the API server directly (CORS must be enabled on API)
+            const url = 'http://localhost:3001/api/' + endpoint;
+
+            let body = {};
+
+            if (endpoint === 'hash') {
+                body.value = document.getElementById('hashPassword').value;
+                const iter = document.getElementById('hashIterations').value;
+                const algo = document.getElementById('hashAlgo').value;
+                if (iter || algo) {
+                    body.options = {};
+                    if (iter) body.options.iterations = parseInt(iter);
+                    if (algo) body.options.algorithm = algo;
+                }
+            } else {
+                body.value = document.getElementById('verifyPassword').value;
+                body.passport = document.getElementById('verifyPassport').value;
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const endTime = performance.now();
+                const latency = Math.round(endTime - startTime);
+                latencyDisplay.textContent = `LATENCY: ${latency} ms`;
+
+                const data = await res.json();
+
+                if (endpoint === 'hash' && data.passport) {
+                    lastPassport = data.passport;
+                }
+
+                // Update Badge
+                statusBadge.classList.remove('hidden', 'bg-gray-700', 'text-gray-300', 'bg-green-500', 'text-white', 'bg-red-500', 'bg-green-900', 'text-green-300', 'bg-red-900', 'text-red-300');
+                if (res.ok) {
+                    statusBadge.textContent = `${res.status} OK`;
+                    statusBadge.classList.add('bg-green-900', 'text-green-300');
+                } else {
+                    statusBadge.textContent = `${res.status} ERR`;
+                    statusBadge.classList.add('bg-red-900', 'text-red-300');
+                }
+
+                const jsonStr = JSON.stringify(data, null, 2);
+                output.innerHTML = syntaxHighlight(jsonStr);
+
+            } catch (error) {
+                statusBadge.textContent = 'NET ERR';
+                statusBadge.classList.add('bg-red-900', 'text-red-300');
+                output.textContent = `Error: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Send Request';
+                spinner.classList.add('hidden');
+            }
+        }
+
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'text-purple-400';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'text-blue-400';
+                    } else {
+                        cls = 'text-green-400';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'text-yellow-400';
+                } else if (/null/.test(match)) {
+                    cls = 'text-red-400';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border: 2px solid #0d1117;
+            border-radius: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+    </style>

@@ -1,0 +1,145 @@
+<div class="space-y-6 animate-fadeIn">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Overview of your Inslash projects and activity.</p>
+        </div>
+        <a href="/projects/new" class="btn-primary flex items-center justify-center gap-2 hover-lift">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            New Project
+        </a>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Total Projects -->
+        <div class="stat-card animate-slideInUp stagger-1">
+            <div class="stat-icon bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                    </path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Projects</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        <%= projects.length %>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Requests (Mock Data for UI) -->
+        <div class="stat-card animate-slideInUp stagger-2">
+            <div class="stat-icon bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Validations</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        <%= stats.totalValidations.toLocaleString() %>
+                    </h3>
+                    <span
+                        class="text-xs font-medium text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/30 px-1.5 py-0.5 rounded-full">Realtime</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="stat-card animate-slideInUp stagger-3">
+            <div class="stat-icon bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">System Status</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Operational</h3>
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Projects -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Projects</h2>
+            <a href="/projects"
+                class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700">View All</a>
+        </div>
+        <div class="table-container border-0 shadow-none rounded-none">
+            <table class="table-clean">
+                <thead>
+                    <tr>
+                        <th class="dark:bg-gray-800 dark:text-gray-400">Project Name</th>
+                        <th class="dark:bg-gray-800 dark:text-gray-400">API Key ID</th>
+                        <th class="dark:bg-gray-800 dark:text-gray-400">Created</th>
+                        <th class="dark:bg-gray-800 dark:text-gray-400">Status</th>
+                        <th class="dark:bg-gray-800 dark:text-gray-400">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (projects.length===0) { %>
+                        <tr>
+                            <td colspan="5" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                                <div class="flex flex-col items-center justify-center">
+                                    <svg class="h-12 w-12 text-gray-300 dark:text-gray-600 mb-3" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z">
+                                        </path>
+                                    </svg>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">No projects found</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Get started by creating
+                                        your first project.
+                                    </p>
+                                    <a href="/projects/new" class="btn-primary">Create Project</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } else { %>
+                            <% projects.slice(0, 5).forEach(project=> { %>
+                                <tr>
+                                    <td class="font-medium text-gray-900">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs mr-3">
+                                                <%= project.name.charAt(0).toUpperCase() %>
+                                            </div>
+                                            <%= project.name %>
+                                        </div>
+                                    </td>
+                                    <td class="font-mono text-xs text-gray-500">
+                                        <%= project.apiKeys[0]?.key.substring(0, 8) %>...
+                                    </td>
+                                    <td class="text-gray-500 text-xs">
+                                        <%= new Date(project.createdAt).toLocaleDateString() %>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="/projects/<%= project._id %>"
+                                            class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">View
+                                            Details</a>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

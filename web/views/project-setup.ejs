@@ -1,0 +1,119 @@
+<div class="max-w-4xl mx-auto space-y-6">
+    <div class="text-center mb-8">
+        <div
+            class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-green-100 text-green-600 mb-4 shadow-sm">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900">Project Created Successfully!</h1>
+        <p class="text-gray-500 mt-2">Your project <span class="font-medium text-gray-900">
+                <%= project.name %>
+            </span> is ready to use.</p>
+    </div>
+
+    <!-- API Key Display -->
+    <div class="card bg-gray-900 border-gray-800 text-white overflow-hidden">
+        <div class="card-header border-gray-800 bg-gray-800/50">
+            <h3 class="text-lg font-medium text-white flex items-center gap-2">
+                <svg class="h-5 w-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
+                    </path>
+                </svg>
+                Your API Key
+            </h3>
+        </div>
+        <div class="card-body">
+            <div
+                class="bg-black/30 rounded-lg p-4 mb-4 border border-gray-700 flex items-center justify-between group relative">
+                <code class="font-mono text-lg text-green-400 break-all pr-12" id="apiKey"><%= apiKey %></code>
+                <button onclick="copyApiKey()"
+                    class="absolute right-2 top-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                    title="Copy to clipboard">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="rounded-lg bg-yellow-900/20 border border-yellow-700/30 p-4 flex gap-3 text-yellow-200">
+                <svg class="h-5 w-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                </svg>
+                <div class="text-sm">
+                    <p class="font-bold mb-1">Make sure to copy your API key now.</p>
+                    <p class="opacity-80">You won't be able to see it again! If you lose it, you'll need to generate a
+                        new one.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integration Guide -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="text-lg font-medium text-gray-900">Quick Start Guide</h3>
+        </div>
+        <div class="card-body space-y-6">
+            <div>
+                <h4 class="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <span
+                        class="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">1</span>
+                    Install the package
+                </h4>
+                <div
+                    class="code-block bg-gray-900 text-gray-300 p-3 rounded-lg font-mono text-sm border border-gray-800">
+                    npm install inslash
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <span
+                        class="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold">2</span>
+                    Initialize in your code
+                </h4>
+                <div
+                    class="code-block bg-gray-900 text-gray-300 p-4 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+                    <pre>const inslash = require('inslash');
+
+// Hash password
+const result = await inslash.hash(password, process.env.HASH_PEPPER, {
+    apiKey: '<%= apiKey %>'
+});
+
+// Verify login
+const isValid = await inslash.verify(password, storedPassport, process.env.HASH_PEPPER, {
+    apiKey: '<%= apiKey %>'
+});</pre>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
+            <a href="/docs" class="btn-secondary">View Documentation</a>
+            <a href="/dashboard" class="btn-primary">Go to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyApiKey() {
+        const apiKey = document.getElementById('apiKey').innerText;
+        navigator.clipboard.writeText(apiKey).then(() => {
+            // Provide feedback - could use a toast if available
+            const btn = document.querySelector('button[title="Copy to clipboard"]');
+            const originalHTML = btn.innerHTML;
+
+            btn.innerHTML = `<svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+        });
+    }
+</script>

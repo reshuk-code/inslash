@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Inslash
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Code block styling */
+        pre[class*="language-"] {
+            margin: 0 !important;
+            border-radius: 0.5rem !important;
+            background: #0d1117 !important;
+        }
+
+        code[class*="language-"] {
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+
+        /* Inline code */
+        :not(pre)>code {
+            background: #1f2937;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+    <%- include('partials/auth-navbar') %>
+
+        <main class="min-h-screen">
+            <%- include('docs') %>
+        </main>
+
+        <%- include('partials/auth-footer') %>
+
+            <!-- Prism.js Scripts -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+            <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+            <script>
+                // Re-highlight code blocks after page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    Prism.highlightAll();
+                });
+            </script>
+
+</body>
+
+</html>

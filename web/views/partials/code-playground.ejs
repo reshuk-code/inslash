@@ -1,0 +1,46 @@
+<!-- Code Playground Component -->
+<div class="code-playground bg-gray-900 dark:bg-gray-950 rounded-lg border border-gray-800 overflow-hidden">
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-800 bg-gray-800/50" x-data="{ activeTab: '<%= tabs[0].id %>' }">
+        <% tabs.forEach((tab, index)=> { %>
+            <button @click="activeTab = '<%= tab.id %>'"
+                :class="activeTab === '<%= tab.id %>' ? 'bg-gray-900 text-white border-b-2 border-indigo-500' : 'text-gray-400 hover:text-white'"
+                class="px-4 py-3 text-sm font-medium transition-colors">
+                <%= tab.label %>
+            </button>
+            <% }); %>
+
+                <!-- Copy All Button -->
+                <button @click="copyCode()"
+                    class="ml-auto px-4 py-3 text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Copy
+                </button>
+    </div>
+
+    <!-- Code Content -->
+    <div class="relative">
+        <% tabs.forEach((tab)=> { %>
+            <div x-show="activeTab === '<%= tab.id %>'" class="p-6 overflow-x-auto">
+                <pre class="text-sm"><code class="language-javascript"><%= tab.code %></code></pre>
+            </div>
+            <% }); %>
+    </div>
+</div>
+
+<script>
+    function copyCode() {
+        const activeCode = document.querySelector('[x-show="activeTab === activeTab"]').textContent;
+        navigator.clipboard.writeText(activeCode.trim());
+
+        // Show feedback
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Copied!';
+        setTimeout(() => btn.innerHTML = originalText, 2000);
+    }
+</script>

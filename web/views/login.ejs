@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Inslash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+    <%- include('partials/auth-navbar') %>
+
+        <div class="min-h-[calc(100vh-8rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="w-full max-w-md">
+                <div class="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 sm:p-10">
+
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-white">Welcome back</h2>
+                        <p class="mt-2 text-sm text-gray-400">
+                            Don't have an account?
+                            <a href="/signup"
+                                class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Sign up</a>
+                        </p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form class="space-y-6" action="/login" method="POST" id="loginForm">
+                        <!-- Username -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-300 mb-2">
+                                Username or Email
+                            </label>
+                            <input id="username" name="username" type="text" required
+                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                                placeholder="Enter your username">
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label for="password" class="block text-sm font-medium text-gray-300">
+                                    Password
+                                </label>
+                                <a href="/forgot-password"
+                                    class="text-xs font-medium text-gray-400 hover:text-indigo-400 transition-colors">
+                                    Forgot password?
+                                </a>
+                            </div>
+                            <input id="password" name="password" type="password" required
+                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                                placeholder="Enter your password">
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="flex items-center">
+                            <input id="rememberMe" name="rememberMe" type="checkbox"
+                                class="h-4 w-4 text-indigo-500 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500 cursor-pointer">
+                            <label for="rememberMe" class="ml-2 block text-sm text-gray-400 cursor-pointer">
+                                Keep me signed in
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="submitBtn"
+                            class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            <span id="buttonText">Sign In</span>
+                        </button>
+                    </form>
+
+                    <!-- Security Badge -->
+                    <div class="mt-6 pt-6 border-t border-gray-800 text-center">
+                        <p class="text-xs text-gray-600">
+                            <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                            Secured by Inslash
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('partials/auth-footer') %>
+
+            <script>
+                const form = document.getElementById('loginForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const buttonText = document.getElementById('buttonText');
+
+                form.addEventListener('submit', function (e) {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('cursor-not-allowed', 'opacity-80');
+                    buttonText.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Signing in...';
+                });
+            </script>
+</body>
+
+</html>

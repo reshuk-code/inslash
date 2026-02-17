@@ -1,11 +1,13 @@
 {
   "name": "inslash",
-  "version": "1.0.3",
-  "description": "A modern, upgradeable, and secure password hashing utility with passport encoding and hash ancestry.",
+  "version": "1.2.0",
+  "description": "A modern, upgradeable, and secure password hashing utility with passport encoding, hash ancestry, and comprehensive security features.",
   "main": "index.js",
-  "types": "index.d.ts", 
+  "types": "index.d.ts",
   "scripts": {
-    "test": "node cstest.js"
+    "test": "node test.js",
+    "benchmark": "node benchmark.js",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "password",
@@ -16,7 +18,12 @@
     "pepper",
     "upgradeable",
     "passport",
-    "nodejs"
+    "nodejs",
+    "authentication",
+    "hashing",
+    "hmac",
+    "key-derivation",
+    "security-tools"
   ],
   "author": "Reshuk Sapkota",
   "license": "MIT",
@@ -30,10 +37,20 @@
   "homepage": "https://github.com/reshuk-code/inslash#readme",
   "files": [
     "index.js",
+    "index.d.ts",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=16"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {},
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/reshuk-code"
   }
 }
