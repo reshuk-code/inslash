@@ -25,6 +25,7 @@
     "inslash": "^1.1.1",
     "mongoose": "^7.5.0",
     "nodemailer": "^8.0.1",
+    "nstall": "^0.2.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

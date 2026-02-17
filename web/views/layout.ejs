@@ -4,13 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Password hashing library. SHA-256, SHA-384, SHA-512 support. Automatic salting and security upgrades.">
+    <meta name="keywords" content="password hashing, sha-256, sha-384, sha-512, authentication, security">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Inslash">
+    <link rel="canonical" href="https://inslash.antqr.xyz">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inslash.antqr.xyz">
+    <meta property="og:title" content="Inslash - Password Hashing Library">
+    <meta property="og:description"
+        content="Password hashing library with SHA-256/384/512 support and automatic security upgrades.">
+    <meta property="og:image" content="https://inslash.antqr.xyz/images/128x128.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://inslash.antqr.xyz">
+    <meta property="twitter:title" content="Inslash - Password Hashing Library">
+    <meta property="twitter:description"
+        content="Password hashing library with SHA-256/384/512 support and automatic security upgrades.">
+    <meta property="twitter:image" content="https://inslash.antqr.xyz/images/128x128.png">
+
     <title>
         <%= title %> | Inslash
     </title>
     <link href="/css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/images/logo.png" sizes="16x16">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/128x128.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
     <link rel="shortcut icon" href="/images/logo.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Inslash",
+      "description": "Password hashing library with SHA-256, SHA-384, and SHA-512 support",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Node.js",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <!-- Theme initialization (must run before page renders to prevent flash) -->
     <script>
         (function () {

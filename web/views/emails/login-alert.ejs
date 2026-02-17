@@ -1,0 +1,67 @@
+<h1>🔔 New Login Detected</h1>
+
+<p>Hi <strong>
+        <%= username %>
+    </strong>,</p>
+
+<p>We detected a login to your Inslash account from a new device. If this was you, you can safely ignore this email.</p>
+
+<h2>Login Details</h2>
+
+<table class="details-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>Device</td>
+        <td>
+            <%= device || 'Unknown Device' %>
+        </td>
+    </tr>
+    <tr>
+        <td>Browser</td>
+        <td>
+            <%= browser || 'Unknown Browser' %>
+        </td>
+    </tr>
+    <tr>
+        <td>IP Address</td>
+        <td>
+            <%= ip || 'Unknown' %>
+        </td>
+    </tr>
+    <tr>
+        <td>Location</td>
+        <td>
+            <%= location || 'Unknown Location' %>
+        </td>
+    </tr>
+    <tr>
+        <td>Time</td>
+        <td>
+            <%= timestamp %>
+        </td>
+    </tr>
+</table>
+
+<div class="warning-box" style="margin-top: 32px;">
+    <p style="margin: 0;"><strong>⚠️ Wasn't you?</strong><br>
+        If you don't recognize this activity, your account may be compromised. Please secure your account immediately.
+    </p>
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 24px 0;">
+    <tr>
+        <td align="center">
+            <a href="https://inslash.antqr.xyz/profile?tab=security" class="button">Secure My Account</a>
+        </td>
+    </tr>
+</table>
+
+<p style="font-size: 14px; color: #6b7280;">
+    We recommend changing your password and reviewing your recent account activity if you don't recognize this login.
+</p>
+
+<div class="divider"></div>
+
+<p style="margin-top: 24px; color: #6b7280;">
+    Stay safe,<br>
+    The Inslash Security Team
+</p>

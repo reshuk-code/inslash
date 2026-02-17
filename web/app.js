@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const inslash = require('../index.js'); // Import local inslash library
+const { renderEmail } = require('./utils/emailRenderer');
+const inslash = require('inslash'); // Import local inslash library
 const nodemailer = require('nodemailer');
 const { hashWithFallback: hash, verifyWithFallback: verify } = require('./utils/apiClient');
 const { generateAvatarSvg } = require('./utils/avatarGenerator');
@@ -187,6 +188,15 @@ const requireAuth = (req, res, next) => {
 
 // ============= ROUTES =============
 
+// SEO Routes
+app.get('/sitemap.xml', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+});
+
+app.get('/robots.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+});
+
 // Home page
 app.get('/', (req, res) => {
     // If user is logged in, redirect to dashboard
@@ -299,16 +309,17 @@ app.post('/signup', async (req, res) => {
             const verificationUrl = `${req.protocol}://${req.get('host')}/verify-email/${emailVerificationToken}`;
 
             try {
+                const html = await renderEmail('verify-email', {
+                    title: 'Verify Your Email - Inslash',
+                    username,
+                    verificationUrl
+                });
+
                 await transporter.sendMail({
-                    from: '"Inslash" <noreply@inslash.com>',
+                    from: '"Inslash" <noreply@inslash.antqr.xyz>',
                     to: email,
                     subject: 'Verify Your Email Address',
-                    html: `
-                        <h1>Welcome to Inslash!</h1>
-                        <p>Please click the link below to verify your email address:</p>
-                        <a href="${verificationUrl}">${verificationUrl}</a>
-                        <p>This link will expire in 24 hours.</p>
-                    `
+                    html
                 });
             } catch (emailError) {
                 console.error('Email send error:', emailError);
@@ -318,6 +329,25 @@ app.post('/signup', async (req, res) => {
         // Log the user in
         req.session.userId = user._id;
         req.session.username = user.username;
+
+        // Send welcome email
+        if (process.env.EMAIL_USER) {
+            try {
+                const html = await renderEmail('welcome', {
+                    title: 'Welcome to Inslash!',
+                    username
+                });
+
+                await transporter.sendMail({
+                    from: '"Inslash" <noreply@inslash.antqr.xyz>',
+                    to: email,
+                    subject: 'Welcome to Inslash! 🎉',
+                    html
+                });
+            } catch (emailError) {
+                console.error('Welcome email send error:', emailError);
+            }
+        }
 
         req.flash('success', 'Account created successfully!');
         res.redirect('/dashboard');
@@ -371,7 +401,7 @@ app.post('/login', async (req, res) => {
         const { username, password, rememberMe } = req.body;
 
         if (!username || !password) {
-            req.flash('error', 'Username and password are required');
+            req.flash('error', 'Please enter both username/email and password');
             return res.redirect('/login');
         }
 
@@ -381,19 +411,19 @@ app.post('/login', async (req, res) => {
         });
 
         if (!user) {
-            req.flash('error', 'Invalid credentials');
+            req.flash('error', 'No account found with this username or email. <a href="/signup" class="underline font-semibold">Create a new account</a>');
             return res.redirect('/login');
         }
 
         if (user.active === false) {
-            req.flash('error', 'This account has been deactivated');
+            req.flash('error', 'This account has been deactivated. Please contact support for assistance.');
             return res.redirect('/login');
         }
 
         // Check if passport exists
         if (!user.passport) {
             console.error('User passport is undefined for user:', user.username);
-            req.flash('error', 'Account data is corrupted. Please contact support.');
+            req.flash('error', 'Account data is corrupted. Please contact support at support@inslash.antqr.xyz');
             return res.redirect('/login');
         }
 
@@ -413,12 +443,12 @@ app.post('/login', async (req, res) => {
                 stack: verifyError.stack,
                 userPassport: user.passport ? user.passport.substring(0, 100) : 'undefined'
             });
-            req.flash('error', 'Login verification failed. Please try again.');
+            req.flash('error', 'Login verification failed due to a technical error. Please try again or contact support.');
             return res.redirect('/login');
         }
 
         if (!verification.valid) {
-            req.flash('error', 'Invalid credentials');
+            req.flash('error', 'Incorrect password. <a href="/forgot-password" class="underline font-semibold">Forgot your password?</a>');
             return res.redirect('/login');
         }
 
@@ -446,20 +476,18 @@ app.post('/login', async (req, res) => {
             // Send Email
             if (process.env.EMAIL_USER) {
                 try {
+                    const html = await renderEmail('otp', {
+                        title: 'Device Verification Code - Inslash',
+                        username: user.username,
+                        otp,
+                        action: 'device verification'
+                    });
+
                     await transporter.sendMail({
-                        from: '"Inslash Security" <noreply@inslash.com>',
+                        from: '"Inslash Security" <noreply@inslash.antqr.xyz>',
                         to: user.email,
                         subject: 'New Device Verification Code',
-                        html: `
-                            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                                <h1>New Device Login Attempt</h1>
-                                <p>We detected a login attempt from a new device.</p>
-                                <p>Please use the following code to verify your identity:</p>
-                                <h2 style="font-size: 32px; letter-spacing: 5px; background: #f3f4f6; padding: 20px; text-align: center; border-radius: 8px;">${otp}</h2>
-                                <p>This code expires in 10 minutes.</p>
-                                <p>If this wasn't you, please reset your password immediately.</p>
-                            </div>
-                        `
+                        html
                     });
                 } catch (emailError) {
                     console.error('Email send error:', emailError);
@@ -531,8 +559,21 @@ app.post('/login', async (req, res) => {
         res.redirect('/dashboard');
 
     } catch (error) {
-        console.error('Login error:', error);
-        req.flash('error', 'An error occurred during login');
+        console.error('Login error:', {
+            message: error.message,
+            stack: error.stack,
+            username: req.body.username
+        });
+
+        // Distinguish between different types of errors
+        if (error.name === 'MongoError' || error.name === 'MongoServerError') {
+            req.flash('error', 'Database connection error. Please try again in a moment.');
+        } else if (error.message.includes('timeout')) {
+            req.flash('error', 'Request timed out. Please check your connection and try again.');
+        } else {
+            req.flash('error', 'An unexpected error occurred during login. Please try again or contact support if the problem persists.');
+        }
+
         res.redirect('/login');
     }
 });
@@ -1557,6 +1598,59 @@ app.get('/docs', (req, res) => {
         layout: false
     });
 });
+
+// ============= DEV: EMAIL PREVIEW ROUTE =============
+// Visit /test-email/:type to see how emails look
+if (process.env.NODE_ENV !== 'production') {
+    app.get('/test-email/:type', async (req, res) => {
+        try {
+            const type = req.params.type;
+            let html;
+
+            switch (type) {
+                case 'welcome':
+                    html = await renderEmail('welcome', {
+                        title: 'Welcome to Inslash!',
+                        username: 'DemoUser'
+                    });
+                    break;
+                case 'verify-email':
+                    html = await renderEmail('verify-email', {
+                        title: 'Verify Your Email',
+                        username: 'DemoUser',
+                        verificationUrl: 'https://inslash.antqr.xyz/verify-email/demo-token-123'
+                    });
+                    break;
+                case 'otp':
+                    html = await renderEmail('otp', {
+                        title: 'Verification Code',
+                        username: 'DemoUser',
+                        otp: '123456',
+                        action: 'device verification'
+                    });
+                    break;
+                case 'login-alert':
+                    html = await renderEmail('login-alert', {
+                        title: 'New Login Detected',
+                        username: 'DemoUser',
+                        device: 'Chrome on Windows',
+                        browser: 'Chrome 120.0',
+                        ip: '192.168.1.1',
+                        location: 'Kathmandu, Nepal',
+                        timestamp: new Date().toLocaleString()
+                    });
+                    break;
+                default:
+                    return res.status(404).send('Email template not found. Try: welcome, verify-email, otp, or login-alert');
+            }
+
+            res.send(html);
+        } catch (error) {
+            res.status(500).send('Error rendering email: ' + error.message);
+        }
+    });
+}
+
 // ============= ERROR HANDLING =============
 // 404 handler - keep this at the end
 app.use((req, res) => {
