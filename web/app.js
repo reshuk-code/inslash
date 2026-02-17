@@ -44,17 +44,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-let MongoStore;
-
-// Try to use MongoDB store, fallback to memory store if it fails
-try {
-    MongoStore = require('connect-mongo')(session);
-    console.log('✅ Using MongoDB session store');
-} catch (error) {
-    console.log('⚠️ MongoDB session store not available, using memory store');
-    MongoStore = null;
-}
-
 // Session configuration
 const sessionConfig = {
     secret: process.env.SESSION_SECRET,
@@ -68,18 +57,23 @@ const sessionConfig = {
     }
 };
 
-// Add MongoDB store if available
+let MongoStore;
+
+// Only initialize MongoStore if not building (or if explicitly needed)
+// Use the shared connection options to avoid immediate connection if possible
+try {
+    MongoStore = require('connect-mongo')(session);
+} catch (e) {
+    console.log('⚠️ MongoDB session store not available');
+}
+
 if (MongoStore) {
-    try {
-        sessionConfig.store = new MongoStore({
-            url: process.env.MONGODB_URI,
-            touchAfter: 24 * 3600,
-            autoRemove: 'native'
-        });
-        console.log('✅ MongoDB session store connected');
-    } catch (err) {
-        console.log('⚠️ Failed to connect MongoDB store, using memory store:', err.message);
-    }
+    sessionConfig.store = new MongoStore({
+        url: process.env.MONGODB_URI,
+        touchAfter: 24 * 3600,
+        autoRemove: 'native',
+        mongooseConnection: mongoose.connection // Attempt to reuse connection
+    });
 }
 
 app.use(session(sessionConfig));
@@ -1604,12 +1598,13 @@ app.use((err, req, res, next) => {
 // Start server
 const PORT = process.env.PORT || 3000;
 
-if (require.main === module) {
+// Only start the server if we are NOT in a Vercel environment and NOT being required as a module
+if (!process.env.VERCEL && require.main === module) {
     app.listen(PORT, () => {
         console.log(`🌐 Web app running on http://localhost:${PORT}`);
         console.log(`✅ MongoDB connected`);
         console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
     });
 }
-
+// If we are in Vercel, we export the app and let Vercel handle the listening
 module.exports = app;
