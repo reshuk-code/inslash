@@ -225,6 +225,119 @@
     </div>
 </section>
 
+<!-- Code Comparison Section -->
+<section class="py-24 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Stop Reinventing the Wheel</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Traditional password hashing is verbose, error-prone, and requires deep cryptographic knowledge. Inslash
+                makes it a one-liner.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+            <!-- The Old Way -->
+            <div class="relative group">
+                <div
+                    class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-20 group-hover:opacity-30 transition duration-500">
+                </div>
+                <div
+                    class="relative bg-gray-50 dark:bg-gray-900 rounded-xl border border-red-200 dark:border-red-900/30 p-8 h-full">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">The Traditional Way</h3>
+                    </div>
+
+                    <div class="prose dark:prose-invert mb-6">
+                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-2">✖</span> Manual salt generation & storage
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-2">✖</span> Complex iteration management
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-2">✖</span> Vulnerable to timing attacks
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-xs text-gray-300 font-mono leading-relaxed">
+<span class="text-purple-400">const</span> salt = crypto.<span class="text-blue-400">randomBytes</span>(16).<span class="text-blue-400">toString</span>(<span class="text-green-400">'hex'</span>);
+<span class="text-purple-400">const</span> hash = crypto.<span class="text-blue-400">pbkdf2Sync</span>(
+  password, 
+  salt, 
+  <span class="text-orange-400">1000</span>, 
+  <span class="text-orange-400">64</span>, 
+  <span class="text-green-400">'sha512'</span>
+).<span class="text-blue-400">toString</span>(<span class="text-green-400">'hex'</span>);
+
+<span class="text-gray-500">// TODO: Store salt securely</span>
+<span class="text-gray-500">// TODO: Handle timing attacks</span>
+<span class="text-gray-500">// TODO: Implement upgrades</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Inslash Way -->
+            <div class="relative group">
+                <div
+                    class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl opacity-30 group-hover:opacity-50 transition duration-500 blur">
+                </div>
+                <div
+                    class="relative bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 p-8 h-full shadow-2xl">
+                    <div
+                        class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                        RECOMMENDED</div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">The Inslash Way</h3>
+                    </div>
+
+                    <div class="prose dark:prose-invert mb-6">
+                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span> Zero-config secure defaults
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span> Salt & Pepper handled automatically
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span> Built-in upgrade mechanism
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto flex items-center h-[164px]">
+                        <pre class="text-sm text-gray-300 font-mono leading-relaxed w-full">
+<span class="text-purple-400">const</span> passport = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">hash</span>(password);
+
+<span class="text-gray-500">// Done. Secure by default.</span>
+<span class="text-gray-500">// Salt included.</span>
+<span class="text-gray-500">// Future-proof.</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Comparison Table -->
 <section class="py-20 bg-white dark:bg-gray-950">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

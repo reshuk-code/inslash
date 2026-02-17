@@ -48,7 +48,7 @@ require("dotenv").config();
 // 1. Configure (Global)
 inslash.configure({
     apiKey: process.env.INSLASH_API_KEY,
-    apiUrl: 'https://inslash.antqr.xyz' // Hosted Instance
+    apiUrl: 'https://inslash-q5s6.vercel.app' // Hosted Instance
 });
 
 // 2. Destructure after configuration (optional, but cleaner)
@@ -74,7 +74,7 @@ example();
 
 ### Get an API Key
 
-Visit [https://inslash.antqr.xyz](https://inslash.antqr.xyz) to create a project and get your API key.
+Visit [https://inslash-q5s6.vercel.app](https://inslash-q5s6.vercel.app) to create a project and get your API key.
 
 ## API
 

@@ -732,6 +732,11 @@ app.post('/forgot-password', async (req, res) => {
     }
 });
 
+// Handle /reset-password without token (likely user error or broken link)
+app.get('/reset-password', (req, res) => {
+    res.redirect('/forgot-password');
+});
+
 // ============= RESET PASSWORD =============
 app.get('/reset-password/:token', async (req, res) => {
     try {
@@ -1370,23 +1375,95 @@ app.post('/profile/update-email', requireAuth, async (req, res) => {
             return res.status(400).json({ error: 'Email is required' });
         }
 
-        // Check if email is already taken
-        if (email !== user.email) {
-            const existingUser = await User.findOne({ email });
-            if (existingUser) {
-                return res.status(400).json({ error: 'Email already in use' });
-            }
-            user.email = email;
-            user.emailVerified = false;
+        // Check if email is invalid format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
         }
+
+        if (email === user.email) {
+            return res.json({ success: true, message: 'Email unchanged' });
+        }
+
+        // Check if email is already taken
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already in use' });
+        }
+
+        // Generate verification token
+        const token = crypto.randomBytes(32).toString('hex');
+        user.pendingEmail = email;
+        user.emailVerificationToken = token;
+        user.emailVerificationExpires = Date.now() + 3600000; // 1 hour
 
         await user.save();
 
-        res.json({ success: true });
+        // Send verification email
+        const verifyUrl = `${req.protocol}://${req.get('host')}/profile/verify-email/${token}`;
+
+        try {
+            await transporter.sendMail({
+                to: email,
+                from: process.env.EMAIL_FROM || '"Inslash Security" <noreply@inslash.com>',
+                subject: 'Verify your new email address',
+                html: `
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                        <h2>Verify your new email</h2>
+                        <p>You requested to change your email address to <strong>${email}</strong>.</p>
+                        <p>Please click the link below to verify this change:</p>
+                        <a href="${verifyUrl}" style="display: inline-block; padding: 12px 24px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px;">Verify Email</a>
+                        <p style="margin-top: 24px; font-size: 12px; color: #666;">If you didn't request this, you can ignore this email.</p>
+                    </div>
+                `
+            });
+
+            res.json({ success: true, message: `Verification email sent to ${email}` });
+        } catch (emailError) {
+            console.error('Email send error:', emailError);
+            // Revert changes if email fails
+            user.pendingEmail = undefined;
+            user.emailVerificationToken = undefined;
+            user.emailVerificationExpires = undefined;
+            await user.save();
+            return res.status(500).json({ error: 'Failed to send verification email' });
+        }
 
     } catch (error) {
         console.error('Profile update error:', error);
         res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+app.get('/profile/verify-email/:token', async (req, res) => {
+    try {
+        const user = await User.findOne({
+            emailVerificationToken: req.params.token,
+            emailVerificationExpires: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            req.flash('error', 'Verification token is invalid or has expired');
+            return res.redirect('/profile');
+        }
+
+        // Update email
+        user.email = user.pendingEmail;
+        user.emailVerified = true;
+        user.pendingEmail = undefined;
+        user.emailVerificationToken = undefined;
+        user.emailVerificationExpires = undefined;
+
+        await user.save();
+
+        // If user is logged in, update session if needed (Passpost deserializes from ID so it handles it)
+        req.flash('success', 'Email updated successfully!');
+        res.redirect('/profile');
+
+    } catch (error) {
+        console.error('Email verification error:', error);
+        req.flash('error', 'An error occurred during verification');
+        res.redirect('/profile');
     }
 });
 
@@ -1654,7 +1731,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 // ============= ERROR HANDLING =============
 // 404 handler - keep this at the end
-app.use((req, res) => {
+app.use((req, res, next) => {
+    // Log missing resources for debugging
+    console.error(`[404] Resource not found: ${req.method} ${req.originalUrl}`);
+
     // Check if the route starts with /api
     if (req.path.startsWith('/api')) {
         return res.status(404).json({

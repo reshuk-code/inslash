@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     emailVerificationToken: String,
+    emailVerificationExpires: Date,
+    pendingEmail: {
+        type: String,
+        lowercase: true,
+        trim: true
+    },
     // Account status
     active: {
         type: Boolean,
