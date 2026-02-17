@@ -179,7 +179,7 @@ app.get('/', (req, res) => {
 
     res.render('index', {
         title: 'Inslash - Secure Password Hashing',
-        layout: false // Disable layout wrapper for landing page
+        layout: 'layout'
     });
 });
 

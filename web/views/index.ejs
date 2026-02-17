@@ -1,208 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Hero Section -->
+<section class="relative pt-16 pb-20 overflow-hidden">
+    <div
+        class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px]">
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inslash - Battle-Tested Password Hashing for Production</title>
-    <meta name="description"
-        content="Professional password hashing library with Argon2id, automatic migrations, and type-safe APIs. Open source, MIT licensed.">
-    <link href="/css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Theme initialization (must run before page renders to prevent flash) -->
-    <script>
-        (function () {
-            const theme = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (theme === 'dark' || (theme === 'system' && systemPrefersDark) || (!theme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-    </script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-
-<body class="font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100"
-    x-data="{ mobileMenuOpen: false }">
-
-    <!-- Navigation Header -->
-    <nav
-        class="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <img src="/images/logo.png" alt="Inslash Logo" class="w-8 h-8 rounded-lg">
-                    <span class="text-xl font-semibold text-gray-900 dark:text-white">Inslash</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left: Content -->
+            <div>
+                <div
+                    class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 mb-6">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    Open Source • MIT Licensed
                 </div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#features"
-                        class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Features</a>
-                    <a href="#examples"
-                        class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Examples</a>
-                    <a href="/console"
-                        class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">API
-                        Console</a>
-                    <a href="https://github.com/yourusername/inslash" target="_blank"
-                        class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                    Secure Password Hashing Made Simple
+                </h1>
+
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                    Production-ready password hashing with SHA-256/384/512, automatic salting, and built-in security
+                    upgrades. Drop-in replacement for your authentication system.
+                </p>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                    <a href="/signup"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
+                        Get Started Free
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                    <button
+                        onclick="navigator.clipboard.writeText('npm install inslash'); this.innerHTML = 'Copied!'; setTimeout(() => this.innerHTML = 'npm install inslash', 2000)"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm rounded-lg border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
+                        npm install inslash
+                    </button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
-                        GitHub
-                    </a>
-                </div>
-
-                <!-- CTA -->
-                <div class="hidden md:flex items-center gap-3">
-                    <!-- Theme Toggle -->
-                    <button onclick="toggleTheme()"
-                        class="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                        title="Toggle theme">
-                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <span class="font-mono">1.2k stars</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10">
                             </path>
                         </svg>
-                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <span class="font-mono">50k+ weekly</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
                             </path>
                         </svg>
-                    </button>
-
-                    <a href="/login"
-                        class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Sign
-                        In</a>
-                    <a href="/signup"
-                        class="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors shadow-sm hover:shadow-md transform hover:scale-105 transition-all">Get
-                        Started</a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="md:hidden p-2 text-gray-600 dark:text-gray-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div x-show="mobileMenuOpen" x-transition
-            class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#features" class="block text-sm font-medium text-gray-600 dark:text-gray-400">Features</a>
-                <a href="#examples" class="block text-sm font-medium text-gray-600 dark:text-gray-400">Examples</a>
-                <a href="/console" class="block text-sm font-medium text-gray-600 dark:text-gray-400">API Console</a>
-                <a href="https://github.com"
-                    class="block text-sm font-medium text-gray-600 dark:text-gray-400">GitHub</a>
-                <div class="pt-3 border-t border-gray-200 dark:border-gray-800 space-y-2">
-                    <a href="/login" class="block text-sm font-medium text-gray-600 dark:text-gray-400">Sign In</a>
-                    <a href="/signup"
-                        class="block px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg text-center">Get
-                        Started</a>
+                        <span>Security audited</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="relative pt-16 pb-20 overflow-hidden">
-        <div
-            class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px]">
-        </div>
+            <!-- Right: Code Example -->
+            <div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Content -->
-                <div>
-                    <div
-                        class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 mb-6">
-                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                        Open Source • MIT Licensed
+
+                <!-- Code Block -->
+                <div class="bg-gray-900 dark:bg-gray-950 rounded-xl border border-gray-800 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <button onclick="copyCode(this)"
+                            class="text-xs text-gray-400 hover:text-white transition-colors">Copy</button>
                     </div>
 
-                    <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                        Secure Password Hashing Made Simple
-                    </h1>
-
-                    <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                        Production-ready password hashing with SHA-256/384/512, automatic salting, and built-in security
-                        upgrades. Drop-in replacement for your authentication system.
-                    </p>
-
-                    <!-- CTAs -->
-                    <div class="flex flex-col sm:flex-row gap-4 mb-10">
-                        <a href="/signup"
-                            class="inline-flex items-center justify-center px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
-                            Get Started Free
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                        <button
-                            onclick="navigator.clipboard.writeText('npm install inslash'); this.innerHTML = 'Copied!'; setTimeout(() => this.innerHTML = 'npm install inslash', 2000)"
-                            class="inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm rounded-lg border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
-                            npm install inslash
-                        </button>
-                    </div>
-
-                    <!-- Trust Badges -->
-                    <div class="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                            <span class="font-mono">1.2k stars</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10">
-                                </path>
-                            </svg>
-                            <span class="font-mono">50k+ weekly</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                                </path>
-                            </svg>
-                            <span>Security audited</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Code Example -->
-                <div>
-
-
-                    <!-- Code Block -->
-                    <div class="bg-gray-900 dark:bg-gray-950 rounded-xl border border-gray-800 overflow-hidden">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-800">
-                            <div class="flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            </div>
-                            <button onclick="copyCode(this)"
-                                class="text-xs text-gray-400 hover:text-white transition-colors">Copy</button>
-                        </div>
-
-                        <!-- Node.js Code -->
-                        <div class="p-6">
-                            <pre class="text-sm text-gray-300 font-mono leading-relaxed"><span class="text-purple-400">const</span> <span class="text-blue-400">inslash</span> = <span class="text-purple-400">require</span>(<span class="text-green-400">'inslash'</span>);
+                    <!-- Node.js Code -->
+                    <div class="p-6">
+                        <pre class="text-sm text-gray-300 font-mono leading-relaxed"><span class="text-purple-400">const</span> <span class="text-blue-400">inslash</span> = <span class="text-purple-400">require</span>(<span class="text-green-400">'inslash'</span>);
 
 <span class="text-gray-500">// Hash a password</span>
 <span class="text-purple-400">const</span> <span class="text-blue-400">passport</span> = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">hash</span>(<span class="text-green-400">'userPassword123'</span>);
@@ -217,547 +101,420 @@
   <span class="text-gray-500">// Seamlessly upgrade to latest algorithm</span>
   <span class="text-purple-400">const</span> <span class="text-blue-400">newPassport</span> = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">upgrade</span>(passport);
 }</pre>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features Grid -->
-    <section id="features" class="py-20 bg-gray-50 dark:bg-black">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Enterprise-Grade Security, Zero
-                    Configuration</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                    Built for production with the security features you need, without the complexity you don't.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Multiple Hash Algorithms</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Support for SHA-256, SHA-384, and SHA-512 HMAC hashing with 100,000+ iterations by default.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Auto Salt & Pepper</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Automatic salting and optional peppering. No manual salt management required.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Passport Encoding</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        All hash metadata encoded in a single string. Includes algorithm, iterations, salt, and version
-                        history.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Automatic Upgrade Detection
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Detects when hashes need upgrading (iterations, algorithm, encoding) and provides new passport
-                        automatically.
-                    </p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">API Mode with Fallback</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Optional hosted API mode with automatic fallback to local crypto. Silent, zero-disruption
-                        operation.
-                    </p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <div
-                        class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Security Tools</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Inspect passports, compare hashes, estimate security strength, and batch verify multiple values.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Table -->
-    <section class="py-20 bg-white dark:bg-gray-950">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How Does It Compare?</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">
-                    See how Inslash stacks up against popular alternatives
-                </p>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border border-gray-200 dark:border-gray-800">
-                    <thead class="bg-gray-50 dark:bg-gray-900">
-                        <tr>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-white">Feature</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-blue-600 dark:text-blue-400 text-center">
-                                Inslash</th>
-                            <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
-                                bcrypt</th>
-                            <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
-                                argon2</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Argon2id Support</td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Auto-Upgrade on Login</td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Rich Metadata Object</td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">TypeScript Support</td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="text-xs text-gray-500">@types</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="text-xs text-gray-500">@types</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Automatic Peppering</td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-20 bg-gray-50 dark:bg-black">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">Everything you need to know</p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- FAQ Item 1 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        What hashing algorithms does Inslash support?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Inslash supports SHA-256, SHA-384, and SHA-512 HMAC hashing. It uses high iteration counts
-                        (100,000+ by default)
-                        and includes automatic salt generation, optional peppering, and passport encoding to store all
-                        hash metadata in one string.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        How do automatic hash upgrades work?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        When you verify a password, Inslash checks if the hash uses older settings (iterations,
-                        algorithm, encoding).
-                        If an upgrade is needed and the password is correct, it returns `needsUpgrade: true` and
-                        provides an
-                        `upgradedPassport`. Simply save the new passport to upgrade the hash automatically.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        What is a pepper and do I need one?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        A pepper is a secret key stored outside your database that adds an extra layer of security.
-                        Inslash supports optional peppering - if provided, it's automatically applied to all hashes.
-                        While not required, we recommend using a pepper for maximum security.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        Is this production-ready?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Absolutely. Inslash is battle-tested in production environments handling millions of
-                        authentications.
-                        It's built on proven cryptographic libraries, has comprehensive test coverage, and follows
-                        security best practices.
-                        Plus, it's open source so you can audit the code yourself.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 5 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        How do I upgrade hash algorithms?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Inslash handles this automatically. When you verify a password, it checks if the hash uses an
-                        older algorithm.
-                        If it does and the password is correct, Inslash returns a flag indicating an upgrade is
-                        available.
-                        You can then save the new hash - all without the user knowing.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 6 -->
-                <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        What frameworks does Inslash work with?
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Inslash is framework-agnostic and works with Express.js, Next.js, NestJS, Koa, Fastify, and any
-                        other
-                        Node.js framework. It's just a JavaScript library with zero dependencies on any specific
-                        framework.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof / Stats -->
-    <section class="py-16 bg-white dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">1.2k+</div>
-                    <div class="text-gray-600 dark:text-gray-400">GitHub Stars</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">50k+</div>
-                    <div class="text-gray-600 dark:text-gray-400">Weekly Downloads</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">500+</div>
-                    <div class="text-gray-600 dark:text-gray-400">Production Apps</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">99.9%</div>
-                    <div class="text-gray-600 dark:text-gray-400">Uptime</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="examples" class="py-20 bg-gray-900 dark:bg-black text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-6">Ready to Secure Your Application?</h2>
-            <p class="text-xl text-gray-400 mb-10">
-                Join thousands of developers who trust Inslash for production password security.
+<!-- Features Grid -->
+<section id="features" class="py-20 bg-gray-50 dark:bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Enterprise-Grade Security, Zero
+                Configuration</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Built for production with the security features you need, without the complexity you don't.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/signup"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                    Get Started Free
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                </a>
-                <a href="/console"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-colors">
-                    Try API Console
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <!-- Brand -->
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="/images/logo.png" alt="Inslash Logo" class="w-8 h-8 rounded-lg">
-                        <span class="text-xl font-semibold text-gray-900 dark:text-white">Inslash</span>
-                    </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Secure password hashing for modern applications.
-                    </p>
                 </div>
-
-                <!-- Documentation -->
-                <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Documentation</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/docs"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Getting
-                                Started</a></li>
-                        <li><a href="/docs#hash"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">API
-                                Reference</a></li>
-                        <li><a href="/docs#configuration"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Configuration
-                                Guide</a></li>
-                        <li><a href="/docs#example-auth"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Examples</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Resources -->
-                <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Resources</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://github.com"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">GitHub</a>
-                        </li>
-                        <li><a href="https://npmjs.com"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">npm
-                                Package</a></li>
-                        <li><a href="#"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Changelog</a>
-                        </li>
-                        <li><a href="#"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Status</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Legal -->
-                <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/terms"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Terms
-                                of Service</a></li>
-                        <li><a href="/privacy"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Privacy
-                                Policy</a>
-                        </li>
-                        <li><a href="https://github.com"
-                                class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">MIT
-                                License</a></li>
-                    </ul>
-                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Multiple Hash Algorithms</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Support for SHA-256, SHA-384, and SHA-512 HMAC hashing with 100,000+ iterations by default.
+                </p>
             </div>
 
-            <div
-                class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-sm text-gray-500">© 2026 Inslash. Open Source. MIT Licensed.</p>
-                <div class="flex gap-6">
-                    <a href="https://github.com" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                    </a>
+            <!-- Feature 2 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div
+                    class="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                        </path>
+                    </svg>
                 </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Auto Salt & Pepper</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Automatic salting and optional peppering. No manual salt management required.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div
+                    class="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Passport Encoding</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    All hash metadata encoded in a single string. Includes algorithm, iterations, salt, and version
+                    history.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div
+                    class="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Automatic Upgrade Detection
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Detects when hashes need upgrading (iterations, algorithm, encoding) and provides new passport
+                    automatically.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">API Mode with Fallback</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Optional hosted API mode with automatic fallback to local crypto. Silent, zero-disruption
+                    operation.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Security Tools</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Inspect passports, compare hashes, estimate security strength, and batch verify multiple values.
+                </p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="py-20 bg-white dark:bg-gray-950">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How Does It Compare?</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400">
+                See how Inslash stacks up against popular alternatives
+            </p>
         </div>
-    </footer>
 
-    <script>
-        // Theme toggle function
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.classList.contains('dark');
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border border-gray-200 dark:border-gray-800">
+                <thead class="bg-gray-50 dark:bg-gray-900">
+                    <tr>
+                        <th class="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-white">Feature</th>
+                        <th class="px-6 py-4 text-sm font-semibold text-blue-600 dark:text-blue-400 text-center">
+                            Inslash</th>
+                        <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
+                            bcrypt</th>
+                        <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
+                            argon2</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Argon2id Support</td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Auto-Upgrade on Login</td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Rich Metadata Object</td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">TypeScript Support</td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="text-xs text-gray-500">@types</span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="text-xs text-gray-500">@types</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Automatic Peppering</td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
-            if (isDark) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
 
-        // Copy code function
-        function copyCode(btn) {
-            const codeBlock = btn.closest('.bg-gray-900').querySelector('pre');
-            const code = codeBlock.innerText;
-            navigator.clipboard.writeText(code);
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = 'Copy', 2000);
-        }
+<!-- FAQ Section -->
+<section id="faq" class="py-20 bg-gray-50 dark:bg-black">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Everything you need to know</p>
+        </div>
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        <div class="space-y-6">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    What hashing algorithms does Inslash support?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Inslash supports SHA-256, SHA-384, and SHA-512 HMAC hashing. It uses high iteration counts
+                    (100,000+ by default)
+                    and includes automatic salt generation, optional peppering, and passport encoding to store all
+                    hash metadata in one string.
+                </p>
+            </div>
 
-                    // Close mobile menu if open
-                    if (window.mobileMenuOpen) {
-                        window.mobileMenuOpen = false;
-                    }
-                }
-            });
-        });
-    </script>
+            <!-- FAQ Item 2 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    How do automatic hash upgrades work?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    When you verify a password, Inslash checks if the hash uses older settings (iterations,
+                    algorithm, encoding).
+                    If an upgrade is needed and the password is correct, it returns `needsUpgrade: true` and
+                    provides an
+                    `upgradedPassport`. Simply save the new passport to upgrade the hash automatically.
+                </p>
+            </div>
 
-</body>
+            <!-- FAQ Item 3 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    What is a pepper and do I need one?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    A pepper is a secret key stored outside your database that adds an extra layer of security.
+                    Inslash supports optional peppering - if provided, it's automatically applied to all hashes.
+                    While not required, we recommend using a pepper for maximum security.
+                </p>
+            </div>
 
-</html>
+            <!-- FAQ Item 4 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Is this production-ready?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Absolutely. Inslash is battle-tested in production environments handling millions of
+                    authentications.
+                    It's built on proven cryptographic libraries, has comprehensive test coverage, and follows
+                    security best practices.
+                    Plus, it's open source so you can audit the code yourself.
+                </p>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    How do I upgrade hash algorithms?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Inslash handles this automatically. When you verify a password, it checks if the hash uses an
+                    older algorithm.
+                    If it does and the password is correct, Inslash returns a flag indicating an upgrade is
+                    available.
+                    You can then save the new hash - all without the user knowing.
+                </p>
+            </div>
+
+            <!-- FAQ Item 6 -->
+            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    What frameworks does Inslash work with?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Inslash is framework-agnostic and works with Express.js, Next.js, NestJS, Koa, Fastify, and any
+                    other
+                    Node.js framework. It's just a JavaScript library with zero dependencies on any specific
+                    framework.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Proof / Stats -->
+<section class="py-16 bg-white dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">1.2k+</div>
+                <div class="text-gray-600 dark:text-gray-400">GitHub Stars</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">50k+</div>
+                <div class="text-gray-600 dark:text-gray-400">Weekly Downloads</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">500+</div>
+                <div class="text-gray-600 dark:text-gray-400">Production Apps</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">99.9%</div>
+                <div class="text-gray-600 dark:text-gray-400">Uptime</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="examples" class="py-20 bg-gray-900 dark:bg-black text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">Ready to Secure Your Application?</h2>
+        <p class="text-xl text-gray-400 mb-10">
+            Join thousands of developers who trust Inslash for production password security.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/signup"
+                class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                Get Started Free
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                </svg>
+            </a>
+            <a href="/console"
+                class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-colors">
+                Try API Console
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Copy code function
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.bg-gray-900').querySelector('pre');
+        const code = codeBlock.innerText;
+        navigator.clipboard.writeText(code);
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+    }
+</script>
