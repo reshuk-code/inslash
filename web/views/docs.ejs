@@ -96,15 +96,18 @@
           </div>
         </div>
 
-        <%- include('partials/code-snippets', { code: `const inslash=require('inslash'); // Configure API mode (do this
-          once at app startup) inslash.configure({ apiKey: process.env.INSLASH_API_KEY,
-          apiUrl: 'https://your-inslash-instance.com' }); // Now use normally - automatically uses API const
-          result=await inslash.hash('password123', process.env.HASH_PEPPER); const verification=await
-          inslash.verify('password123', result.passport, process.env.HASH_PEPPER);`, language: 'javascript' }) %>
+        <%- include('partials/code-snippets', { code: `const inslash=require('inslash'); require("dotenv").config(); //
+          1. Configure (Global) inslash.configure({ apiKey: process.env.INSLASH_API_KEY,
+          apiUrl: 'https://inslash.antqr.xyz' // Hosted Instance }); // 2. Destructure after configuration (optional,
+          but cleaner) const { hash, verify }=inslash; async function example() { // This now automatically uses the
+          API! const result=await hash('password123', process.env.HASH_PEPPER); console.log(result.passport); const
+          isValid=await verify('password123', result.passport, process.env.HASH_PEPPER); console.log(isValid.valid); //
+          true } example();`, language: 'javascript' }) %>
 
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Get Your API Key</h3>
           <ol class="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-2 ml-4">
-            <li>Sign up at your Inslash instance</li>
+            <li>Sign up at <a href="https://inslash.antqr.xyz"
+                class="text-blue-600 dark:text-blue-400 hover:underline">inslash.antqr.xyz</a></li>
             <li>Navigate to <strong>API Keys</strong> in your dashboard</li>
             <li>Generate a new API key</li>
             <li>Add to your <code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">.env</code> file</li>
@@ -115,7 +118,7 @@
             <span class="text-green-400">INSLASH_API_KEY</span>=<span
               class="text-yellow-400">inslash_your_key_here</span><br />
             <span class="text-green-400">INSLASH_API_URL</span>=<span
-              class="text-yellow-400">https://your-instance.com</span><br />
+              class="text-yellow-400">https://inslash.antqr.xyz</span><br />
             <span class="text-green-400">HASH_PEPPER</span>=<span class="text-yellow-400">your-secret-pepper</span>
           </div>
 
