@@ -16,9 +16,27 @@ const expressLayouts = require('express-ejs-layouts');
 const app = express();
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ MongoDB connected'))
-    .catch(err => console.error('❌ MongoDB connection error:', err));
+let mongoClient = null;
+
+const connectDB = async () => {
+    if (mongoose.connection.readyState === 1) {
+        return mongoose.connection;
+    }
+
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log('✅ MongoDB connected');
+        return mongoose.connection;
+    } catch (err) {
+        console.error('❌ MongoDB connection error:', err);
+        throw err;
+    }
+};
+
+// Connect initially if not in serverless mode (or let requests handle it)
+if (require.main === module) {
+    connectDB();
+}
 
 // Middleware
 app.use(express.json());
@@ -89,6 +107,11 @@ const transporter = nodemailer.createTransport({
 
 // Make user available to all templates - FIXED VERSION
 app.use(async (req, res, next) => {
+    // Ensure DB is connected for every request in serverless environment
+    if (mongoose.connection.readyState !== 1) {
+        await connectDB();
+    }
+
     res.locals.currentUser = null;
     res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
