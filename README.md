@@ -43,16 +43,27 @@ console.log(verifyResult.valid); // true or false
 
 ```js
 const inslash = require('inslash');
+require("dotenv").config();
 
-// Configure once with your API key
+// 1. Configure (Global)
 inslash.configure({
-    apiKey: 'inslash_your_api_key_here',
-    apiUrl: 'https://api.inslash.com' // or http://localhost:3001 for testing
+    apiKey: process.env.INSLASH_API_KEY,
+    apiUrl: 'https://inslash.antqr.xyz' // Hosted Instance
 });
 
-// Now hash() and verify() automatically use the API
-const result = await inslash.hash('myPassword');
-const verified = await inslash.verify('myPassword', result.passport);
+// 2. Destructure after configuration (optional, but cleaner)
+const { hash, verify } = inslash;
+
+async function example() {
+    // This now automatically uses the API!
+    const result = await hash('password123', process.env.HASH_PEPPER);
+    console.log(result.passport);
+
+    const isValid = await verify('password123', result.passport, process.env.HASH_PEPPER);
+    console.log(isValid.valid); // true
+}
+
+example();
 ```
 
 ### How It Works
@@ -63,7 +74,7 @@ const verified = await inslash.verify('myPassword', result.passport);
 
 ### Get an API Key
 
-Visit [https://inslash.com](https://inslash.com) to create a project and get your API key.
+Visit [https://inslash.antqr.xyz](https://inslash.antqr.xyz) to create a project and get your API key.
 
 ## API
 
