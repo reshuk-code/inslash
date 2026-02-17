@@ -1580,8 +1580,13 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🌐 Web app running on http://localhost:${PORT}`);
-    console.log(`✅ MongoDB connected`);
-    console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🌐 Web app running on http://localhost:${PORT}`);
+        console.log(`✅ MongoDB connected`);
+        console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+}
+
+module.exports = app;
