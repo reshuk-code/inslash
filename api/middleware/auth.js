@@ -47,7 +47,8 @@ const authenticateApiKey = async (req, res, next) => {
         console.error('Auth error:', error);
         res.status(500).json({
             error: 'SERVER_ERROR',
-            message: 'Authentication failed'
+            message: 'Authentication failed',
+            details: error.message // Start using a cloud DB (Atlas) if seeing connection errors
         });
     }
 };
