@@ -874,7 +874,8 @@ app.get('/console', requireAuth, async (req, res) => {
         res.render('console', {
             title: 'Sandbox Console - Inslash',
             user,
-            defaultKey
+            defaultKey,
+            apiUrl: process.env.API_URL || 'http://localhost:3001/'
         });
     } catch (error) {
         console.error('Console error:', error);
