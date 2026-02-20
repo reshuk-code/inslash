@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
@@ -7,192 +7,156 @@
     <title>Create Account - Inslash</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+
+        .bg-grid {
+            background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
+                linear-gradient(to bottom, #80808012 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
     </style>
 </head>
 
-<body class="bg-gray-950 text-gray-100 antialiased" x-data="{ 
+<body class="bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 antialiased h-full flex flex-col" x-data="{ 
     showError: <%= typeof error !== 'undefined' && error && error.length > 0 ? 'true' : 'false' %>,
     showSuccess: <%= typeof success !== 'undefined' && success && success.length > 0 ? 'true' : 'false' %>
 }">
 
-    <!-- Toast Notifications -->
-    <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
-        <!-- Error Toast -->
-        <template x-if="showError">
-            <div x-show="showError" x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
-                x-init="setTimeout(() => showError = false, 5000)"
-                class="pointer-events-auto flex items-center w-full max-w-xs p-4 text-gray-400 bg-gray-800 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border border-red-500/20"
-                role="alert">
-                <div
-                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800/30 dark:text-red-400">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 20 20">
-                        <path
-                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
-                    </svg>
-                </div>
-                <div class="ml-3 text-sm font-normal text-red-200">
-                    <% if (typeof error !=='undefined' && error && error.length> 0) { %>
-                        <%- error[0] %>
-                            <% } %>
-                </div>
-                <button type="button" @click="showError = false"
-                    class="ml-auto -mx-1.5 -my-1.5 bg-gray-800 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-700 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                </button>
-            </div>
-        </template>
-
-        <!-- Success Toast -->
-        <template x-if="showSuccess">
-            <div x-show="showSuccess" x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
-                x-init="setTimeout(() => showSuccess = false, 5000)"
-                class="pointer-events-auto flex items-center w-full max-w-xs p-4 text-gray-400 bg-gray-800 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border border-green-500/20"
-                role="alert">
-                <div
-                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800/30 dark:text-green-400">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 20 20">
-                        <path
-                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                    </svg>
-                </div>
-                <div class="ml-3 text-sm font-normal text-green-200">
-                    <% if (typeof success !=='undefined' && success && success.length> 0) { %>
-                        <%- success[0] %>
-                            <% } %>
-                </div>
-                <button type="button" @click="showSuccess = false"
-                    class="ml-auto -mx-1.5 -my-1.5 bg-gray-800 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-700 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                </button>
-            </div>
-        </template>
-    </div>
-
     <%- include('partials/auth-navbar') %>
 
-        <div class="min-h-[calc(100vh-8rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class="w-full max-w-md">
+        <div class="flex-grow flex items-center justify-center p-6 relative overflow-hidden bg-grid">
+            <!-- Ambient Background Glow -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none">
+            </div>
 
-
-
-                <div class="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 sm:p-10">
-
-                    <!-- Header -->
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-white">Create Account</h2>
-                        <p class="mt-2 text-sm text-gray-400">
-                            Already have an account?
-                            <a href="/login"
-                                class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Sign
-                                in</a>
-                        </p>
-                    </div>
-
-                    <!-- Signup Form -->
-                    <form class="space-y-5" action="/signup" method="POST" id="signupForm">
-                        <!-- Username -->
-                        <div>
-                            <label for="username" class="block text-sm font-medium text-gray-300 mb-2">
-                                Username
-                            </label>
-                            <input id="username" name="username" type="text" required minlength="3"
-                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                placeholder="Choose a username">
-                        </div>
-
-                        <!-- Email -->
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
-                                Email
-                            </label>
-                            <input id="email" name="email" type="email" required
-                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                placeholder="Enter your email">
-                        </div>
-
-                        <!-- Password -->
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
-                                Password
-                            </label>
-                            <input id="password" name="password" type="password" required minlength="8"
-                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                placeholder="Create password">
-                            <!-- Password Strength Bar -->
-                            <div class="mt-2 h-1 bg-gray-700 rounded-full overflow-hidden">
-                                <div id="passwordStrength" class="h-full transition-all duration-500 w-0"></div>
-                            </div>
-                            <p id="passwordHint" class="text-xs text-gray-500 mt-1">At least 8
-                                characters</p>
-                        </div>
-
-                        <!-- Confirm Password -->
-                        <div>
-                            <label for="confirmPassword" class="block text-sm font-medium text-gray-300 mb-2">
-                                Confirm Password
-                            </label>
-                            <input id="confirmPassword" name="confirmPassword" type="password" required minlength="8"
-                                class="block w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                placeholder="Confirm password">
-                        </div>
-
-                        <!-- Terms Checkbox -->
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" required
-                                    class="h-4 w-4 text-indigo-500 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500 cursor-pointer">
-                            </div>
-                            <label for="acceptTerms" class="ml-2 text-sm text-gray-400 cursor-pointer">
-                                I agree to the
-                                <a href="/terms" target="_blank"
-                                    class="text-indigo-400 hover:text-indigo-300 hover:underline">Terms
-                                    of Service</a>
-                                and
-                                <a href="/privacy" target="_blank"
-                                    class="text-indigo-400 hover:text-indigo-300 hover:underline">Privacy
-                                    Policy</a>
-                            </label>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" id="submitBtn"
-                            class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                            <span id="buttonText">Create Account</span>
-                        </button>
-                    </form>
-
-                    <!-- Security Badge -->
-                    <div class="mt-6 pt-6 border-t border-gray-800 text-center">
-                        <p class="text-xs text-gray-600">
-                            <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                </path>
+            <div class="w-full max-w-[500px] animate-fadeIn relative">
+                <div
+                    class="bg-white dark:bg-[#0a0a0a] p-10 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl">
+                    <!-- Branding -->
+                    <div class="text-center mb-10">
+                        <div
+                            class="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl text-white mb-6 shadow-lg shadow-indigo-500/20">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                             </svg>
-                            Secured by Inslash
-                        </p>
+                        </div>
+                        <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Create Your Account</h1>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Join Inslash to secure your infrastructure
+                            today</p>
                     </div>
+
+                    <!-- Alert Messages -->
+                    <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+                        <div
+                            class="mb-8 p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl flex items-center gap-3">
+                            <svg class="h-5 w-5 text-red-500 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span class="text-xs font-medium text-red-800 dark:text-red-400">
+                                <%= error[0] %>
+                            </span>
+                        </div>
+                        <% } %>
+
+                            <form class="space-y-5" action="/signup" method="POST" id="signupForm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label for="username"
+                                            class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 block">Username</label>
+                                        <input id="username" name="username" type="text" required minlength="3"
+                                            class="block w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                                            placeholder="johndoe">
+                                    </div>
+                                    <div>
+                                        <label for="email"
+                                            class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 block">Email
+                                            Address</label>
+                                        <input id="email" name="email" type="email" required
+                                            class="block w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                                            placeholder="name@company.com">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="password"
+                                        class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 block">Password</label>
+                                    <input id="password" name="password" type="password" required minlength="8"
+                                        class="block w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                                        placeholder="At least 8 characters">
+
+                                    <!-- Password Strength Indicator -->
+                                    <div class="mt-3">
+                                        <div
+                                            class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                                            <div id="passwordStrength" class="h-full transition-all duration-500 w-0">
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <p id="passwordHint"
+                                                class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                                Security Requirement</p>
+                                            <span id="strengthText"
+                                                class="text-[10px] font-bold uppercase tracking-widest"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="confirmPassword"
+                                        class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 block">Confirm
+                                        Password</label>
+                                    <input id="confirmPassword" name="confirmPassword" type="password" required
+                                        minlength="8"
+                                        class="block w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                                        placeholder="Verify password">
+                                </div>
+
+                                <div
+                                    class="flex items-start p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10">
+                                    <div class="flex items-center h-5">
+                                        <input id="acceptTerms" name="acceptTerms" type="checkbox" required
+                                            class="h-4 w-4 text-indigo-600 bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 rounded focus:ring-indigo-500 cursor-pointer">
+                                    </div>
+                                    <label for="acceptTerms"
+                                        class="ml-3 text-xs text-slate-500 dark:text-slate-400 leading-normal cursor-pointer">
+                                        I agree to the <a href="/terms"
+                                            class="text-indigo-500 font-bold hover:text-indigo-600">Terms of Service</a>
+                                        and <a href="/privacy"
+                                            class="text-indigo-500 font-bold hover:text-indigo-600">Privacy Policy</a>.
+                                    </label>
+                                </div>
+
+                                <button type="submit" id="submitBtn"
+                                    class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-2 group">
+                                    <span id="buttonText" class="flex items-center justify-center gap-2 text-sm">
+                                        Create Account
+                                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                                d="M14 5l7 7-7 7M5 12h16" />
+                                        </svg>
+                                    </span>
+                                </button>
+
+                                <div class="text-center pt-2">
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">
+                                        Already have an account?
+                                        <a href="/login"
+                                            class="text-indigo-500 font-bold hover:text-indigo-600 ml-1 transition-colors">Sign
+                                            in</a>
+                                    </p>
+                                </div>
+                            </form>
                 </div>
             </div>
         </div>
@@ -200,7 +164,6 @@
         <%- include('partials/auth-footer') %>
 
             <script>
-                // Password strength indicator
                 const passwordInput = document.getElementById('password');
                 const strengthBar = document.getElementById('passwordStrength');
                 const strengthHint = document.getElementById('passwordHint');
@@ -220,17 +183,17 @@
                     strengthBar.className = 'h-full transition-all duration-500 w-0';
 
                     if (strength <= 25) {
-                        hint = 'Weak';
+                        hint = 'Insufficient Entropy';
                         colorClass = 'bg-red-500';
                     } else if (strength <= 50) {
-                        hint = 'Fair';
+                        hint = 'Moderate Security';
                         colorClass = 'bg-yellow-500';
                     } else if (strength <= 75) {
-                        hint = 'Good';
-                        colorClass = 'bg-blue-500';
+                        hint = 'High-Grade Security';
+                        colorClass = 'bg-indigo-500';
                     } else {
-                        hint = 'Strong';
-                        colorClass = 'bg-green-500';
+                        hint = 'Maximum Security';
+                        colorClass = 'bg-emerald-500';
                     }
 
                     if (password.length === 0) strength = 0;
@@ -238,26 +201,18 @@
                     strengthBar.style.width = strength + '%';
                     strengthBar.classList.add(colorClass);
                     strengthHint.innerText = hint;
-                    strengthHint.className = 'text-xs mt-1 font-bold transition-colors ' + colorClass.replace('bg-', 'text-');
+                    strengthHint.className = 'text-[9px] mt-2 font-black uppercase tracking-widest transition-colors ' + colorClass.replace('bg-', 'text-');
                 });
 
-                // Confirm password validation
                 const confirmInput = document.getElementById('confirmPassword');
                 confirmInput.addEventListener('input', function () {
-                    const pass = passwordInput.value;
-                    const conf = this.value;
-                    if (conf && pass !== conf) {
+                    if (this.value && passwordInput.value !== this.value) {
                         this.classList.add('border-red-500');
-                        this.classList.remove('border-green-500');
-                    } else if (conf && pass === conf) {
-                        this.classList.remove('border-red-500');
-                        this.classList.add('border-green-500');
                     } else {
-                        this.classList.remove('border-red-500', 'border-green-500');
+                        this.classList.remove('border-red-500');
                     }
                 });
 
-                // Form submission
                 const form = document.getElementById('signupForm');
                 const submitBtn = document.getElementById('submitBtn');
                 const buttonText = document.getElementById('buttonText');
@@ -269,8 +224,8 @@
                         return;
                     }
                     submitBtn.disabled = true;
-                    submitBtn.classList.add('cursor-not-allowed', 'opacity-80');
-                    buttonText.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Creating Account...';
+                    submitBtn.classList.add('cursor-not-allowed', 'opacity-50');
+                    buttonText.innerHTML = '<span class="flex items-center gap-2 font-black uppercase tracking-widest text-[10px]"><svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Initializing Protocol...</span>';
                 });
             </script>
 </body>

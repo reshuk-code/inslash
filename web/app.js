@@ -12,6 +12,7 @@ const { hashWithFallback: hash, verifyWithFallback: verify } = require('./utils/
 const { generateAvatarSvg } = require('./utils/avatarGenerator');
 const User = require('./models/User');
 const Project = require('./models/Project');
+const UsageLog = require('./models/UsageLog');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
@@ -831,32 +832,31 @@ app.get('/dashboard', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(res.locals.currentUser.id);
         const Project = require('./models/Project');
-        // Fetch all projects for stats
+        const UsageLog = require('./models/UsageLog');
+
+        // Fetch all projects
         const allProjects = await Project.find({ userId: user._id }).sort({ createdAt: -1 });
+        const projectIds = allProjects.map(p => p._id);
 
-        // Calculate stats
-        let totalRequests = 0;
-        let totalValidations = 0;
-
-        allProjects.forEach(p => {
-            if (p.apiKeys) {
-                p.apiKeys.forEach(k => {
-                    if (k.usage) {
-                        totalRequests += (k.usage.count || 0);
-                        totalValidations += (k.usage.verifications || 0);
-                    }
-                });
+        // Calculate REAL global stats via aggregation
+        const globalStats = await UsageLog.aggregate([
+            { $match: { projectId: { $in: projectIds } } },
+            {
+                $group: {
+                    _id: null,
+                    totalRequests: { $sum: 1 },
+                    totalValidations: { $sum: { $cond: [{ $eq: ["$type", "verify"] }, 1, 0] } }
+                }
             }
-        });
+        ]);
+
+        const stats = globalStats[0] || { totalRequests: 0, totalValidations: 0 };
 
         res.render('dashboard', {
             title: 'Dashboard - Inslash',
             user,
-            projects: allProjects, // Pass all projects, let view slice for "Recent"
-            stats: {
-                totalRequests,
-                totalValidations
-            },
+            projects: allProjects,
+            stats,
             passportMetadata: user.passportMetadata
         });
     } catch (error) {
@@ -946,9 +946,25 @@ app.post('/profile/change-password', requireAuth, async (req, res) => {
 // ============= PROJECTS =============
 app.get('/projects', requireAuth, async (req, res) => {
     try {
-        const Project = require('./models/Project');
         const projects = await Project.find({ userId: res.locals.currentUser.id })
             .sort({ createdAt: -1 });
+
+        // Fetch real analytics for each project via aggregation
+        const projectStats = await UsageLog.aggregate([
+            { $match: { projectId: { $in: projects.map(p => p._id) } } },
+            {
+                $group: {
+                    _id: "$projectId",
+                    validationsCount: { $sum: { $cond: [{ $eq: ["$type", "verify"] }, 1, 0] } }
+                }
+            }
+        ]);
+
+        // Map stats back to projects
+        projects.forEach(p => {
+            const stat = projectStats.find(s => s._id.toString() === p._id.toString());
+            p.stats = { validationsCount: stat ? stat.validationsCount : 0 };
+        });
 
         res.render('projects', {
             title: 'My Projects - Inslash',
@@ -1103,199 +1119,68 @@ app.post('/projects/:projectId/revoke-key/:keyId', requireAuth, async (req, res)
 });
 
 // Get Project Stats (filtered)
+// ============= PROJECT STATS & LOGS =============
+
+// Real temporal stats for charts
 app.get('/projects/:id/stats', requireAuth, async (req, res) => {
     try {
-        const Project = require('./models/Project');
         const UsageLog = require('./models/UsageLog');
+        const Project = require('./models/Project');
+        const project = await Project.findOne({ _id: req.params.id, userId: res.locals.currentUser.id });
 
-        // Verify ownership
-        const project = await Project.findOne({
-            _id: req.params.id,
-            userId: res.locals.currentUser.id
-        });
-
-        if (!project) {
-            return res.status(404).json({ error: 'Project not found' });
-        }
+        if (!project) return res.status(404).json({ error: 'Project not found' });
 
         const period = req.query.period || '24h';
         let startDate = new Date();
+        let groupBy = { $hour: "$timestamp" };
 
-        // Calculate start date based on period
-        switch (period) {
-            case '24h':
-                startDate.setHours(startDate.getHours() - 24);
-                break;
-            case '7d':
-                startDate.setDate(startDate.getDate() - 7);
-                break;
-            case '30d':
-                startDate.setDate(startDate.getDate() - 30);
-                break;
-            case 'all':
-                startDate = new Date(0); // Beginning of time
-                break;
-            default:
-                startDate.setHours(startDate.getHours() - 24);
+        if (period === '24h') {
+            startDate.setHours(startDate.getHours() - 24);
+        } else if (period === '7d') {
+            startDate.setDate(startDate.getDate() - 7);
+            groupBy = { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } };
+        } else { // Default to 30d
+            startDate.setDate(startDate.getDate() - 30);
+            groupBy = { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } };
         }
 
-        // Aggregate logs
         const stats = await UsageLog.aggregate([
-            {
-                $match: {
-                    projectId: project._id,
-                    timestamp: { $gte: startDate }
-                }
-            },
+            { $match: { projectId: project._id, timestamp: { $gte: startDate } } },
             {
                 $group: {
-                    _id: null,
-                    total: { $sum: 1 },
-                    hashes: {
-                        $sum: { $cond: [{ $eq: ["$type", "hash"] }, 1, 0] }
-                    },
-                    verifications: {
-                        $sum: { $cond: [{ $eq: ["$type", "verify"] }, 1, 0] }
-                    },
-                    failed: {
-                        $sum: { $cond: [{ $eq: ["$status", "failed"] }, 1, 0] }
-                    }
-                }
-            }
-        ]);
-
-        // Get time-series data for chart
-        // Check "Aggregate by hour" or "Aggregate by day" based on period
-        let groupByFormat = "%Y-%m-%dT%H:00:00Z"; // Default by hour (UTC)
-        if (period === '7d' || period === '30d' || period === 'all') {
-            groupByFormat = "%Y-%m-%dT00:00:00Z"; // By day (UTC)
-        }
-
-        const rawChartData = await UsageLog.aggregate([
-            {
-                $match: {
-                    projectId: project._id,
-                    timestamp: { $gte: startDate }
-                }
-            },
-            {
-                $group: {
-                    _id: {
-                        $dateToString: { format: groupByFormat, date: "$timestamp" }
-                    },
+                    _id: groupBy,
                     count: { $sum: 1 }
                 }
             },
-            { $sort: { _id: 1 } }
+            { $sort: { "_id": 1 } }
         ]);
 
-        // Post-process to fill gaps with zeros
-        const chartData = [];
-        const now = new Date();
-        let currentDate = new Date(startDate);
-
-        // Map existing data for quick lookup
-        const dataMap = new Map();
-        rawChartData.forEach(item => dataMap.set(item._id, item.count));
-
-        while (currentDate <= now) {
-            let dateKey;
-
-            if (groupByFormat.includes("%H")) {
-                // Hour format: YYYY-MM-DDTHH:00:00 (UTC)
-                const yyyy = currentDate.getUTCFullYear();
-                const mm = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
-                const dd = String(currentDate.getUTCDate()).padStart(2, '0');
-                const hh = String(currentDate.getUTCHours()).padStart(2, '0');
-                dateKey = `${yyyy}-${mm}-${dd}T${hh}:00:00Z`;
-
-                // Increment by 1 hour
-                currentDate.setHours(currentDate.getHours() + 1);
-            } else {
-                // Day format: YYYY-MM-DDTHH:00:00 (UTC)
-                const yyyy = currentDate.getUTCFullYear();
-                const mm = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
-                const dd = String(currentDate.getUTCDate()).padStart(2, '0');
-                dateKey = `${yyyy}-${mm}-${dd}T00:00:00Z`;
-
-                // Increment by 1 day
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-
-            chartData.push({
-                _id: dateKey,
-                count: dataMap.get(dateKey) || 0
-            });
-        }
-
-        const result = stats[0] || { total: 0, hashes: 0, verifications: 0, failed: 0 };
-
-        res.json({
-            ...result,
-            chartData
-        });
-
+        res.json(stats);
     } catch (error) {
-        console.error('Stats error:', error);
         res.status(500).json({ error: 'Failed to fetch stats' });
     }
 });
 
-
-// Get Project Usage Logs (Paginated)
+// Audit logs stream
 app.get('/projects/:id/logs', requireAuth, async (req, res) => {
     try {
-        const Project = require('./models/Project');
         const UsageLog = require('./models/UsageLog');
-
-        // Verify ownership
-        const project = await Project.findOne({
-            _id: req.params.id,
-            userId: res.locals.currentUser.id
-        });
-
-        if (!project) {
-            return res.status(404).json({ error: 'Project not found' });
-        }
+        const Project = require('./models/Project');
+        const project = await Project.findOne({ _id: req.params.id, userId: res.locals.currentUser.id });
+        if (!project) return res.status(404).json({ error: 'Project not found' });
 
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 50;
-        const skip = (page - 1) * limit;
-
+        const limit = 20;
         const logs = await UsageLog.find({ projectId: project._id })
             .sort({ timestamp: -1 })
-            .skip(skip)
-            .limit(limit)
-            .lean();
-
-        // Map keyId to key name for display
-        // Create a map of keyId -> keyName
-        const keyMap = {};
-        if (project.apiKeys) {
-            project.apiKeys.forEach(k => {
-                keyMap[k._id.toString()] = k.name;
-            });
-        }
-
-        const enrichedLogs = logs.map(log => ({
-            ...log,
-            keyName: keyMap[log.keyId.toString()] || 'Unknown Key',
-            timestamp: log.timestamp // Send ISO date
-        }));
-
-        const total = await UsageLog.countDocuments({ projectId: project._id });
+            .skip((page - 1) * limit)
+            .limit(limit);
 
         res.json({
-            logs: enrichedLogs,
-            pagination: {
-                current: page,
-                pages: Math.ceil(total / limit),
-                total
-            }
+            logs,
+            hasMore: logs.length === limit
         });
-
     } catch (error) {
-        console.error('Fetch logs error:', error);
         res.status(500).json({ error: 'Failed to fetch logs' });
     }
 });
@@ -1332,7 +1217,7 @@ app.get('/api-keys', requireAuth, async (req, res) => {
 
         res.render('api-keys', {
             title: 'API Keys - Inslash',
-            keys: allKeys
+            projects: projects
         });
 
     } catch (error) {

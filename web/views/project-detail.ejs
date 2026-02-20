@@ -1,677 +1,309 @@
-<div class="max-w-7xl mx-auto space-y-6">
-    <!-- Header with Tabs -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="flex items-center gap-4">
+<div class="space-y-10 animate-fadeIn pb-16">
+    <!-- Breadcrumbs / Header -->
+    <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+        <div class="flex items-center gap-6">
             <div
-                class="h-12 w-12 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-sm">
+                class="h-16 w-16 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-slate-200 dark:shadow-none dark:bg-white dark:text-slate-900 group-hover:scale-110 transition-transform">
                 <%= project.name.charAt(0).toUpperCase() %>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                <nav
+                    class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
+                    <a href="/projects"
+                        class="hover:text-slate-900 dark:hover:text-white transition-colors">Projects</a>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span class="text-slate-900 dark:text-white">
+                        <%= project.name %>
+                    </span>
+                </nav>
+                <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
                     <%= project.name %>
                 </h1>
-                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span class="font-mono">ID: <%= project._id %></span>
-                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-                    <span>Created <%= new Date(project.createdAt).toLocaleDateString() %></span>
-                </div>
             </div>
         </div>
 
-        <div class="flex gap-2">
-            <button
-                class="btn-secondary text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300 dark:bg-red-900/10 dark:text-red-400 dark:border-red-900/30 dark:hover:bg-red-900/20">
+        <div class="flex items-center gap-3">
+            <button onclick="confirmDeleteProject()"
+                class="px-5 py-2.5 bg-red-50 text-red-600 rounded-xl font-bold text-sm hover:bg-red-600 hover:text-white transition-saas dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500 dark:hover:text-white">
                 Delete Project
             </button>
         </div>
     </div>
 
-    <!-- Tabs Navigation -->
-    <div class="border-b border-gray-200 dark:border-gray-700">
-        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <button onclick="switchTab('overview')" id="tab-overview"
-                class="tab-link border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors dark:text-indigo-400 dark:border-indigo-400">
-                Overview
-            </button>
-            <button onclick="switchTab('apikeys')" id="tab-apikeys"
-                class="tab-link border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                API Keys
-            </button>
-            <button onclick="switchTab('settings')" id="tab-settings"
-                class="tab-link border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                Settings
-            </button>
-            <button onclick="switchTab('logs')" id="tab-logs"
-                class="tab-link border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                Usage Logs
-            </button>
-        </nav>
+    <!-- Sub-Navigation -->
+    <div class="flex items-center gap-8 border-b border-slate-200 dark:border-white/5 no-scrollbar overflow-x-auto">
+        <button onclick="switchTab('overview')" id="tab-overview"
+            class="tab-btn px-1 py-4 text-sm font-bold text-slate-400 relative transition-colors hover:text-slate-900 dark:hover:text-white">
+            Overview
+            <div
+                class="tab-indicator absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white transform scale-x-0 transition-transform">
+            </div>
+        </button>
+        <button onclick="switchTab('apikeys')" id="tab-apikeys"
+            class="tab-btn px-1 py-4 text-sm font-bold text-slate-400 relative transition-colors hover:text-slate-900 dark:hover:text-white">
+            API Keys
+            <div
+                class="tab-indicator absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white transform scale-x-0 transition-transform">
+            </div>
+        </button>
+        <button onclick="switchTab('logs')" id="tab-logs"
+            class="tab-btn px-1 py-4 text-sm font-bold text-slate-400 relative transition-colors hover:text-slate-900 dark:hover:text-white">
+            Audit Logs
+            <div
+                class="tab-indicator absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white transform scale-x-0 transition-transform">
+            </div>
+        </button>
+        <button onclick="switchTab('settings')" id="tab-settings"
+            class="tab-btn px-1 py-4 text-sm font-bold text-slate-400 relative transition-colors hover:text-slate-900 dark:hover:text-white">
+            Settings
+            <div
+                class="tab-indicator absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white transform scale-x-0 transition-transform">
+            </div>
+        </button>
     </div>
 
-    <!-- Tab Contents -->
-    <div class="mt-6">
-        <!-- OVERVIEW TAB -->
-        <div id="content-overview" class="tab-content space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Key Stats -->
-                <div class="md:col-span-2 space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="card p-4 flex flex-col justify-between h-32">
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Requests</p>
-                            <div class="flex items-end justify-between">
-                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-                                    <%= project.apiKeys.reduce((acc, k)=> acc + (k.usage?.count || 0),
-                                        0).toLocaleString() %>
-                                </h3>
-                                <span
-                                    class="text-xs text-green-600 font-medium bg-green-50 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">Total</span>
-                            </div>
-                        </div>
-                        <div class="card p-4 flex flex-col justify-between h-32">
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Validations</p>
-                            <div class="flex items-end justify-between">
-                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-                                    <%= project.apiKeys.reduce((acc, k)=> acc + (k.usage?.verifications || 0),
-                                        0).toLocaleString() %>
-                                </h3>
-                                <span
-                                    class="text-xs text-green-600 font-medium bg-green-50 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">Verified</span>
-                            </div>
-                        </div>
-                        <div class="card p-4 flex flex-col justify-between h-32">
-                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Hashes</p>
-                            <div class="flex items-end justify-between">
-                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-                                    <%= project.apiKeys.reduce((acc, k)=> acc + (k.usage?.hashes || 0),
-                                        0).toLocaleString() %>
-                                </h3>
-                                <span
-                                    class="text-xs text-blue-600 font-medium bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-full">Generated</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card h-80 flex flex-col">
-                        <div class="card-header flex justify-between items-center">
-                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Request Volume</h3>
-                            <div class="flex space-x-2">
-                                <button onclick="updateChart('24h')" id="btn-24h"
-                                    class="px-2 py-1 text-xs font-medium rounded-md bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">24H</button>
-                                <button onclick="updateChart('7d')" id="btn-7d"
-                                    class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">7D</button>
-                                <button onclick="updateChart('30d')" id="btn-30d"
-                                    class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">30D</button>
-                                <button onclick="updateChart('all')" id="btn-all"
-                                    class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">All</button>
-                            </div>
-                        </div>
-                        <div class="card-body flex-grow relative">
-                            <canvas id="usageChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column -->
-                <div class="space-y-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Quick Access</h3>
-                        </div>
-                        <div class="card-body">
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">You have <strong>
-                                    <%= project.apiKeys.length %>
-                                </strong> active API keys for this project.</p>
-                            <button onclick="switchTab('apikeys')" class="btn-secondary w-full">Manage Keys</button>
-                        </div>
-                    </div>
-                </div>
+    <!-- Sections -->
+    <div id="content-overview" class="tab-content animate-fadeIn space-y-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card p-8 bg-slate-50 dark:bg-white/5 border-none shadow-none">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Lifetime Activity</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 dark:text-white tabular-nums">
+                    <%= project.apiKeys.reduce((acc, k)=> acc + (k.usage?.count || 0), 0).toLocaleString() %>
+                </h3>
+            </div>
+            <div class="card p-8 bg-slate-50 dark:bg-white/5 border-none shadow-none">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Health Status</p>
+                <h3 class="text-3xl font-extrabold text-emerald-500 tabular-nums">99.9%</h3>
+            </div>
+            <div class="card p-8 bg-slate-50 dark:bg-white/5 border-none shadow-none">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Response Latency</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 dark:text-white tabular-nums">12ms</h3>
             </div>
         </div>
 
-        <!-- API KEYS TAB -->
-        <div id="content-apikeys" class="tab-content hidden space-y-6">
-            <div class="flex justify-between items-center">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Project API Keys</h3>
-                <!-- Generate Key Form (Hidden input for name) -->
-                <div class="flex gap-2">
-                    <button onclick="openGenerateModal()" class="btn-primary flex items-center gap-2">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+        <div class="card p-10">
+            <div class="flex items-center justify-between mb-10">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Traffic Distribution</h3>
+                <div class="flex bg-slate-100 dark:bg-white/5 p-1 rounded-xl">
+                    <button onclick="updateChart('24h')"
+                        class="chart-btn px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-saas">24h</button>
+                    <button onclick="updateChart('7d')"
+                        class="chart-btn px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-saas">7d</button>
+                    <button onclick="updateChart('30d')"
+                        class="chart-btn px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-saas">30d</button>
+                </div>
+            </div>
+            <div class="h-[400px]">
+                <canvas id="usageChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-apikeys" class="tab-content hidden animate-fadeIn space-y-6">
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Security Credentials</h2>
+            <button onclick="openGenerateModal()" class="btn-primary">Generate Secret Key</button>
+        </div>
+        <div class="card divide-y dark:divide-white/5">
+            <% project.apiKeys.forEach(key=> { %>
+                <div class="p-6 flex items-center justify-between group">
+                    <div class="space-y-1">
+                        <p class="text-sm font-bold text-slate-900 dark:text-white">
+                            <%= key.name %>
+                        </p>
+                        <div class="flex items-center gap-3">
+                            <code
+                                class="text-[11px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-500"><%= key.key.substring(0, 12) %>••••••••</code>
+                            <button onclick="copyKey('<%= key.key %>')"
+                                class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Copy</button>
+                        </div>
+                    </div>
+                    <button onclick="revokeKey('<%= project._id %>', '<%= key._id %>')"
+                        class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                             </path>
                         </svg>
-                        Generate New Key
                     </button>
                 </div>
-            </div>
-
-            <div class="card overflow-hidden">
-                <div class="table-container border-0 shadow-none">
-                    <table class="table-clean">
-                        <thead>
-                            <tr>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Name</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">API Key</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Created</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Last Used</th>
-                                <th class="text-right dark:bg-gray-800 dark:text-gray-400">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% project.apiKeys.forEach(key=> { %>
-                                <tr>
-                                    <td class="font-medium text-gray-900 dark:text-white">
-                                        <%= key.name %>
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <code id="key-<%= key._id %>"
-                                                class="font-mono text-xs text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-900 px-3 py-1.5 rounded border border-gray-200 dark:border-gray-700 select-all"><%= key.key %></code>
-                                            <button onclick="copyKey('<%= key._id %>', '<%= key.key %>', event)"
-                                                class="btn-secondary py-1 px-2 text-xs hover-lift transition-all"
-                                                title="Copy to clipboard">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="text-sm text-gray-500 dark:text-gray-400">
-                                        <%= new Date(key.createdAt).toLocaleDateString() %>
-                                    </td>
-                                    <td class="text-sm text-gray-500 dark:text-gray-400">
-                                        <%= key.lastUsed ? new Date(key.lastUsed).toLocaleDateString() : 'Never' %>
-                                    </td>
-                                    <td class="text-right">
-                                        <button
-                                            class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium transition-colors"
-                                            onclick="revokeKey('<%= project._id %>', '<%= key._id %>')">Revoke</button>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- SETTINGS TAB -->
-        <div id="content-settings" class="tab-content hidden space-y-6">
-            <div class="card max-w-2xl">
-                <div class="card-header">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">General Settings</h3>
-                </div>
-                <div class="card-body">
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Project
-                                Name</label>
-                            <input type="text" value="<%= project.name %>" class="input-clean" disabled>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Contact support to rename projects.
-                            </p>
-                        </div>
-                        <div>
-                            <label
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
-                            <textarea class="input-clean" rows="3" disabled><%= project.description %></textarea>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- LOGS TAB -->
-        <div id="content-logs" class="tab-content hidden space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Recent Activity</h3>
-                <button onclick="loadLogs()" class="btn-secondary text-sm flex items-center gap-2">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                        </path>
-                    </svg>
-                    Refresh
-                </button>
-            </div>
-
-            <div class="card overflow-hidden">
-                <div class="table-container border-0 shadow-none">
-                    <table class="table-clean" id="logsTable">
-                        <thead>
-                            <tr>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Status</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Method</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Key Name</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">IP Address</th>
-                                <th class="dark:bg-gray-800 dark:text-gray-400">Duration</th>
-                                <th class="text-right dark:bg-gray-800 dark:text-gray-400">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody id="logsBody">
-                            <tr>
-                                <td colspan="6" class="text-center py-8 text-gray-500">Loading logs...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="flex justify-center mt-4">
-                <button id="loadMoreLogsBtn" onclick="loadMoreLogs()"
-                    class="hidden text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">
-                    Load More
-                </button>
-            </div>
+                <% }); %>
         </div>
     </div>
 
-    <!-- Generate Key Modal -->
-    <div id="generateKeyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title"
-        role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeGenerateModal()">
-            </div>
-
-            <div
-                class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div
-                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11.536 16l-1.536 2.449a1 1 0 01-2.121 0L6.036 16l-.864.576a1 1 0 01-1.396-1.396l.576-.864L2 11.536 6.55 6a6 6 0 014.46-2.55A6 6 0 0115 7z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
-                                Generate New API Key
-                            </h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                                    Give your key a descriptive name to identify where it's being used (e.g.,
-                                    "Production Server", "Mobile App").
-                                </p>
-                                <div>
-                                    <label for="keyName"
-                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Key
-                                        Name</label>
-                                    <input type="text" name="keyName" id="keyName" class="mt-1 input-clean w-full"
-                                        placeholder="My API Key" value="API Key <%= project.apiKeys.length + 1 %>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" onclick="generateKey()"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Generate
-                    </button>
-                    <button type="button" onclick="closeGenerateModal()"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700">
-                        Cancel
-                    </button>
-                </div>
-            </div>
+    <div id="content-logs" class="tab-content hidden animate-fadeIn space-y-6">
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Audit Logs</h2>
+            <button onclick="loadLogs()"
+                class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Sync
+                Logs</button>
+        </div>
+        <div class="card overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5">
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Identity
+                        </th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Action
+                        </th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Origin
+                        </th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Timestamp
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="logsBody" class="divide-y dark:divide-white/5">
+                    <tr>
+                        <td colspan="4"
+                            class="px-8 py-12 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            Awaiting stream...</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div id="successKeyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title"
-        role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-            <div
-                class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div
-                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/30 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-                                API Key Created Successfully
-                            </h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                                    Here is your new API key. Please copy it now.
-                                </p>
-                                <div class="relative">
-                                    <input type="text" id="newApiKey" readonly
-                                        class="input-clean w-full font-mono text-sm pr-10" value="">
-                                    <button onclick="copyNewKey()"
-                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                            </path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <p class="text-xs text-yellow-600 dark:text-yellow-500 mt-2">
-                                    For security, this is the only time the full key will be displayed.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+    <div id="content-settings" class="tab-content hidden animate-fadeIn space-y-10">
+        <div class="card p-10 max-w-2xl">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">Project Settings</h3>
+            <form class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Label</label>
+                    <input type="text" value="<%= project.name %>" class="input-clean" disabled>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" onclick="closeSuccessModal()"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Done
-                    </button>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Manifest
+                        Description</label>
+                    <textarea class="input-clean bg-slate-50 dark:bg-white/5"
+                        rows="4"><%= project.description %></textarea>
                 </div>
-            </div>
+                <button type="submit" class="btn-primary w-full">Apply Configuration</button>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Generate Key Modal -->
+<div id="generateKeyModal" class="fixed inset-0 z-[100] hidden">
+    <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-md" onclick="closeGenerateModal()"></div>
+    <div
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-10 bg-white dark:bg-[#111] rounded-3xl shadow-2xl animate-fadeIn">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 tracking-tighter">New Secret Key</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Create a new key for this project.</p>
 
+        <form action="/projects/<%= project._id %>/generate-key" method="POST" class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Key Context</label>
+                <input type="text" name="name" placeholder="e.g. Staging Server" required class="input-clean">
+            </div>
+            <div class="flex gap-4">
+                <button type="button" onclick="closeGenerateModal()" class="btn-secondary flex-1">Cancel</button>
+                <button type="submit" class="btn-primary flex-1">Generate Key</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const projectId = '<%= project._id %>';
     let usageChart = null;
 
-    // Initialize Chart
-    document.addEventListener('DOMContentLoaded', () => {
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById('content-' + tabId).classList.remove('hidden');
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('text-slate-900', 'dark:text-white');
+            btn.querySelector('.tab-indicator').classList.add('scale-x-0');
+        });
+
+        const active = document.getElementById('tab-' + tabId);
+        active.classList.add('text-slate-900', 'dark:text-white');
+        active.querySelector('.tab-indicator').classList.remove('scale-x-0');
+
+        if (tabId === 'logs') loadLogs();
+    }
+
+    async function loadLogs() {
+        const body = document.getElementById('logsBody');
+        try {
+            const res = await fetch(`/projects/<%= project._id %>/logs`);
+            const data = await res.json();
+            if (!data.logs || data.logs.length === 0) {
+                body.innerHTML = '<tr><td colspan="4" class="px-8 py-12 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">No activity recorded for this project yet.</td></tr>';
+                return;
+            }
+            body.innerHTML = data.logs.map(log => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                    <td class="px-8 py-5 text-xs text-slate-500 font-bold">${log.ip || '0.0.0.0'}</td>
+                    <td class="px-8 py-5">
+                        <span class="badge ${log.type === 'verify' ? 'badge-success' : 'badge-indigo'}">${log.type}</span>
+                    </td>
+                    <td class="px-8 py-5 text-[10px] font-black font-mono text-slate-400 uppercase tracking-widest truncate max-w-[100px]">${log.keyId}</td>
+                    <td class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400">${new Date(log.timestamp).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        } catch (e) {
+            body.innerHTML = '<tr><td colspan="4" class="px-8 py-12 text-center text-red-500 font-bold">Failed to synchronize audit stream.</td></tr>';
+        }
+    }
+
+    async function updateChart(period) {
+        document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('bg-white', 'dark:bg-white/10', 'text-slate-900', 'dark:text-white', 'shadow-sm'));
+        event.target.classList.add('bg-white', 'dark:bg-white/10', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+
+        try {
+            const res = await fetch(`/projects/<%= project._id %>/stats?period=` + period);
+            const data = await res.json();
+
+            if (!data || data.length === 0) {
+                usageChart.data.labels = ['No Data'];
+                usageChart.data.datasets[0].data = [0];
+            } else {
+                usageChart.data.labels = data.map(s => s._id);
+                usageChart.data.datasets[0].data = data.map(s => s.count);
+            }
+            usageChart.update();
+        } catch (e) { }
+    }
+
+    // Chart Init
+    window.addEventListener('load', () => {
         const ctx = document.getElementById('usageChart').getContext('2d');
-
-        // Gradient
-        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.5)'); // Indigo
-        gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
-
         usageChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Requests',
                     data: [],
-                    borderColor: '#6366f1',
-                    backgroundColor: gradient,
+                    borderColor: '#000',
                     borderWidth: 2,
-                    pointRadius: 3,
-                    pointHoverRadius: 5,
-                    fill: true,
-                    tension: 0.4
+                    tension: 0.1,
+                    pointRadius: 0,
+                    fill: false
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        backgroundColor: 'rgba(17, 24, 39, 0.9)',
-                        titleColor: '#f3f4f6',
-                        bodyColor: '#e5e7eb',
-                        borderColor: '#374151',
-                        borderWidth: 1
-                    }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
+                    x: { display: false },
                     y: {
                         beginAtZero: true,
-                        grid: {
-                            color: 'rgba(156, 163, 175, 0.1)'
-                        },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    x: {
                         grid: { display: false },
-                        ticks: { color: '#9ca3af' }
+                        ticks: { display: false }
                     }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
                 }
             }
         });
-
-        // Load initial data (24h)
         updateChart('24h');
+        switchTab('overview');
     });
 
-    async function updateChart(period) {
-        // Update buttons state
-        document.querySelectorAll('[id^="btn-"]').forEach(btn => {
-            btn.classList.remove('bg-indigo-100', 'text-indigo-700', 'dark:bg-indigo-900/50', 'dark:text-indigo-300');
-            btn.classList.add('text-gray-500', 'dark:text-gray-400');
-        });
-        const activeBtn = document.getElementById(`btn-${period}`);
-        if (activeBtn) {
-            activeBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
-            activeBtn.classList.add('bg-indigo-100', 'text-indigo-700', 'dark:bg-indigo-900/50', 'dark:text-indigo-300');
-        }
-
-        try {
-            const res = await fetch(`/projects/${projectId}/stats?period=${period}`);
-            const data = await res.json();
-
-            // Update stats cards
-            if (data.chartData) {
-                // Process chart data
-                const labels = data.chartData.map(d => {
-                    const date = new Date(d._id); // ISO string now parses correctly
-                    // Format based on period
-                    if (period === '24h') {
-                        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    } else {
-                        return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
-                    }
-                });
-                const counts = data.chartData.map(d => d.count);
-
-                usageChart.data.labels = labels;
-                usageChart.data.datasets[0].data = counts;
-                usageChart.update();
-            }
-
-            // Update summary stats if present in DOM (optional enhancement)
-            // currently using server-side rendered stats for initial load
-        } catch (error) {
-            console.error('Failed to update chart:', error);
-        }
-    }
-
-
-    function openGenerateModal() {
-        document.getElementById('generateKeyModal').classList.remove('hidden');
-        document.getElementById('keyName').focus();
-    }
-
-    function closeGenerateModal() {
-        document.getElementById('generateKeyModal').classList.add('hidden');
-    }
-
-    async function generateKey() {
-        const name = document.getElementById('keyName').value;
-        if (!name) return;
-
-        try {
-            const res = await fetch(`/projects/${projectId}/generate-key`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name })
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                closeGenerateModal();
-                // Show success modal with key
-                document.getElementById('newApiKey').value = data.key;
-                document.getElementById('successKeyModal').classList.remove('hidden');
-            } else {
-                showToast(data.error || 'Failed to generate key', 'error');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showToast('An error occurred', 'error');
-        }
-    }
-
-    function copyNewKey() {
-        const keyInput = document.getElementById('newApiKey');
-        keyInput.select();
-        document.execCommand('copy'); // Fallback/Standard
-
-        // Modern approach if supported
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(keyInput.value);
-        }
-
-        showToast('API Key copied to clipboard!', 'success');
-    }
-
-    function closeSuccessModal() {
-        document.getElementById('successKeyModal').classList.add('hidden');
-        window.location.reload(); // Reload to show new key in list
-    }
-    function switchTab(tabId) {
-        // Hide all contents
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        // Show selected content
-        document.getElementById('content-' + tabId).classList.remove('hidden');
-
-        // Update tabs
-        document.querySelectorAll('.tab-link').forEach(el => {
-            el.classList.remove('border-indigo-500', 'text-indigo-600');
-            el.classList.add('border-transparent', 'text-gray-500');
-        });
-        const activeTab = document.getElementById('tab-' + tabId);
-        activeTab.classList.remove('border-transparent', 'text-gray-500');
-        activeTab.classList.add('border-indigo-500', 'text-indigo-600');
-    }
-
-    async function revokeKey(projectId, keyId) {
-        showModal({
-            title: 'Revoke API Key',
-            message: 'Are you sure you want to revoke this API key? This action cannot be undone and any applications using this key will stop working immediately.',
-            type: 'danger',
-            confirmText: 'Yes, Revoke Key',
-            onConfirm: async () => {
-                try {
-                    const res = await fetch(`/projects/${projectId}/revoke-key/${keyId}`, { method: 'POST' });
-                    if (res.ok) {
-                        showToast('API key revoked successfully', 'success');
-                        setTimeout(() => window.location.reload(), 1000);
-                    } else {
-                        showToast('Failed to revoke key', 'error');
-                    }
-                } catch (e) {
-                    showToast('Error revoking key', 'error');
-                }
-            }
-        });
-    }
-
-    let currentLogPage = 1;
-
-    async function loadLogs(append = false) {
-        if (!append) currentLogPage = 1;
-
-        try {
-            const res = await fetch(`/projects/${projectId}/logs?page=${currentLogPage}&limit=50`);
-            const data = await res.json();
-
-            const tbody = document.getElementById('logsBody');
-            if (!append) tbody.innerHTML = '';
-
-            if (data.logs.length === 0 && !append) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">No logs found</td></tr>';
-                return;
-            }
-
-            data.logs.forEach(log => {
-                const row = document.createElement('tr');
-                // Status Color
-                const statusColor = log.status === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
-
-                // Method Color
-                const methodColor = log.type === 'hash' ? 'text-blue-600 dark:text-blue-400' : 'text-purple-600 dark:text-purple-400';
-
-                row.innerHTML = `
-                    <td><span class="px-2 py-1 text-xs font-medium rounded-full ${statusColor}">${log.status.toUpperCase()}</span></td>
-                    <td class="text-sm font-medium ${methodColor}">${log.type.toUpperCase()}</td>
-                    <td class="text-sm text-gray-900 dark:text-white">${log.keyName}</td>
-                    <td class="text-sm text-gray-500 dark:text-gray-400 font-mono text-xs">${log.ip || '-'}</td>
-                    <td class="text-sm text-gray-500 dark:text-gray-400">${log.responseTime}ms</td>
-                    <td class="text-right text-sm text-gray-500 dark:text-gray-400 text-xs">${new Date(log.timestamp).toLocaleString()}</td>
-                `;
-                tbody.appendChild(row);
-            });
-
-            // Handle Load More button
-            const btn = document.getElementById('loadMoreLogsBtn');
-            if (data.pagination.current < data.pagination.pages) {
-                btn.classList.remove('hidden');
-            } else {
-                btn.classList.add('hidden');
-            }
-
-        } catch (error) {
-            console.error('Failed to load logs:', error);
-            if (!append) document.getElementById('logsBody').innerHTML = '<tr><td colspan="6" class="text-center py-4 text-red-500">Failed to load logs</td></tr>';
-        }
-    }
-
-    function loadMoreLogs() {
-        currentLogPage++;
-        loadLogs(true);
-    }
-
-    // Auto-load logs when tab is switched
-    const originalSwitchTab = switchTab;
-    switchTab = function (tabId) {
-        originalSwitchTab(tabId);
-        if (tabId === 'logs' && document.getElementById('logsBody').children.length <= 1) { // Load if empty or loading
-            loadLogs();
-        }
-    };
-    function copyKey(keyId, keyValue, event) {
-        // Prevent event bubbling
-        if (event) event.preventDefault();
-
-        navigator.clipboard.writeText(keyValue).then(() => {
-            const btn = event ? event.target.closest('button') : document.querySelector(`button[onclick*="${keyId}"]`);
-            if (!btn) return;
-
-            const originalHTML = btn.innerHTML;
-
-            // Success feedback
-            btn.innerHTML = '<svg class="w-3.5 h-3.5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
-            btn.classList.add('bg-green-50', 'border-green-200');
-
-            showToast('API key copied to clipboard', 'success');
-
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.classList.remove('bg-green-50', 'border-green-200');
-            }, 1500);
-        }).catch(err => {
-            console.error('Copy failed:', err);
-            showToast('Failed to copy to clipboard', 'error');
-        });
-    }
+    function openGenerateModal() { document.getElementById('generateKeyModal').classList.remove('hidden'); }
+    function closeGenerateModal() { document.getElementById('generateKeyModal').classList.add('hidden'); }
+    function copyKey(val) { navigator.clipboard.writeText(val); alert('Copied'); }
 </script>

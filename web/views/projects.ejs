@@ -1,148 +1,161 @@
-<div class="max-w-7xl mx-auto space-y-6">
-    <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-8 animate-fadeIn pb-12">
+    <!-- Header & Search -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Projects</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage all your integrations and API keys.</p>
+            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Projects</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-2">Manage and monitor your security projects.</p>
         </div>
-        <div class="flex gap-3">
-            <div class="relative">
-                <input type="text" placeholder="Search projects..." class="input-clean pl-10 w-full md:w-64">
-                <svg class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative group">
+                <input type="text" id="projectSearch" placeholder="Search projects..."
+                    class="pl-11 pr-4 py-3 w-full sm:w-64 glass-card border-0 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all">
+                <div
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
             </div>
-            <a href="/projects/new" class="btn-primary flex items-center justify-center gap-2 whitespace-nowrap">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            <a href="/projects/new"
+                class="btn-primary flex items-center justify-center gap-2 hover-lift px-6 py-3 bg-gradient-premium border-0 shadow-lg shadow-indigo-500/20">
+                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
                 </svg>
-                New Project
+                <span class="font-bold">New Project</span>
             </a>
         </div>
     </div>
 
-    <!-- Projects List -->
-    <div class="card overflow-hidden">
-        <div class="table-container border-0 shadow-none">
-            <table class="table-clean">
-                <thead>
-                    <tr>
-                        <th class="w-1/3 dark:bg-gray-800 dark:text-gray-400">Project Name</th>
-                        <th class="dark:bg-gray-800 dark:text-gray-400">API Keys</th>
-                        <th class="dark:bg-gray-800 dark:text-gray-400">Environment</th>
-                        <th class="dark:bg-gray-800 dark:text-gray-400">Created</th>
-                        <th class="dark:bg-gray-800 dark:text-gray-400">Status</th>
-                        <th class="text-right dark:bg-gray-800 dark:text-gray-400">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (projects.length===0) { %>
-                        <tr>
-                            <td colspan="6" class="py-12 text-center text-gray-500 dark:text-gray-400">
-                                <div class="flex flex-col items-center justify-center">
-                                    <div class="bg-gray-100 dark:bg-gray-700 rounded-full p-4 mb-4">
-                                        <svg class="h-8 w-8 text-gray-400 dark:text-gray-500" fill="none"
-                                            stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">No projects yet</h3>
-                                    <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-sm">Get started by creating
-                                        your first project to
-                                        integrate Inslash authentication into your app.</p>
-                                    <a href="/projects/new" class="btn-primary">Create Project</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <% } else { %>
-                            <% projects.forEach(project=> { %>
-                                <tr class="group cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-                                    onclick="window.location='/projects/<%= project._id %>'">
-                                    <td>
-                                        <div class="flex items-center">
+    <!-- Projects Table Wrap -->
+    <div class="glass-card rounded-2xl overflow-hidden border-0 shadow-2xl shadow-indigo-500/5">
+        <% if (!projects || projects.length===0) { %>
+            <div class="p-20 text-center">
+                <div
+                    class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 mb-6 animate-pulse">
+                    <svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-extrabold text-gray-900 dark:text-white">Create your first project</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 mb-8 max-w-sm mx-auto font-medium">Projects help you
+                    organize your API keys and security settings for different applications.</p>
+                <a href="/projects/new" class="btn-primary px-10 py-4 text-lg inline-block">New Project</a>
+            </div>
+            <% } else { %>
+                <div class="table-container border-0 shadow-none rounded-none">
+                    <table class="table-clean w-full">
+                        <thead>
+                            <tr class="bg-gray-50/50 dark:bg-gray-800/30">
+                                <th
+                                    class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700/50">
+                                    Project</th>
+                                <th
+                                    class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700/50">
+                                    Status</th>
+                                <th
+                                    class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700/50">
+                                    Validation Activity</th>
+                                <th
+                                    class="px-8 py-5 text-right text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700/50">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                            <% projects.forEach((project, index)=> { %>
+                                <tr class="group hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-all cursor-pointer"
+                                    onclick="window.location.href='/projects/<%= project._id %>'">
+                                    <td class="px-8 py-6">
+                                        <div class="flex items-center gap-4">
                                             <div
-                                                class="h-10 w-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg mr-4 shadow-sm">
-                                                <%= project.name.charAt(0).toUpperCase() %>
+                                                class="h-12 w-12 rounded-xl bg-gradient-premium flex items-center justify-center text-white shadow-lg shadow-indigo-500/10 group-hover:scale-110 transition-transform">
+                                                <span class="font-black text-lg">
+                                                    <%= project.name.charAt(0).toUpperCase() %>
+                                                </span>
                                             </div>
                                             <div>
-                                                <div
-                                                    class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                                <h4
+                                                    class="font-extrabold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                                                     <%= project.name %>
-                                                </div>
-                                                <div class="text-xs text-gray-500 dark:text-gray-400">ID: <%=
-                                                        project._id.toString().substring(0, 8) %>...</div>
+                                                </h4>
+                                                <p
+                                                    class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1">
+                                                    ID: <%= project._id.toString().substring(0, 8) %>...
+                                                </p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="font-mono text-xs text-gray-600 dark:text-gray-300">
-                                        <div class="flex items-center gap-2">
+                                    <td class="px-8 py-6">
+                                        <div class="flex flex-wrap gap-2">
                                             <span
-                                                class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600">
-                                                <%= project.apiKeys.length %> keys
-                                            </span>
+                                                class="badge !bg-green-500/10 !text-green-500 !border-green-500/20 border !rounded-lg px-2 py-0.5 font-bold text-[10px] uppercase tracking-widest">Active</span>
+                                            <span
+                                                class="badge !bg-indigo-500/10 !text-indigo-600 !border-indigo-500/20 border !rounded-lg px-2 py-0.5 font-bold text-[10px] uppercase tracking-widest">v1.2</span>
                                         </div>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-neutral">Production</span>
+                                    <td class="px-8 py-6">
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex-1 min-w-[120px]">
+                                                <div
+                                                    class="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
+                                                    <span>Validations</span>
+                                                    <span class="text-indigo-500">
+                                                        <%= (project.stats?.validationsCount || 0).toLocaleString() %>
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    class="w-full bg-gray-100 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                                    <div class="bg-indigo-500 h-full w-[100%]"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="text-sm text-gray-500 dark:text-gray-400">
-                                        <%= new Date(project.createdAt).toLocaleDateString(undefined, { year: 'numeric'
-                                            , month: 'short' , day: 'numeric' }) %>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-success">Active</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="flex items-center justify-end gap-3"
-                                            onclick="event.stopPropagation()">
-                                            <a href="/projects/<%= project._id %>"
-                                                class="text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-md">
-                                                <svg class="h-5 w-5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                                                    </path>
-                                                </svg>
-                                            </a>
+                                    <td class="px-8 py-6 text-right">
+                                        <div class="flex items-center justify-end gap-2">
                                             <button
-                                                class="text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition-colors bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-md">
-                                                <svg class="h-5 w-5" fill="none" stroke="currentColor"
+                                                class="p-2.5 glass-card border-0 rounded-lg text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-gray-800 transition-all">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                                    </path>
+                                                        stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                                 </svg>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <% }); %>
-                                    <% } %>
-                </tbody>
-            </table>
-        </div>
-
-        <% if (projects.length> 0) { %>
-            <div
-                class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Showing <span class="font-medium">
-                        <%= projects.length %>
-                    </span> projects</p>
-                <div class="flex gap-2">
-                    <button
-                        class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled>Previous</button>
-                    <button
-                        class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled>Next</button>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            <% } %>
+
+                <!-- Table Footer -->
+                <div
+                    class="px-8 py-5 border-t border-gray-100 dark:border-gray-700/50 bg-gray-50/50 dark:bg-gray-800/30 flex items-center justify-between">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                        Showing <span class="text-indigo-500">
+                            <%= projects.length %>
+                        </span> projects
+                    </p>
+                    <div class="flex gap-2">
+                        <button
+                            class="px-3 py-1.5 glass-card border-0 rounded-lg text-[10px] font-black uppercase tracking-widest text-gray-400 cursor-not-allowed"
+                            disabled>Prev</button>
+                        <button
+                            class="px-3 py-1.5 glass-card border-0 rounded-lg text-[10px] font-black uppercase tracking-widest text-gray-400 cursor-not-allowed"
+                            disabled>Next</button>
+                    </div>
+                </div>
+                <% } %>
     </div>
 </div>
+
+<script>
+    // Project search logic
+    document.getElementById('projectSearch')?.addEventListener('input', function (e) {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('tbody tr').forEach(row => {
+            const name = row.querySelector('h4').textContent.toLowerCase();
+            row.style.display = name.includes(term) ? '' : 'none';
+        });
+    });
+</script>

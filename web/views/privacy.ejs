@@ -1,138 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Inslash</title>
+    <title>Privacy Protocol - Inslash</title>
     <link href="/css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
-<body class="font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+<body class="font-sans antialiased bg-[#020617] text-slate-300 min-h-screen flex flex-col bg-grid">
 
     <%- include('partials/auth-navbar') %>
 
         <!-- Content -->
-        <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Privacy Policy</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">Last updated: February 17, 2026</p>
+        <main class="flex-grow max-w-[1000px] mx-auto px-6 sm:px-10 lg:px-16 py-32 relative z-10 w-full">
+            <header class="mb-24 gsap-reveal">
+                <div class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">Security Document
+                    01-P</div>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-[0.9]">
+                    Privacy <br />
+                    <span class="text-indigo-500">Protocol.</span>
+                </h1>
+                <p class="text-slate-500 text-xs font-black uppercase tracking-widest italic">Effective Specification:
+                    February 20, 2026</p>
+            </header>
 
-            <div class="prose dark:prose-invert max-w-none space-y-8">
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">1. Information We Collect</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-                        We collect information you provide directly to us when you create an account, use our services,
-                        or
-                        communicate with us. This includes:
-                    </p>
-                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2 ml-4">
-                        <li>Email address</li>
-                        <li>Account credentials (hashed and securely stored using Inslash)</li>
-                        <li>API keys and usage data</li>
-                        <li>Project information and settings</li>
-                    </ul>
+            <article class="space-y-24 gsap-reveal">
+                <section class="border-l-2 border-indigo-500/20 pl-10">
+                    <h2 class="text-2xl font-black text-white mb-6 uppercase tracking-widest text-[14px]">1. Information
+                        Ingestion</h2>
+                    <div
+                        class="prose prose-invert prose-slate max-w-none font-medium leading-relaxed text-slate-400 space-y-6">
+                        <p>We collect system-minimum metadata required for protocol stability. This includes
+                            cryptographic identities and operational logs telemetry.</p>
+                        <ul class="space-y-3 list-none p-0">
+                            <li class="flex items-center gap-3"><span
+                                    class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Account Credentials (SHA-512
+                                Encrypted)</li>
+                            <li class="flex items-center gap-3"><span
+                                    class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> API Authentication Tokens
+                            </li>
+                            <li class="flex items-center gap-3"><span
+                                    class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Transport Layer Telemetry
+                            </li>
+                        </ul>
+                    </div>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">2. How We Use Your Information
-                    </h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">We use the information we collect
-                        to:
-                    </p>
-                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2 ml-4">
-                        <li>Provide, maintain, and improve our services</li>
-                        <li>Authenticate your account and prevent fraud</li>
-                        <li>Send you technical notices and support messages</li>
-                        <li>Monitor and analyze usage patterns</li>
-                        <li>Respond to your comments and questions</li>
-                    </ul>
+                <section class="border-l-2 border-indigo-500/20 pl-10">
+                    <h2 class="text-2xl font-black text-white mb-6 uppercase tracking-widest text-[14px]">2.
+                        Cryptographic Security</h2>
+                    <div class="prose prose-invert prose-slate max-w-none font-medium leading-relaxed text-slate-400">
+                        <p>Inslash utilizes enterprise-grade Argon2id and SHA-512 hashing vectors. Every fragment of
+                            sensitive data is isolated within an immutable Passport string, featuring unique per-user
+                            salts and optional hardware-security peppering.</p>
+                    </div>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">3. Data Security</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        We take data security seriously. All passwords are hashed using Inslash with high iteration
-                        counts
-                        (100,000+), SHA-512 algorithm, automatic salting, and optional peppering. We use
-                        industry-standard
-                        security measures to protect your data.
-                    </p>
+                <section class="border-l-2 border-indigo-500/20 pl-10">
+                    <h2 class="text-2xl font-black text-white mb-6 uppercase tracking-widest text-[14px]">3. Data
+                        Sovereignty</h2>
+                    <div class="prose prose-invert prose-slate max-w-none font-medium leading-relaxed text-slate-400">
+                        <p>Your data is strictly confined to the Inslash ecosystem. We enforce a zero-sharing policy
+                            with third-party analytical or advertising networks. Decryption is mathematically impossible
+                            by design.</p>
+                    </div>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">4. Data Sharing</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        We do not sell, trade, or rent your personal information to third parties. We may share
-                        aggregated,
-                        anonymized data for analytics purposes. We may disclose your information if required by law or
-                        to
-                        protect our rights.
-                    </p>
+                <section class="border-l-2 border-indigo-500/20 pl-10">
+                    <h2 class="text-2xl font-black text-white mb-6 uppercase tracking-widest text-[14px]">4. Operational
+                        Persistence</h2>
+                    <div class="prose prose-invert prose-slate max-w-none font-medium leading-relaxed text-slate-400">
+                        <p>Metadata remains cached as long as the account remains active in the registry. Terminal
+                            account deletion triggers a total cryptographic purge of all associated identities within 72
+                            hours.</p>
+                    </div>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">5. Cookies and Tracking</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        We use cookies to maintain your session and remember your preferences (such as theme selection).
-                        We
-                        do not use cookies for advertising or third-party tracking.
-                    </p>
+                <section class="border-l-2 border-indigo-500/20 pl-10">
+                    <h2 class="text-2xl font-black text-white mb-6 uppercase tracking-widest text-[14px]">5. Protocol
+                        Adjustments</h2>
+                    <div class="prose prose-invert prose-slate max-w-none font-medium leading-relaxed text-slate-400">
+                        <p>We reserve the right to upgrade this protocol as security standards evolve. Significant
+                            shifts in cryptography will be broadcast via system-wide notifications.</p>
+                    </div>
                 </section>
+            </article>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">6. Data Retention</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        We retain your account information for as long as your account is active or as needed to provide
-                        you
-                        services. You may request deletion of your account at any time by contacting us.
-                    </p>
-                </section>
-
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">7. Your Rights</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">You have the right to:</p>
-                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2 ml-4">
-                        <li>Access your personal data</li>
-                        <li>Correct inaccurate data</li>
-                        <li>Request deletion of your data</li>
-                        <li>Export your data</li>
-                        <li>Opt-out of communications</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">8. Children's Privacy</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Our service is not intended for children under 13 years of age. We do not knowingly collect
-                        personal
-                        information from children under 13.
-                    </p>
-                </section>
-
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">9. Changes to Privacy Policy
-                    </h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        We may update this Privacy Policy from time to time. We will notify you of any changes by
-                        posting
-                        the new Privacy Policy on this page and updating the "Last updated" date.
-                    </p>
-                </section>
-
-                <section>
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">10. Contact Us</h2>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        If you have any questions about this Privacy Policy, please contact us through our GitHub
-                        repository
-                        or via email at privacy@inslash.com.
-                    </p>
-                </section>
-            </div>
+            <section class="mt-32 pt-24 border-t border-white/5 gsap-reveal">
+                <h3 class="text-sm font-black text-white uppercase tracking-widest mb-6 italic">Protocol Contact</h3>
+                <p class="text-slate-500 font-medium">For inquiries regarding the privacy specification, reach out via
+                    the secure channel: <a href="mailto:protocol@inslash.security"
+                        class="text-indigo-400 hover:text-indigo-300 underline underline-offset-4">protocol@inslash.security</a>
+                </p>
+            </section>
         </main>
 
         <%- include('partials/auth-footer') %>
 
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+            <script>
+                gsap.registerPlugin(ScrollTrigger);
+                document.addEventListener('DOMContentLoaded', () => {
+                    gsap.utils.toArray(".gsap-reveal").forEach((el) => {
+                        gsap.from(el, {
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 90%",
+                            },
+                            y: 30,
+                            opacity: 0,
+                            duration: 1,
+                            ease: "power4.out"
+                        });
+                    });
+                });
+            </script>
 </body>
 
 </html>

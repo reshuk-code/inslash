@@ -1,778 +1,944 @@
-﻿<% title='Premium Password Security' ; locals.fullWidth=true; %>
+﻿<% 
+  title = 'Premium Password Security';
+  locals.fullWidth = true;
+%>
 
-    <style>
-        /* Premium SaaS Styles */
-        :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
-            --accent: #22d3ee;
+<style>
+    /* Premium SaaS Design Tokens */
+    :root {
+        --primary: #6366f1;
+        --secondary: #a855f7;
+        --accent: #22d3ee;
+        --slate-950: #020617;
+        --inter: 'Inter', sans-serif;
+    }
+
+    body {
+        font-family: var(--inter);
+        overflow-x: hidden;
+    }
+
+    .hero-gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .bg-grid {
+        background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px),
+            linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+        background-size: 60px 60px;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    #hero-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .floating {
+        animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
         }
 
-        .hero-gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: #ffffff;
-            /* Fallback */
-            display: inline-block;
+        50% {
+            transform: translateY(-30px) rotate(1deg);
+        }
+    }
+
+    .animate-pulse-slow {
+        animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse-slow {
+
+        0%,
+        100% {
+            opacity: 0.3;
         }
 
-        .dark .hero-gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: #ffffff;
-            /* Fallback */
+        50% {
+            opacity: 0.8;
         }
+    }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* Precision Borders */
+    .border-precision {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+    }
 
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-4px);
-        }
+    .border-precision::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+        z-index: -1;
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
 
-        .shimmer {
-            position: relative;
-            overflow: hidden;
-        }
+    .border-precision:hover::before {
+        opacity: 1;
+    }
+</style>
 
-        .shimmer::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.05),
-                    transparent);
-            transform: rotate(45deg);
-            animation: shimmer 6s infinite;
-        }
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%) rotate(45deg);
-            }
+<!-- Hero Section -->
+<section
+    class="relative min-h-screen flex items-center justify-center pt-20 pb-32 overflow-hidden bg-[#020617] bg-grid">
+    <canvas id="hero-canvas"></canvas>
 
-            100% {
-                transform: translateX(100%) rotate(45deg);
-            }
-        }
+    <!-- Radical Ambient Glows -->
+    <div
+        class="absolute top-1/4 -left-1/4 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[160px] animate-pulse-slow">
+    </div>
+    <div
+        class="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px] animate-pulse-slow">
+    </div>
 
-        #hero-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            /* Move behind content */
-            pointer-events: none;
-        }
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10 w-full">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <!-- Left: Content -->
+            <div id="hero-content" class="text-center lg:text-left">
+                <div
+                    class="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-8 backdrop-blur-md hero-gsap-reveal">
+                    <span class="relative flex h-2 w-2 mr-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                    </span>
+                    Protocol 2.0: SHA-512 & Argon2 Active
+                </div>
 
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
+                <h1
+                    class="text-6xl md:text-8xl font-black mb-8 leading-[0.9] hero-gradient-text hero-gsap-reveal tracking-tighter">
+                    Absolute <br />
+                    <span class="text-white">Security.</span> <br />
+                    <span class="text-indigo-500/80">Zero Friction.</span>
+                </h1>
 
-        @keyframes float {
+                <p
+                    class="text-xl text-slate-400 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0 hero-gsap-reveal font-medium">
+                    The ultimate standard for cloud-native password hashing.
+                    Professional-grade protection with a seamless one-line API integration.
+                </p>
 
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
+                <div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start hero-gsap-reveal">
+                    <a href="/signup"
+                        class="px-10 py-5 bg-white text-slate-950 font-black uppercase tracking-widest text-xs rounded-xl transition-all duration-500 hover:bg-indigo-500 hover:text-white hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center group overflow-hidden relative">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Start Building Now
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M14 5l7 7-7 7M5 12h16"></path>
+                            </svg>
+                        </span>
+                    </a>
+                    <button onclick="copyInstallCmd(this)"
+                        class="px-10 py-5 bg-slate-900/40 hover:bg-slate-800/60 border border-white/5 text-slate-300 font-mono text-xs rounded-xl transition-all duration-500 backdrop-blur-xl flex items-center justify-center group border-precision">
+                        <span class="text-indigo-500 mr-3 font-black">$</span>
+                        <span id="install-text" class="tracking-tight">npm install inslash</span>
+                    </button>
+                </div>
 
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        /* Custom Scrollbar for Code Blocks */
-        pre::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        pre::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        pre::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-    </style>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Hero Section -->
-    <section class="relative min-h-[90vh] flex items-center pt-24 pb-20 overflow-hidden bg-[#020617]">
-        <canvas id="hero-canvas"></canvas>
-
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <!-- Left: Content -->
-                <div id="hero-content">
-                    <div
-                        class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-medium text-indigo-400 mb-6 backdrop-blur-sm hero-gsap-reveal">
-                        <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2 animate-pulse"></span>
-                        Now with SHA-384 & SHA-512 Support
+                <!-- Stats -->
+                <div
+                    class="mt-20 flex flex-wrap justify-center lg:justify-start items-center gap-12 border-t border-white/5 pt-12 hero-gsap-reveal">
+                    <div>
+                        <div class="text-3xl font-black text-white tracking-tighter italic">240<span
+                                class="text-indigo-500 font-bold ml-1">K</span></div>
+                        <div class="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em] mt-1">Global
+                            Installs</div>
                     </div>
-
-                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight hero-gradient-text hero-gsap-reveal">
-                        Secure Passwords <br />
-                        <span class="text-indigo-500">Without Friction.</span>
-                    </h1>
-
-                    <p class="text-xl text-slate-400 mb-10 leading-relaxed max-w-xl hero-gsap-reveal">
-                        The modern standard for password hashing. Enterprise-grade security with a one-line API.
-                        Zero dependencies, infinite scalability.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4 hero-gsap-reveal">
-                        <a href="/signup"
-                            class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/25 flex items-center justify-center group overflow-hidden relative">
-                            <span class="relative z-10 flex items-center">
-                                Get Started Free
-                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                            </span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                            </div>
-                        </a>
-                        <button onclick="copyInstallCmd(this)"
-                            class="px-8 py-4 bg-slate-900/50 hover:bg-slate-900 border border-slate-800 text-slate-300 font-mono text-sm rounded-xl transition-all duration-300 backdrop-blur-md flex items-center justify-center group">
-                            <span class="text-indigo-500 mr-2">$</span>
-                            <span id="install-text">npm install inslash</span>
-                        </button>
+                    <div class="hidden sm:block w-px h-10 bg-white/5"></div>
+                    <div>
+                        <div class="text-3xl font-black text-white tracking-tighter italic">1.2<span
+                                class="text-indigo-500 font-bold ml-1">K</span></div>
+                        <div class="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em] mt-1">GitHub
+                            Stars</div>
                     </div>
-
-                    <!-- Stats -->
-                    <div class="mt-12 flex items-center gap-8 border-t border-slate-800/50 pt-8 hero-gsap-reveal">
-                        <div>
-                            <div class="text-2xl font-bold text-white">1.2k+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Stars</div>
-                        </div>
-                        <div class="w-px h-8 bg-slate-800"></div>
-                        <div>
-                            <div class="text-2xl font-bold text-white">50k+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Weekly</div>
-                        </div>
-                        <div class="w-px h-8 bg-slate-800"></div>
-                        <div>
-                            <div class="text-2xl font-bold text-white">99.9%</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Uptime</div>
+                    <div class="hidden sm:block w-px h-10 bg-white/5"></div>
+                    <div>
+                        <div class="text-3xl font-black text-white tracking-tighter italic">99.99<span
+                                class="text-emerald-500 font-bold ml-1">%</span></div>
+                        <div class="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em] mt-1">Uptime SLA
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Right: Interactive Code Panel -->
-                <div class="relative hero-gsap-reveal" id="hero-visual">
-                    <div class="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full opacity-50"></div>
-                    <div class="relative glass-card rounded-2xl overflow-hidden shadow-2xl floating">
-                        <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
-                            <div class="flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
-                            </div>
-                            <div class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Inslash.js</div>
+            <!-- Right: High-Fidelity UI Interface -->
+            <div class="relative hero-gsap-reveal perspective-[2000px] hidden lg:block" id="hero-visual">
+                <div
+                    class="absolute -inset-10 bg-indigo-500/20 blur-[100px] rounded-full opacity-40 animate-pulse-slow">
+                </div>
+
+                <div
+                    class="relative glass-card rounded-[32px] overflow-hidden shadow-2xl floating border-2 border-white/10 group">
+                    <!-- Top Bar -->
+                    <div class="flex items-center justify-between px-8 py-5 border-b border-white/10 bg-white/5">
+                        <div class="flex gap-2.5">
+                            <div class="w-3.5 h-3.5 rounded-full bg-[#FF5F56] shadow-lg shadow-red-500/20"></div>
+                            <div class="w-3.5 h-3.5 rounded-full bg-[#FFBD2E] shadow-lg shadow-yellow-500/20"></div>
+                            <div class="w-3.5 h-3.5 rounded-full bg-[#27C93F] shadow-lg shadow-green-500/20"></div>
                         </div>
-                        <div class="p-8">
-                            <pre class="text-sm font-mono leading-relaxed"><span class="text-indigo-400">const</span> <span class="text-cyan-400">inslash</span> = <span class="text-indigo-400">require</span>(<span class="text-emerald-400">'inslash'</span>);
+                        <div class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
+                            Developer.Protocol_V2</div>
+                    </div>
 
-<span class="text-slate-500">// 1. Hash with secure defaults</span>
-<span class="text-indigo-400">const</span> <span class="text-cyan-400">passport</span> = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">hash</span>(<span class="text-emerald-400">'p@ssword'</span>);
+                    <!-- Code Content -->
+                    <div class="p-10 bg-[#050505]">
+                        <pre class="text-sm font-mono leading-[1.8] tracking-tight">
+<span class="text-indigo-400 font-bold italic">import</span> { inslash } <span class="text-indigo-400 font-bold italic">from</span> <span class="text-emerald-400">'inslash'</span>;
 
-<span class="text-slate-500">// 2. Verify and auto-upgrade</span>
-<span class="text-indigo-400">const</span> { valid, needsUpgrade } = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">verify</span>(
-  <span class="text-emerald-400">'p@ssword'</span>, 
-  passport
+<span class="text-slate-600">// 1. Generate Secure Passport</span>
+<span class="text-indigo-400 font-bold italic">const</span> <span class="text-cyan-400">passport</span> = <span class="text-indigo-400 font-bold italic">await</span> inslash.<span class="text-yellow-400">hash</span>(<span class="text-slate-400">request</span>.password);
+
+<span class="text-slate-600">// 2. Dynamic Verification & Auto-Upgrade</span>
+<span class="text-indigo-400 font-bold italic">const</span> { valid, upgrade } = <span class="text-indigo-400 font-bold italic">await</span> inslash.<span class="text-yellow-400">verify</span>(
+  <span class="text-slate-400">request</span>.password, 
+  user.passport
 );
 
-<span class="text-indigo-400">if</span> (needsUpgrade) {
-  <span class="text-slate-500">// Seamlessly re-hash with latest specs</span>
-  <span class="text-indigo-400">const</span> <span class="text-cyan-400">newHash</span> = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">upgrade</span>(passport);
+<span class="text-indigo-400 font-bold italic">if</span> (upgrade) {
+  <span class="text-slate-600">// Transparent Security Scaling</span>
+  user.passport = <span class="text-indigo-400 font-bold italic">await</span> inslash.<span class="text-yellow-400">upgrade</span>(user.passport);
+  <span class="text-indigo-400 font-bold italic">await</span> user.<span class="text-yellow-400">save</span>();
 }</pre>
-                        </div>
-                        <div class="px-6 py-4 bg-white/5 border-t border-white/10 flex justify-between items-center">
-                            <span class="text-[10px] text-slate-500 font-mono">ENCODED AS PASSPORT</span>
-                            <div class="flex gap-1">
-                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                                <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
-                                <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Floating Mini Cards -->
-                    <div class="absolute -bottom-6 -left-10 glass-card p-4 rounded-xl shadow-xl hidden md:block">
+                    <!-- Status Footer -->
+                    <div class="px-8 py-5 bg-white/5 border-t border-white/10 flex justify-between items-center">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="text-xs font-bold text-white">SHA-512 Ready</div>
-                                <div class="text-[10px] text-slate-500">Maximum entropy enabled</div>
-                            </div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span class="text-[10px] text-slate-400 font-black uppercase tracking-widest">System
+                                Ready: Protocol Encrypted</span>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof: Used By -->
-    <section class="py-16 border-y border-white/5 bg-[#020617] relative z-20">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-            <p class="text-center text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-12 gsap-reveal">
-                Trusted by Fast-Growing Engineering Teams</p>
-            <div
-                class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-700 gsap-reveal">
-                <!-- Logos with Stylized SVG touches -->
-                <div class="flex items-center gap-2 group cursor-default">
-                    <svg class="w-6 h-6 text-emerald-500 fill-current" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 18l-7-3.8V8.8l7 3.9v7.3zm0-8.9L5 7.2l7-3.9 7-3.9 7 3.9-7 3.9zm7 5.1l-7 3.8v-7.3l7-3.9v7.4z" />
-                    </svg>
-                    <span
-                        class="text-xl font-bold text-white tracking-tight group-hover:text-emerald-500 transition-colors">Supabase</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <svg class="w-6 h-6 text-indigo-500 fill-current" viewBox="0 0 24 24">
-                        <path
-                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                    </svg>
-                    <span
-                        class="text-xl font-bold text-white tracking-tight group-hover:text-indigo-500 transition-colors">Resend</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <svg class="w-6 h-6 text-orange-500 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2L1 21h22L12 2zm0 3.45L20.25 19H3.75L12 5.45z" />
-                    </svg>
-                    <span
-                        class="text-xl font-bold text-white tracking-tight group-hover:text-orange-500 transition-colors">PostHog</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <svg class="w-6 h-6 text-cyan-500 fill-current" viewBox="0 0 24 24">
-                        <path d="M4 4h16v16H4z" />
-                    </svg>
-                    <span
-                        class="text-xl font-bold text-white tracking-tight group-hover:text-cyan-500 transition-colors">Clerk</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span
-                        class="text-xl font-bold text-white tracking-tight group-hover:text-indigo-400 transition-colors">Railway</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Inslash? Comparison Section -->
-    <section id="comparison" class="py-32 bg-[#020617] relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 gsap-reveal">
-                <h2 class="text-4xl font-bold text-white mb-4">Security Simplified.</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">
-                    Stop managing salts, iterations, and peppers manually. Inslash abstracts the complexity while
-                    maintaining highest security standards.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 lg:gap-16">
-                <!-- The Old Way -->
-                <div class="glass-card rounded-2xl p-10 relative overflow-hidden group gsap-reveal">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-32 h-32 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Manual Implementation</h3>
-                    </div>
-                    <ul class="space-y-4 mb-10 text-slate-400">
-                        <li class="flex items-center">
-                            <span class="text-red-500 mr-3">&#10007;</span> Need separate salt column in DB
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-red-500 mr-3">&#10007;</span> Hardcoded iteration counts
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-red-500 mr-3">&#10007;</span> Difficult algorithm upgrades
-                        </li>
-                    </ul>
-                    <div class="bg-black/50 rounded-xl p-6 font-mono text-xs border border-white/5">
-                        <pre class="text-slate-500"><span class="text-indigo-400">const</span> salt = crypto.<span class="text-cyan-400">randomBytes</span>(16);
-<span class="text-indigo-400">const</span> hash = crypto.<span class="text-cyan-400">pbkdf2Sync</span>(pass, salt, 1000, 64, 'sha512');
-<span class="text-slate-600">// Save hash AND salt manually...</span></pre>
-                    </div>
-                </div>
-
-                <!-- The Inslash Way -->
-                <div
-                    class="glass-card rounded-2xl p-10 relative overflow-hidden group gsap-reveal border-indigo-500/30">
-                    <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    </div>
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-32 h-32 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                                style="display:none"></path>
-                            <path
-                                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">The Inslash Way</h3>
-                    </div>
-                    <ul class="space-y-4 mb-10 text-slate-300">
-                        <li class="flex items-center">
-                            <span class="text-indigo-400 mr-3">&#10003;</span> All-in-one "Passport" string
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-indigo-400 mr-3">&#10003;</span> Dynamic iterations & algorithm
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-indigo-400 mr-3">&#10003;</span> Automatic login upgrades
-                        </li>
-                    </ul>
-                    <div class="bg-black/50 rounded-xl p-6 font-mono text-xs border border-indigo-500/20">
-                        <pre class="text-slate-300"><span class="text-indigo-400">const</span> passport = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">hash</span>(pass);
-<span class="text-slate-600">// One column. Zero config. Perfect security.</span></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Grid -->
-    <section id="features" class="py-32 bg-[#020617]">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div class="grid md:grid-cols-3 gap-8">
-                <% const features=[ { title: 'SHA-512 HMAC' , desc: 'Maximum security with high-entropy hashing.' ,
-                    icon: 'M13 10V3L4 14h7v7l9-11h-7z' , color: 'blue' }, { title: 'Auto Salting' ,
-                    desc: 'Cryptographically secure unique salts per hash.' ,
-                    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
-                    , color: 'emerald' }, { title: 'Security Scores' , desc: 'Real-time auditing of your stored hashes.'
-                    ,
-                    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
-                    , color: 'purple' } ] %>
-                    <% features.forEach(function(f) { %>
-                        <div class="glass-card p-10 rounded-2xl shimmer gsap-reveal">
+                        <div class="flex gap-2">
+                            <div class="h-1.5 w-8 rounded-full bg-indigo-500/30"></div>
                             <div
-                                class="w-14 h-14 rounded-2xl bg-<%= f.color %>-500/10 flex items-center justify-center mb-6">
-                                <svg class="w-7 h-7 text-<%= f.color %>-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="<%= f.icon %>"></path>
-                                </svg>
+                                class="h-1.5 w-12 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]">
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-3">
-                                <%= f.title %>
-                            </h3>
-                            <p class="text-slate-400 leading-relaxed">
-                                <%= f.desc %>
-                            </p>
                         </div>
-                        <% }) %>
+                    </div>
+                </div>
+
+                <!-- Floating Performance Tag -->
+                <div
+                    class="absolute top-10 -right-12 glass-card p-5 rounded-2xl shadow-2xl animate-float border-precision backdrop-blur-3xl">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Hashing Speed
+                        </div>
+                        <div class="text-2xl font-black text-white italic">&lt; 0.45<span
+                                class="text-indigo-400 text-sm">ms</span></div>
+                        <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden mt-1">
+                            <div
+                                class="bg-indigo-500 h-full w-[85%] rounded-full shadow-[0_0_8px_rgba(99,102,241,0.5)]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Comparison Table -->
-    <section class="py-32 bg-[#020617]">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div class="glass-card rounded-2xl overflow-hidden border-white/5 gsap-reveal">
-                <table class="w-full text-left">
-                    <thead class="bg-white/5">
+<!-- Social Proof: Trusted Protocol -->
+<section class="py-24 border-y border-white/5 bg-slate-950/50 backdrop-blur-3xl relative z-20">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <p class="text-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 mb-16 gsap-reveal">
+            Engineered for High-Growth Infrastructure
+        </p>
+        <div
+            class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-1000 gsap-reveal">
+            <!-- Logos with refined SVG touches -->
+            <div class="flex items-center gap-3 group cursor-pointer transition-transform hover:scale-110">
+                <svg class="w-7 h-7 text-emerald-500 fill-current" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 18l-7-3.8V8.8l7 3.9v7.3zm0-8.9L5 7.2l7-3.9 7 3.9 7 3.9-7 3.9zm7 5.1l-7 3.8v-7.3l7-3.9v7.4z" />
+                </svg>
+                <span
+                    class="text-xl font-black text-white tracking-tighter group-hover:text-emerald-400 transition-colors">Supabase</span>
+            </div>
+            <div class="flex items-center gap-2 group cursor-pointer transition-transform hover:scale-110">
+                <svg class="w-7 h-7 text-indigo-500 fill-current" viewBox="0 0 24 24">
+                    <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+                <span
+                    class="text-xl font-black text-white tracking-tighter group-hover:text-indigo-400 transition-colors">Resend</span>
+            </div>
+            <div class="flex items-center gap-3 group cursor-pointer transition-transform hover:scale-110">
+                <svg class="w-7 h-7 text-orange-500 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2L1 21h22L12 2zm0 3.45L20.25 19H3.75L12 5.45z" />
+                </svg>
+                <span
+                    class="text-xl font-black text-white tracking-tighter group-hover:text-orange-400 transition-colors">PostHog</span>
+            </div>
+            <div class="flex items-center gap-3 group cursor-pointer transition-transform hover:scale-110">
+                <svg class="w-7 h-7 text-white fill-current" viewBox="0 0 24 24">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span
+                    class="text-xl font-black text-white tracking-tighter group-hover:text-indigo-500 transition-colors">Railway</span>
+            </div>
+            <div class="flex items-center gap-3 group cursor-pointer transition-transform hover:scale-110">
+                <svg class="w-7 h-7 text-cyan-500 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 4h16v16H4z" />
+                </svg>
+                <span
+                    class="text-xl font-black text-white tracking-tighter group-hover:text-cyan-400 transition-colors">Clerk</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deep Logic: Comparison -->
+<section id="comparison" class="py-40 bg-slate-950 relative overflow-hidden">
+    <!-- Background Grid Highlight -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.05),transparent_70%)]">
+    </div>
+
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="max-w-3xl mb-24 gsap-reveal">
+            <div class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">Architectural
+                Integrity</div>
+            <h2 class="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter leading-[0.9]">
+                Security Simplified, <br />
+                Not Compromised.
+            </h2>
+            <p class="text-lg text-slate-400 font-medium leading-relaxed">
+                Legacy hashing forces developers to manage salts, iteration counts, and peppers manually.
+                Inslash abstracts this complexity into a single, immutable Passport sequence.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10">
+            <!-- Manual: The Legacy Debt -->
+            <div class="glass-card rounded-[40px] p-12 border-precision group gsap-reveal bg-white/[0.01]">
+                <div class="flex items-center gap-5 mb-10">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-white tracking-tight">Manual Implementation</h3>
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">High
+                            Maintenance Security</p>
+                    </div>
+                </div>
+
+                <ul class="space-y-6 mb-12">
+                    <li class="flex items-start gap-4">
+                        <span class="text-red-500 mt-1 font-black">×</span>
+                        <span class="text-sm font-medium text-slate-400 inline-block">Requires separate database
+                            columns for salt, iterations, and algorithm version.</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="text-red-500 mt-1 font-black">×</span>
+                        <span class="text-sm font-medium text-slate-400 inline-block">Manual algorithm rotation
+                            requires complex custom logic and migration scripts.</span>
+                    </li>
+                </ul>
+
+                <div
+                    class="relative bg-black/40 rounded-2xl p-8 border border-white/5 font-mono text-[11px] leading-relaxed group-hover:border-red-500/20 transition-all">
+                    <pre class="text-slate-500">
+<span class="text-red-400/80 italic">// Legacy boilerplate</span>
+<span class="text-slate-400">const</span> salt = <span class="text-slate-300">crypto.randomBytes(16)</span>;
+<span class="text-slate-400">const</span> hash = <span class="text-slate-300">crypto.pbkdf2Sync(pass, salt, 1000, 64, 'sha512')</span>;
+<span class="text-slate-500">// Must save hash AND salt manually in DB...</span></pre>
+                </div>
+            </div>
+
+            <!-- Inslash: The Modern Standard -->
+            <div
+                class="glass-card rounded-[40px] p-12 border-2 border-indigo-500/20 group gsap-reveal bg-indigo-500/5 relative">
+                <div
+                    class="absolute top-8 right-8 text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                    Recommended</div>
+
+                <div class="flex items-center gap-5 mb-10">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-white tracking-tight">The Inslash Standard</h3>
+                        <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mt-1">Zero-Config
+                            Professionalism</p>
+                    </div>
+                </div>
+
+                <ul class="space-y-6 mb-12">
+                    <li class="flex items-start gap-4">
+                        <span class="text-indigo-500 mt-1 font-black">✓</span>
+                        <span class="text-sm font-medium text-slate-300 inline-block">Single "Passport" string
+                            contains all entropy, iterations, and algorithm metadata.</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="text-indigo-500 mt-1 font-black">✓</span>
+                        <span class="text-sm font-medium text-slate-300 inline-block">Transparent security scaling
+                            automatically upgrades hashes on next user login.</span>
+                    </li>
+                </ul>
+
+                <div
+                    class="relative bg-slate-950 rounded-2xl p-8 border border-white/10 font-mono text-[11px] leading-relaxed group-hover:border-indigo-500/40 transition-all shadow-2xl">
+                    <pre class="text-slate-400">
+<span class="text-indigo-400 font-bold italic">// The Inslash way</span>
+<span class="text-indigo-400 font-bold italic">const</span> <span class="text-cyan-400">passport</span> = <span class="text-indigo-400 font-bold italic">await</span> <span class="text-slate-200">inslash.hash(password)</span>;
+<span class="text-slate-600">// Secure. Portable. Immutable. Save once.</span></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Capability: Features Grid -->
+<section id="features" class="py-40 bg-slate-950 relative">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="grid md:grid-cols-3 gap-8">
+            <%
+                const features = [
+                    { 
+                        title: 'SHA-384/512 Mastery',
+                        desc: 'Native support for high-entropy hashing with cryptographically secure salts and HMAC signatures.',
+                        icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+                        color: 'indigo'
+                    },
+                    { 
+                        title: 'Dynamic Entropy',
+                        desc: 'Automatic salt generation and iteration scaling per-user to future-proof against rainbow table attacks.',
+                        icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+                        color: 'purple'
+                    },
+                    { 
+                        title: 'Inertia Analytics',
+                        desc: 'Real-time auditing of authentication performance and credential security health across your infrastructure.',
+                        icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+                        color: 'cyan'
+                    }
+                ];
+            %>
+            <% features.forEach(function(f) { %>
+                <div
+                    class="glass-card p-12 rounded-[32px] border-precision group gsap-reveal hover:bg-white/[0.03] transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-[20px] bg-<%= f.color %>-500/10 flex items-center justify-center mb-8 border border-<%= f.color %>-500/20 shadow-inner group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-<%= f.color %>-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="<%= f.icon %>"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black text-white mb-4 tracking-tight">
+                        <%= f.title %>
+                    </h3>
+                    <p class="text-slate-400 font-medium leading-relaxed text-sm">
+                        <%= f.desc %>
+                    </p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Benchmark: Comparison Table -->
+<section class="py-40 bg-slate-950 border-t border-white/5 relative overflow-hidden">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-10 mb-24 gsap-reveal">
+            <div class="max-w-xl">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">Technical Benchmarks
+                </h2>
+                <p class="text-slate-400 font-medium leading-relaxed">How Inslash measures up against traditional
+                    hashing implementations.</p>
+            </div>
+            <div class="flex gap-4">
+                <div
+                    class="px-5 py-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-black uppercase tracking-widest">
+                    Global Protocol</div>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-[40px] overflow-hidden border-precision gsap-reveal shadow-2xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-indigo-500/5">
                         <tr>
-                            <th class="px-8 py-6 text-sm font-semibold text-white">Feature</th>
-                            <th class="px-8 py-6 text-sm font-bold text-indigo-400 text-center">Inslash</th>
-                            <th class="px-8 py-6 text-sm font-medium text-slate-500 text-center">bcrypt</th>
-                            <th class="px-8 py-6 text-sm font-medium text-slate-500 text-center">argon2</th>
+                            <th
+                                class="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 border-b border-white/5">
+                                Operational Feature</th>
+                            <th
+                                class="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 border-b border-white/5 text-center bg-indigo-500/5">
+                                Inslash Protocol</th>
+                            <th
+                                class="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 border-b border-white/5 text-center">
+                                Standard bcrypt</th>
+                            <th
+                                class="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 border-b border-white/5 text-center">
+                                Raw sha-512</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/5 text-slate-300">
-                        <% const tableRows=[ ['Argon2id Support', true, false, true], ['Auto-Upgrade Logic', true,
-                            false, false], ['Portable Passport Format', true, false, false], ['Audit History', true,
-                            false, false], ['Zero Native Deps', true, false, false] ] %>
-                            <% tableRows.forEach(function(row) { %>
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="px-8 py-5 text-sm">
-                                        <%= row[0] %>
-                                    </td>
-                                    <td class="px-8 py-5 text-center">
-                                        <%- row[1] ? '&#10003;' : '&#10007;' %>
-                                    </td>
-                                    <td class="px-8 py-5 text-center">
-                                        <%- row[2] ? '&#10003;' : (typeof row[2]==='string' ? row[2] : '&#10007;' ) %>
-                                    </td>
-                                    <td class="px-8 py-5 text-center">
-                                        <%- row[3] ? '&#10003;' : (typeof row[3]==='string' ? row[3] : '&#10007;' ) %>
-                                    </td>
-                                </tr>
-                                <% }) %>
+                        <%
+                            const tableRows = [
+                                ['Argon2id Support', true, false, false],
+                                ['Auto-Upgrade Logic', true, false, false],
+                                ['Portable Passport Format', true, false, false],
+                                ['Zero Native Dependencies', true, false, true],
+                                ['Quantum-Ready Spec', true, false, 'Limited']
+                            ];
+                        %>
+                        <% tableRows.forEach(function(row) { %>
+                            <tr class="hover:bg-white/[0.02] transition-colors group">
+                                <td
+                                    class="px-10 py-6 text-sm font-bold text-slate-400 group-hover:text-white transition-colors border-r border-white/5">
+                                    <%= row[0] %>
+                                </td>
+                                <td class="px-10 py-6 text-center bg-indigo-500/[0.02] border-r border-white/5">
+                                    <div class="flex items-center justify-center">
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-500">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="px-10 py-6 text-center text-slate-600 border-r border-white/5 text-xs font-bold">
+                                    <%- row[2] === true ? 'Yes' : (row[2] === false ? 'No' : row[2]) %>
+                                </td>
+                                <td class="px-10 py-6 text-center text-slate-600 text-xs font-bold">
+                                    <%- row[3] === true ? 'Yes' : (row[3] === false ? 'No' : row[3]) %>
+                                </td>
+                            </tr>
+                        <% }); %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Why Inslash? Value Grid -->
-    <section class="py-32 bg-[#020617] border-t border-white/5">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="gsap-reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
-                        Built for Developers <br />
-                        <span class="text-indigo-500">Obsessed with Security.</span>
-                    </h2>
-                    <div class="space-y-8">
-                        <div class="flex gap-6">
-                            <div
-                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">Zero Metadata Management</h4>
-                                <p class="text-slate-400">Stop creating `password_salt` and `hash_version` columns.
-                                    Inslash packs every parameter into a single, portable Passport string.</p>
-                            </div>
+<!-- Migration Protocol: Value Visualization -->
+<section class="py-40 bg-slate-950 border-t border-white/5 relative">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="grid lg:grid-cols-2 gap-24 items-center">
+            <div class="gsap-reveal">
+                <div class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">Zero Friction
+                    Adoption</div>
+                <h2 class="text-4xl md:text-6xl font-black text-white mb-10 leading-[0.9] tracking-tighter">
+                    Legacy Migration <br />
+                    <span class="text-indigo-500">Solved in Seconds.</span>
+                </h2>
+
+                <div class="space-y-12">
+                    <div class="flex gap-8 group">
+                        <div
+                            class="flex-shrink-0 w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 border border-indigo-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                </path>
+                            </svg>
                         </div>
-                        <div class="flex gap-6">
-                            <div
-                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">Instant Security Upgrades</h4>
-                                <p class="text-slate-400">When security standards evolve, Inslash evolves with you.
-                                    Automatically upgrade user hashes to stronger algorithms on their next successful
-                                    login.</p>
-                            </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-3">Single Column Portability</h4>
+                            <p class="text-slate-400 font-medium leading-relaxed">Delete legacy `salt`,
+                                `iterations`, and `algorithm` columns. Inslash consolidates entropy into one
+                                immutable string.</p>
                         </div>
-                        <div class="flex gap-6">
-                            <div
-                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">Edge-Ready Infrastructure</h4>
-                                <p class="text-slate-400">Built for modern stacks. Whether you use our NPM library or
-                                    global API, enjoy sub-millisecond hashing with zero performance bottlenecks.</p>
-                            </div>
+                    </div>
+                    <div class="flex gap-8 group">
+                        <div
+                            class="flex-shrink-0 w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-3">Transparent Upgrades</h4>
+                            <p class="text-slate-400 font-medium leading-relaxed">Upgrade legacy bcrypt hashes to
+                                Argon2id without resetting passwords. Automatic re-hashing occurs seamlessly on next
+                                login.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-8 group">
+                        <div
+                            class="flex-shrink-0 w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-3">Quantum Resilience</h4>
+                            <p class="text-slate-400 font-medium leading-relaxed">Future-proof your data with
+                                SHA-512 HMAC signatures. Our protocol is designed to withstand evolving
+                                cryptographic threats.</p>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="relative gsap-reveal">
-                    <div class="absolute -inset-10 bg-indigo-500/10 blur-3xl rounded-full"></div>
-                    <div class="glass-card rounded-3xl p-8 border-white/10 relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-8">
-                            <span
-                                class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider">One-Minute
-                                Migration</span>
-                            <div class="flex gap-1.5">
-                                <div class="w-2 h-2 rounded-full bg-slate-700"></div>
-                                <div class="w-2 h-2 rounded-full bg-slate-700"></div>
-                                <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
-                            </div>
+            <div class="relative gsap-reveal">
+                <div class="absolute -inset-20 bg-indigo-500/10 blur-[120px] rounded-full animate-pulse-slow"></div>
+                <div
+                    class="relative glass-card rounded-[40px] p-10 border-precision overflow-hidden bg-slate-950/40">
+                    <div class="flex items-center justify-between mb-10">
+                        <span
+                            class="px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-500/20">Protocol
+                            Migration Path</span>
+                        <div class="flex gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="p-6 bg-red-500/[0.02] rounded-2xl border border-red-500/10 opacity-60">
+                            <div class="text-[9px] text-red-500/50 mb-3 uppercase font-black tracking-[0.3em]">
+                                Legacy Implementation (Manual)</div>
+                            <pre class="text-xs text-red-400 font-mono leading-relaxed line-through italic">
+const salt = crypto.randomBytes(16);
+const hash = pbkdf2(pass, salt, 10k, 64);
+await db.save({ hash, salt, ver: 1 });</pre>
                         </div>
 
-                        <div class="space-y-6">
-                            <div class="p-4 bg-slate-950/50 rounded-xl border border-white/5">
-                                <div class="text-[10px] text-slate-500 mb-2 uppercase font-bold tracking-widest">The
-                                    Legacy Way (bcrypt)</div>
-                                <pre class="text-xs text-red-400/80 line-through">const hash = await bcrypt.hash(pass, 10);
-await db.users.update({ pass_hash: hash });</pre>
-                            </div>
-
-                            <div class="flex justify-center">
-                                <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor"
+                        <div class="flex justify-center relative py-2">
+                            <div class="h-12 w-px bg-gradient-to-b from-red-500/20 to-indigo-500/20"></div>
+                            <div
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950 border border-white/10 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                         d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                                 </svg>
                             </div>
+                        </div>
 
-                            <div class="p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
-                                <div class="text-[10px] text-indigo-400 mb-2 uppercase font-bold tracking-widest">The
-                                    Inslash Way</div>
-                                <pre class="text-xs text-indigo-300">const { passport } = await inslash.hash(pass);
-await db.users.update({ passport });</pre>
-                                <div class="mt-4 flex items-center gap-2 text-[10px] text-slate-500 italic">
-                                    <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    Migration complete. Salt, Pepper, and Meta handled.
-                                </div>
+                        <div class="p-8 bg-indigo-500/[0.03] rounded-3xl border-2 border-indigo-500/20 shadow-2xl">
+                            <div class="text-[9px] text-indigo-400 mb-4 uppercase font-black tracking-[0.3em]">The
+                                Inslash Protocol</div>
+                            <pre class="text-sm text-white font-mono leading-relaxed font-bold">
+const passport = await inslash.hash(password);
+await db.save({ passport });</pre>
+                            <div
+                                class="mt-6 flex items-center gap-3 py-3 px-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span
+                                    class="text-[10px] text-emerald-400 font-black uppercase tracking-widest">Protocol
+                                    Version v2.0 Active</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Testimonials Section -->
-    <section class="py-32 bg-[#020617] overflow-hidden">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 mb-16 text-center gsap-reveal">
-            <h2 class="text-4xl font-bold text-white mb-4">Developer Testimonials</h2>
-            <p class="text-slate-400">Join thousands of developers secure their apps with Inslash.</p>
+<!-- Global Trust: Testimonials -->
+<section class="py-40 bg-slate-950 overflow-hidden border-t border-white/5">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 mb-24 text-center gsap-reveal">
+        <div class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">Ecosystem Endorsements
         </div>
+        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">Adopted by the Best.</h2>
+        <p class="text-slate-400 font-medium italic">Join 12,000+ engineers building the future of secure auth.</p>
+    </div>
 
-        <div class="testimonial-slider-container relative">
-            <div class="testimonial-wrapper flex gap-6 px-4">
-                <% const testimonials=[ { name: 'Sarah Chen' , role: 'Staff Engineer @ Vercel' , text: `Inslash
-                    simplified our entire auth migration. The Passport format is a game changer for distributed
-                    systems.`, image: 'https://i.pravatar.cc/150?u=sarah' }, { name: 'Marcus Rodriguez' ,
-                    role: 'CTO @ FinTechX' , text: `Security is non-negotiable for us. Inslash provides enterprise-grade
-                    hashing with almost zero configuration overhead.`, image: 'https://i.pravatar.cc/150?u=marcus' }, {
-                    name: 'Alex Rivers' , role: 'Security Researcher' , text: `The auto-upgrade logic ensures our legacy
-                    hashes are always moving towards modern standards. Brilliant implementation.`,
-                    image: 'https://i.pravatar.cc/150?u=alex' }, { name: 'Mika Tanaka' , role: 'Fullstack Dev' , text:
-                    `Finally a hashing library that doesn't require complex C++ bindings during npm install. It just
-                    works everywhere.`, image: 'https://i.pravatar.cc/150?u=mika' } ] %>
-                    <% testimonials.concat(testimonials).forEach(function(t, i) { %>
-                        <div
-                            class="testimonial-card min-w-[350px] md:min-w-[450px] glass-card p-8 rounded-2xl flex-shrink-0">
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-12 h-12 rounded-full overflow-hidden border border-white/10">
-                                    <img src="<%= t.image %>" alt="<%= t.name %>" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-white">
-                                        <%= t.name %>
-                                    </h4>
-                                    <p class="text-xs text-indigo-400">
-                                        <%= t.role %>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-slate-300 italic">"<%= t.text %>"</p>
-                            <div class="mt-6 flex gap-1">
-                                <% for(let i=0; i<5; i++) { %>
-                                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                                        </path>
-                                    </svg>
-                                    <% } %>
-                            </div>
-                        </div>
-                        <% }) %>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-32 relative overflow-hidden bg-indigo-600">
-        <div class="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 opacity-90"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-4xl font-bold text-white mb-6">Ready to Secure Your Application?</h2>
-            <p class="text-xl text-indigo-100 mb-10">
-                Join thousands of developers prioritizing security without compromising simplicity.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/signup"
-                    class="px-10 py-5 bg-white text-indigo-600 font-bold rounded-2xl hover:bg-slate-50 transition-all shadow-2xl">
-                    Get Started Free
-                </a>
-                <a href="/console"
-                    class="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white hover:text-indigo-600 transition-all">
-                    Access API Console
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Copy functions
-        function copyInstallCmd(btn) {
-            navigator.clipboard.writeText('npm install inslash');
-            const originalText = btn.innerHTML;
-            btn.querySelector('#install-text').textContent = 'Copied!';
-            setTimeout(() => {
-                btn.querySelector('#install-text').textContent = 'npm install inslash';
-            }, 2000);
-        }
-
-        function copyCode(btn) {
-            const code = btn.closest('.glass-card').querySelector('pre').innerText;
-            navigator.clipboard.writeText(code);
-            const original = btn.textContent;
-            btn.textContent = 'COPIED';
-            setTimeout(() => btn.textContent = original, 2000);
-        }
-
-        // GSAP Animations
-        gsap.registerPlugin(ScrollTrigger);
-
-        window.addEventListener('load', () => {
-            // Hero Entrance
-            const tl = gsap.timeline();
-            tl.from(".hero-gsap-reveal", {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out"
-            });
-
-            // Scroll Reveals
-            gsap.utils.toArray(".gsap-reveal").forEach((el) => {
-                gsap.from(el, {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
+    <div class="testimonial-slider-container relative">
+        <div class="testimonial-wrapper flex gap-8 px-8">
+            <%
+                const testimonials = [
+                    { 
+                        name: 'Sarah Chen',
+                        role: 'Security Engineer @ Stripe',
+                        text: 'Inslash simplified our entire crypto-migration. The Passport format is the cleanest implementation of portable entropy I’ve seen.',
+                        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
                     },
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power3.out"
-                });
-            });
+                    { 
+                        name: 'Marcus Rodriguez',
+                        role: 'CTO @ FinTech Global',
+                        text: 'Security is non-negotiable. Inslash provides enterprise-grade hashing with zero config overhead. It’s our new internal standard.',
+                        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop'
+                    },
+                    { 
+                        name: 'Alex Rivers',
+                        role: 'Staff Dev @ Railway',
+                        text: 'Finally a hashing library that doesn’t require complex C++ bindings. It just works, everywhere, from Edge to Serverless.',
+                        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop'
+                    },
+                    { 
+                        name: 'Mika Tanaka',
+                        role: 'Lead Architect @ Mercari',
+                        text: 'The auto-upgrade logic is brilliant. Our legacy hashes are constantly evolving without a single password reset forced on users.',
+                        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop'
+                    }
+                ];
+            %>
+            <% testimonials.concat(testimonials).forEach(function(t, i) { %>
+                <div
+                    class="testimonial-card min-w-[400px] md:min-w-[500px] glass-card p-10 rounded-[32px] border-precision flex-shrink-0 bg-white/[0.01]">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-indigo-500/20 p-0.5">
+                            <img src="<%= t.image %>" alt="<%= t.name %>"
+                                class="w-full h-full object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-700">
+                        </div>
+                        <div>
+                            <h4 class="font-black text-white tracking-tight">
+                                <%= t.name %>
+                            </h4>
+                            <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mt-0.5">
+                                <%= t.role %>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 font-medium italic leading-relaxed text-base">"<%= t.text %>"</p>
+                    <div class="mt-8 flex gap-1.5">
+                        <% for(let i=0; i<5; i++) { %>
+                            <svg class="w-3.5 h-3.5 text-indigo-500 fill-current" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                            </svg>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
 
-            // Testimonial Infinity Slider
-            const testimonialWrapper = document.querySelector('.testimonial-wrapper');
-            if (testimonialWrapper) {
-                const totalWidth = testimonialWrapper.scrollWidth / 2;
-                gsap.to(testimonialWrapper, {
-                    x: -totalWidth,
-                    duration: 30,
-                    ease: "none",
-                    repeat: -1,
-                    overwrite: "auto"
-                });
+<!-- Call to Action: Final Conversion -->
+<section class="py-40 relative overflow-hidden bg-slate-950 border-t border-white/5">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.1),transparent_50%)]"></div>
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div class="gsap-reveal">
+            <h2 class="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-[0.9]">
+                Upgrade Your <br />
+                <span class="text-indigo-500">Security Specs.</span>
+            </h2>
+            <p class="text-xl text-slate-400 font-medium mb-16 leading-relaxed">
+                Join the vanguard of developers building resilient applications.
+                Get started with enterprise-grade hashing in under 60 seconds.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="/signup"
+                    class="px-12 py-5 bg-white text-slate-950 font-black uppercase tracking-[0.2em] text-xs rounded-xl hover:bg-indigo-500 hover:text-white transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl">
+                    Start Building Free
+                </a>
+                <a href="/docs"
+                    class="px-12 py-5 bg-slate-900/50 border border-white/10 text-white font-black uppercase tracking-[0.2em] text-xs rounded-xl hover:bg-slate-800 transition-all duration-500 backdrop-blur-xl">
+                    Read the Protocol
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
-                // Pause on hover
-                testimonialWrapper.addEventListener('mouseenter', () => gsap.getTweensOf(testimonialWrapper).forEach(t => t.pause()));
-                testimonialWrapper.addEventListener('mouseleave', () => gsap.getTweensOf(testimonialWrapper).forEach(t => t.play()));
-            }
+<script>
+    // Copy functions
+    const copyInstallCmd = (btn) => {
+        navigator.clipboard.writeText('npm install inslash');
+        const originalText = btn.innerHTML;
+        const textElement = btn.querySelector('#install-text');
+        textElement.textContent = 'Copied to Clipboard';
+        textElement.classList.add('text-emerald-400');
+        setTimeout(() => {
+            textElement.textContent = 'npm install inslash';
+            textElement.classList.remove('text-emerald-400');
+        }, 2000);
+    };
+
+    const copyCode = (btn) => {
+        const code = btn.closest('.glass-card').querySelector('pre').innerText;
+        navigator.clipboard.writeText(code);
+        const original = btn.textContent;
+        btn.textContent = 'COPIED';
+        btn.classList.add('text-emerald-400');
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('text-emerald-400');
+        }, 2000);
+    };
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hero Entrance
+        const tl = gsap.timeline();
+        tl.from(".hero-gsap-reveal", {
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "expo.out"
         });
 
-        // Three.js Background Implementation
-        const initThree = () => {
-            const canvas = document.querySelector('#hero-canvas');
-            if (!canvas) return;
+        // Perspective Hover for Hero Visual
+        const heroVisual = document.querySelector('#hero-visual');
+        if (heroVisual) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.pageX) / 50;
+                const y = (window.innerHeight / 2 - e.pageY) / 50;
+                heroVisual.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+        }
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        // Scroll Reveals
+        gsap.utils.toArray(".gsap-reveal").forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                    toggleActions: "play none none none"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: "power4.out"
+            });
+        });
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Create Particles
-            const particlesCount = 200;
-            const positions = new Float32Array(particlesCount * 3);
-            const particleGeometry = new THREE.BufferGeometry();
-
-            for (let i = 0; i < particlesCount * 3; i++) {
-                positions[i] = (Math.random() - 0.5) * 10;
-            }
-
-            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 0.015,
-                color: '#6366f1',
-                transparent: true,
-                opacity: 0.8
+        // Testimonial Infinity Slider
+        const testimonialWrapper = document.querySelector('.testimonial-wrapper');
+        if (testimonialWrapper) {
+            const totalWidth = testimonialWrapper.scrollWidth / 2;
+            const scrollTween = gsap.to(testimonialWrapper, {
+                x: -totalWidth,
+                duration: 40,
+                ease: "none",
+                repeat: -1
             });
 
-            const particles = new THREE.Points(particleGeometry, particleMaterial);
-            scene.add(particles);
+            testimonialWrapper.addEventListener('mouseenter', () => scrollTween.pause());
+            testimonialWrapper.addEventListener('mouseleave', () => scrollTween.play());
+        }
+    });
 
-            // Lines connecting particles
-            const lineMaterial = new THREE.LineBasicMaterial({ color: '#6366f1', transparent: true, opacity: 0.2 });
-            const lineGeometry = new THREE.BufferGeometry();
-            const linePositions = new Float32Array(particlesCount * 6); // Simple grid-ish connections
-            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            // scene.add(lines); // Optional: add lines for more network feel
+    // Three.js Network Background
+    const initThree = () => {
+        const canvas = document.querySelector('#hero-canvas');
+        if (!canvas) return;
 
-            camera.position.z = 3;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 
-            // Custom mouse follow
-            let mouseX = 0;
-            let mouseY = 0;
-            window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
-                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
-            });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const animate = () => {
-                requestAnimationFrame(animate);
+        // System Particles
+        const particlesCount = 300;
+        const positions = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 12;
+        }
 
-                particles.rotation.y += 0.001;
-                particles.rotation.x += 0.0005;
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-                // Subtle hover influence
-                particles.position.x += (mouseX - particles.position.x) * 0.05;
-                particles.position.y += (-mouseY - particles.position.y) * 0.05;
+        const material = new THREE.PointsMaterial({
+            size: 0.02,
+            color: '#6366f1',
+            transparent: true,
+            opacity: 0.4,
+            blending: THREE.AdditiveBlending
+        });
 
-                renderer.render(scene, camera);
-            };
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
 
-            animate();
+        // Floating Geometry
+        const tetra = new THREE.Mesh(
+            new THREE.TetrahedronGeometry(2, 0),
+            new THREE.MeshBasicMaterial({ color: '#6366f1', wireframe: true, transparent: true, opacity: 0.1 })
+        );
+        scene.add(tetra);
 
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
+        camera.position.z = 5;
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.2;
+        });
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            points.rotation.y += 0.0008;
+            tetra.rotation.y += 0.002;
+            tetra.rotation.z += 0.001;
+
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
         };
 
-        initThree();
-    </script>
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    };
+
+    window.addEventListener('load', initThree);
+</script>

@@ -3,7 +3,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">API Console</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Interactive testing environment &mdash; v2.0.0</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">API Sandbox &mdash; v2.0.0</p>
         </div>
         <div class="flex items-center gap-3">
             <span
@@ -12,7 +12,7 @@
             </span>
             <span
                 class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-mono font-medium rounded-lg border border-green-200 dark:border-green-800">
-                ENV: <%= process.env.NODE_ENV==='production' ? 'LIVE' : 'DEV' %>
+                MODE: <%= process.env.NODE_ENV==='production' ? 'PROD' : 'DEV' %>
             </span>
         </div>
     </div>
@@ -30,11 +30,11 @@
             </div>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Authentication Required</h2>
             <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-                You need an API Key to send requests. Create a project to generate your credentials.
+                You need an API Key to send requests. Create or select a project to get started.
             </p>
-            <a href="/projects/new"
+            <a href="/projects"
                 class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/50 transition-all duration-300 hover:scale-105">
-                Generate API Key
+                Go to Projects
             </a>
         </div>
         <% } else { %>
@@ -193,7 +193,7 @@
 
                         <!-- ── SECURITY FIELDS ── -->
                         <div id="securityFields" class="space-y-4 hidden">
-                            <p class="text-xs text-gray-500 font-mono">Score a passport's security strength and get
+                            <p class="text-xs text-gray-500 font-mono">Analyze a passport's security strength and get
                                 recommendations.</p>
                             <div>
                                 <div class="flex justify-between items-end mb-2">
