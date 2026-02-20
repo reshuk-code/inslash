@@ -1,43 +1,73 @@
 declare module 'inslash' {
+
+    // -------------------------------------------------------------------------
+    // Option types
+    // -------------------------------------------------------------------------
+
+    export type Algorithm = 'sha256' | 'sha384' | 'sha512';
+    export type Encoding = 'hex' | 'base64' | 'base64url';
+    export type SecurityPreset = 'fast' | 'balanced' | 'strong' | 'paranoid';
+
     export interface HashOptions {
         saltLength?: number;
         hashLength?: number;
         iterations?: number;
-        algorithm?: 'sha256' | 'sha512' | 'sha384';
-        encoding?: 'hex' | 'base64' | 'base64url' | 'latin1';
+        algorithm?: Algorithm;
+        encoding?: Encoding;
+        /** Security preset shorthand — overrides individual options if provided. */
+        preset?: SecurityPreset;
+    }
+
+    export interface ApiKeyOptions {
+        prefix?: string;
+        /** Number of random bytes to generate (default: 32). */
+        byteLength?: number;
+        encoding?: Encoding;
+    }
+
+    // -------------------------------------------------------------------------
+    // Result types
+    // -------------------------------------------------------------------------
+
+    export interface HistoryEntry {
+        date: string;
+        algorithm: Algorithm;
+        iterations: number;
+        encoding?: Encoding;
+        event?: string;
+        reasons?: string[];
     }
 
     export interface HashResult {
         passport: string;
-        algorithm: string;
+        version: string;
+        algorithm: Algorithm;
         iterations: number;
         saltLength: number;
         hashLength: number;
+        encoding: Encoding;
         salt: string;
         hash: string;
-        encoding: string;
-        history: Array<{
-            date: string;
-            algorithm: string;
-            iterations: number;
-            encoding?: string;
-        }>;
+        history: HistoryEntry[];
     }
 
     export interface VerifyResult {
         valid: boolean;
         needsUpgrade: boolean;
-        upgradeReasons?: string[];
+        upgradeReasons: string[];
         upgradedPassport: string | null;
         upgradedMetadata: {
-            algorithm: string;
+            algorithm: Algorithm;
             iterations: number;
-            encoding: string;
+            saltLength: number;
+            hashLength: number;
+            encoding: Encoding;
         } | null;
         metadata: {
-            algorithm: string;
+            version: string;
+            algorithm: Algorithm;
             iterations: number;
-            encoding: string;
+            encoding: Encoding;
             hashLength: number;
             saltLength: number;
         };
@@ -45,33 +75,35 @@ declare module 'inslash' {
 
     export interface InspectResult {
         valid: boolean;
-        algorithm?: string;
+        version?: string;
+        algorithm?: Algorithm;
         iterations?: number;
         saltLength?: number;
         hashLength?: number;
+        encoding?: Encoding;
         salt?: string;
         hash?: string;
-        history?: any[];
-        encoding?: string;
+        history?: HistoryEntry[];
         error?: string;
     }
 
     export interface CompareResult {
         sameAlgorithm: boolean;
         sameIterations: boolean;
+        sameEncoding: boolean;
         sameSalt: boolean;
         sameHash: boolean;
-        sameEncoding: boolean;
-        完全相同: boolean;
+        /** True when both hash AND salt are identical (i.e. same passport). */
+        identical: boolean;
         error?: string;
     }
 
     export interface SecurityEstimate {
         score: number;
-        level: 'Excellent' | 'Strong' | 'Good' | 'Fair' | 'Weak' | 'Invalid';
+        level: 'Excellent' | 'Strong' | 'Good' | 'Fair' | 'Weak' | 'Critical' | 'Invalid';
         recommendations: string[];
         metadata: {
-            algorithm: string;
+            algorithm: Algorithm;
             iterations: number;
             saltLength: number;
             hashLength: number;
@@ -79,11 +111,23 @@ declare module 'inslash' {
         error?: string;
     }
 
-    export interface ApiKeyOptions {
-        prefix?: string;
-        length?: number;
-        encoding?: 'hex' | 'base64' | 'base64url';
+    export interface BatchVerifyResult {
+        value: string;
+        valid: boolean;
+        needsUpgrade?: boolean;
+        error?: string;
     }
+
+    export interface ConfigureOptions {
+        apiKey?: string;
+        apiUrl?: string;
+        strictMode?: boolean;
+        timeout?: number;
+    }
+
+    // -------------------------------------------------------------------------
+    // Core functions
+    // -------------------------------------------------------------------------
 
     export function hash(
         value: string,
@@ -95,28 +139,82 @@ declare module 'inslash' {
         value: string,
         passport: string,
         secret: string,
-        options?: Partial<HashOptions>
+        options?: HashOptions
     ): Promise<VerifyResult>;
 
-    export function encodePassport(meta: any): string;
-    export function decodePassport(passport: string): any;
-    
-    // New functions
+    // -------------------------------------------------------------------------
+    // Passport utilities
+    // -------------------------------------------------------------------------
+
+    export function encodePassport(meta: Record<string, unknown>): string;
+    export function decodePassport(passport: string): Record<string, unknown>;
+    export function inspectPassport(passport: string): InspectResult;
+    export function comparePassports(passport1: string, passport2: string): CompareResult;
+
+    // -------------------------------------------------------------------------
+    // Batch operations
+    // -------------------------------------------------------------------------
+
     export function batchVerify(
         values: string[],
         passport: string,
         secret: string,
-        options?: Partial<HashOptions>
-    ): Promise<Array<{ value: string; valid: boolean; needsUpgrade?: boolean; error?: string }>>;
+        options?: HashOptions & { concurrency?: number }
+    ): Promise<BatchVerifyResult[]>;
 
-    export function inspectPassport(passport: string): InspectResult;
-    export function comparePassports(passport1: string, passport2: string): CompareResult;
+    // -------------------------------------------------------------------------
+    // Security analysis
+    // -------------------------------------------------------------------------
+
     export function estimateSecurity(passport: string): SecurityEstimate;
+
+    // -------------------------------------------------------------------------
+    // Key utilities
+    // -------------------------------------------------------------------------
+
     export function generateApiKey(options?: ApiKeyOptions): string;
 
+    export function deriveKey(
+        password: string,
+        salt: string,
+        opts?: { iterations?: number; keyLength?: number; algorithm?: Algorithm }
+    ): Promise<Buffer>;
+
+    // -------------------------------------------------------------------------
+    // API configuration
+    // -------------------------------------------------------------------------
+
+    export function configure(options: ConfigureOptions): typeof CONFIG;
+
+    // -------------------------------------------------------------------------
     // Constants
-    export const DEFAULTS: Required<HashOptions>;
-    export const SUPPORTED_ALGORITHMS: string[];
-    export const SUPPORTED_ENCODINGS: string[];
+    // -------------------------------------------------------------------------
+
+    export const DEFAULTS: {
+        saltLength: number;
+        hashLength: number;
+        iterations: number;
+        algorithm: Algorithm;
+        encoding: Encoding;
+        concurrency: number;
+    };
+
+    export const SECURITY_PRESETS: {
+        readonly fast: Required<Omit<HashOptions, 'preset'>>;
+        readonly balanced: Required<Omit<HashOptions, 'preset'>>;
+        readonly strong: Required<Omit<HashOptions, 'preset'>>;
+        readonly paranoid: Required<Omit<HashOptions, 'preset'>>;
+    };
+
+    export const SUPPORTED_ALGORITHMS: ReadonlyArray<Algorithm>;
+    export const SUPPORTED_ENCODINGS: ReadonlyArray<Encoding>;
     export const VERSION: string;
+
+    // Internal (not exported at runtime but useful for typing configure return)
+    interface CONFIG {
+        apiKey: string | null;
+        apiUrl: string | null;
+        strictMode: boolean;
+        timeout: number;
+    }
 }

@@ -8,7 +8,10 @@ const rateLimit = require('express-rate-limit');
 const { authenticateApiKey } = require('./middleware/auth');
 const hashRoutes = require('./routes/hash');
 const verifyRoutes = require('./routes/verify');
-const keyRoutes = require('./routes/keys'); // Add this
+const keyRoutes = require('./routes/keys');
+const inspectRoutes = require('./routes/inspect');
+const batchVerifyRoutes = require('./routes/batch-verify');
+const securityRoutes = require('./routes/security');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,7 +31,7 @@ app.get('/health', (req, res) => {
     res.json({
         status: 'healthy',
         service: 'inslash-api',
-        version: '1.0.3',
+        version: '2.0.0',
         timestamp: new Date().toISOString()
     });
 });
@@ -36,13 +39,16 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
     res.json({
         name: 'Inslash API',
-        version: '1.0.3',
+        version: '2.0.0',
         description: 'Secure password hashing API',
         documentation: {
             authentication: 'Use x-api-key header',
             endpoints: {
                 'POST /api/hash': 'Hash a password',
-                'POST /api/verify': 'Verify a password',
+                'POST /api/verify': 'Verify a password against a passport',
+                'POST /api/inspect': 'Decode passport metadata (no verification)',
+                'POST /api/batch-verify': 'Verify multiple values against one passport',
+                'POST /api/security': 'Estimate security strength of a passport',
                 'GET /api/keys': 'List your API keys',
                 'POST /api/keys/create': 'Create a new API key',
                 'POST /api/keys/:id/revoke': 'Revoke an API key'
@@ -72,7 +78,10 @@ app.use('/api', apiLimiter);
 // Routes
 app.use('/api/hash', hashRoutes);
 app.use('/api/verify', verifyRoutes);
-app.use('/api/keys', keyRoutes); // Add key management routes
+app.use('/api/inspect', inspectRoutes);
+app.use('/api/batch-verify', batchVerifyRoutes);
+app.use('/api/security', securityRoutes);
+app.use('/api/keys', keyRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {

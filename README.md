@@ -1,15 +1,22 @@
 # inslash
 
-A modern, upgradeable, and secure password hashing utility for Node.js.  
-Features passport encoding, hash ancestry, salt, pepper, and automatic upgrade support.
+> Enterprise-grade, zero-dependency password hashing for Node.js — v2.0.0
 
-## Features
+Built to exceed the security and flexibility of bcrypt, argon2, and scrypt wrappers.  
+Designed for zero-compromise production use at scale.
 
-- Secure password hashing with salt and pepper
-- Passport encoding (all hash info in one string)
-- Hash ancestry/history for upgrades and audits
-- Automatic upgrade detection and rehashing
-- Async API
+## Why inslash?
+
+| Feature | bcrypt | argon2 | **inslash** |
+|---|---|---|---|
+| Zero native dependencies | ❌ | ❌ | ✅ |
+| PBKDF2 + HMAC hybrid | ❌ | ❌ | ✅ |
+| Automatic security upgrades | ❌ | ❌ | ✅ |
+| Audit history in passport | ❌ | ❌ | ✅ |
+| API mode (hosted hashing) | ❌ | ❌ | ✅ |
+| Security scoring | ❌ | ❌ | ✅ |
+| Batch verification | ❌ | ❌ | ✅ |
+| TypeScript types | ❌ | ✅ | ✅ |
 
 ## Installation
 
@@ -17,89 +24,215 @@ Features passport encoding, hash ancestry, salt, pepper, and automatic upgrade s
 npm install inslash
 ```
 
-## Usage
+## Quick Start
 
 ```js
-const { hash, verify } = require("inslash");
+const { hash, verify } = require('inslash');
 
-const secret = "your-secret-key";
+const secret = process.env.HASH_SECRET;
 
 // Hash a password
-const result = await hash("myPassword", secret);
-
+const result = await hash('myPassword', secret);
 // Store result.passport in your database
 
 // Verify a password
-const verifyResult = await verify("myPassword", result.passport, secret);
+const { valid } = await verify('myPassword', result.passport, secret);
+console.log(valid); // true
+```
 
-console.log(verifyResult.valid); // true or false
+## Security Presets
+
+Use presets instead of tuning options manually:
+
+```js
+const { hash } = require('inslash');
+
+// 'fast' | 'balanced' | 'strong' | 'paranoid'
+const result = await hash('myPassword', secret, { preset: 'strong' });
+```
+
+| Preset | Algorithm | Iterations | Salt | Hash |
+|---|---|---|---|---|
+| `fast` | sha256 | 50,000 | 16 | 32 |
+| `balanced` | sha256 | 100,000 | 16 | 32 |
+| `strong` | sha384 | 200,000 | 24 | 48 |
+| `paranoid` | sha512 | 400,000 | 32 | 64 |
+
+## Automatic Security Upgrades
+
+When security requirements change, `verify()` can automatically rehash on login — no forced password resets needed:
+
+```js
+const { valid, needsUpgrade, upgradedPassport } = await verify(
+    'myPassword',
+    storedPassport,
+    secret,
+    { preset: 'paranoid' } // new target security level
+);
+
+if (valid && needsUpgrade) {
+    // Save upgradedPassport to your database
+    await db.users.update({ passwordHash: upgradedPassport });
+}
 ```
 
 ## API Mode (Hosted Hashing)
 
-`inslash` can connect to a hosted API for password hashing, with automatic fallback to local crypto if the API is unavailable.
-
-### Setup
+Offload hashing to the Inslash hosted API with automatic local fallback:
 
 ```js
 const inslash = require('inslash');
-require("dotenv").config();
+require('dotenv').config();
 
-// 1. Configure (Global)
 inslash.configure({
     apiKey: process.env.INSLASH_API_KEY,
-    apiUrl: 'https://inslash-q5s6.vercel.app' // Hosted Instance
+    apiUrl: 'https://inslash-q5s6.vercel.app',
+    strictMode: false, // true = throw on API failure instead of falling back
+    timeout: 10_000,
 });
 
-// 2. Destructure after configuration (optional, but cleaner)
 const { hash, verify } = inslash;
 
-async function example() {
-    // This now automatically uses the API!
-    const result = await hash('password123', process.env.HASH_PEPPER);
-    console.log(result.passport);
-
-    const isValid = await verify('password123', result.passport, process.env.HASH_PEPPER);
-    console.log(isValid.valid); // true
-}
-
-example();
+const result = await hash('password123', process.env.HASH_PEPPER);
+const { valid } = await verify('password123', result.passport, process.env.HASH_PEPPER);
 ```
 
-### How It Works
+Get your API key at [https://inslash-q5s6.vercel.app](https://inslash-q5s6.vercel.app).
 
-1. **API First**: When configured, `hash()` and `verify()` call your hosted API
-2. **Silent Fallback**: If the API is down or slow, falls back to local crypto automatically
-3. **Zero Config Local**: If not configured, uses local crypto only (no secret needed from you)
-
-### Get an API Key
-
-Visit [https://inslash-q5s6.vercel.app](https://inslash-q5s6.vercel.app) to create a project and get your API key.
-
-## API
+## Full API Reference
 
 ### `configure(options)`
-- `options.apiKey` (string): Your Inslash API key.
-- `options.apiUrl` (string): API endpoint URL.
-- **Returns:** Current configuration object.
-- **Note:** Call this once before using `hash()` or `verify()` to enable API mode.
 
-### `async hash(value, secret, options?)`
-- `value` (string): The value to hash.
-- `secret` (string): Secret key for HMAC.
-- `options` (object): Optional. Override defaults (`iterations`, `algorithm`, etc).
-- **Returns:** `{ passport, algorithm, iterations, saltLength, hashLength, salt, hash, history }`
+Configure API mode globally. Call once at startup.
 
-### `async verify(value, passport, secret, options?)`
-- `value` (string): Value to verify.
-- `passport` (string): Encoded hash passport.
-- `secret` (string): Secret key for HMAC.
-- `options` (object): Optional. Override defaults.
-- **Returns:** `{ valid, needsUpgrade, upgradedPassport }`
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `apiKey` | string | — | Your Inslash API key |
+| `apiUrl` | string | — | Hosted API base URL |
+| `strictMode` | boolean | `false` | Throw on API failure instead of falling back |
+| `timeout` | number | `10000` | Request timeout in ms |
 
-### Environment Variables
+---
 
-- `HASH_PEPPER`: Optional. Adds a global pepper to all hashes.
+### `hash(value, secret, options?)`
+
+Hash a value. Returns a `HashResult` with a self-contained `passport` string.
+
+```js
+const result = await hash('myPassword', secret, {
+    algorithm: 'sha512',   // 'sha256' | 'sha384' | 'sha512'
+    iterations: 200_000,
+    saltLength: 24,
+    hashLength: 48,
+    encoding: 'hex',       // 'hex' | 'base64' | 'base64url'
+});
+
+console.log(result.passport); // store this in your DB
+```
+
+---
+
+### `verify(value, passport, secret, options?)`
+
+Verify a value against a stored passport. Optionally upgrades the hash.
+
+```js
+const result = await verify('myPassword', storedPassport, secret);
+// result.valid          → boolean
+// result.needsUpgrade   → boolean
+// result.upgradedPassport → string | null (save to DB if truthy)
+// result.upgradeReasons → string[]
+// result.metadata       → { algorithm, iterations, encoding, ... }
+```
+
+---
+
+### `batchVerify(values, passport, secret, options?)`
+
+Verify multiple values against the same passport (e.g. checking a list of candidates). Runs with concurrency control to avoid CPU starvation.
+
+```js
+const results = await batchVerify(
+    ['guess1', 'guess2', 'correctPassword'],
+    storedPassport,
+    secret,
+    { concurrency: 4 }
+);
+// [{ value, valid, needsUpgrade }, ...]
+```
+
+---
+
+### `inspectPassport(passport)`
+
+Decode a passport and read its metadata without verifying.
+
+```js
+const info = inspectPassport(storedPassport);
+// { valid, version, algorithm, iterations, saltLength, hashLength, encoding, history }
+```
+
+---
+
+### `comparePassports(passport1, passport2)`
+
+Structurally compare two passports (does **not** verify plaintext).
+
+```js
+const cmp = comparePassports(p1, p2);
+// { sameAlgorithm, sameIterations, sameEncoding, sameSalt, sameHash, identical }
+```
+
+---
+
+### `estimateSecurity(passport)`
+
+Score a passport's security strength and get upgrade recommendations.
+
+```js
+const { score, level, recommendations } = estimateSecurity(storedPassport);
+// level: 'Excellent' | 'Strong' | 'Good' | 'Fair' | 'Weak' | 'Critical' | 'Invalid'
+// recommendations: string[]
+```
+
+---
+
+### `generateApiKey(options?)`
+
+Generate a cryptographically secure API key.
+
+```js
+const key = generateApiKey({ prefix: 'myapp', byteLength: 32, encoding: 'hex' });
+// 'myapp_a3f9...'
+```
+
+---
+
+### `deriveKey(password, salt, opts?)`
+
+Derive a deterministic encryption key from a password using PBKDF2. Useful for symmetric encryption, not authentication.
+
+```js
+const keyBuffer = await deriveKey(password, saltHex, {
+    iterations: 200_000,
+    keyLength: 32,
+    algorithm: 'sha512'
+});
+```
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `HASH_PEPPER` | Optional global pepper appended to all values before hashing |
+
+## Constants
+
+```js
+const { DEFAULTS, SECURITY_PRESETS, SUPPORTED_ALGORITHMS, SUPPORTED_ENCODINGS, VERSION } = require('inslash');
+```
 
 ## License
 
