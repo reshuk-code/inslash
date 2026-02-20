@@ -39,17 +39,24 @@ if (require.main === module) {
     connectDB();
 }
 
+// Essential for deployment behind proxies (Vercel, Nginx, etc)
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// API Defaults
+const DEFAULT_API_URL = 'https://inslash-q5s6.vercel.app';
+
 // Session configuration
 const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: true, // Required for secure cookies behind proxy
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -1761,7 +1768,8 @@ app.get('/test', (req, res) => {
 app.get('/docs', (req, res) => {
     res.render('docs-wrapper', {
         title: 'Documentation',
-        layout: false
+        layout: false,
+        apiUrl: process.env.API_URL || DEFAULT_API_URL
     });
 });
 

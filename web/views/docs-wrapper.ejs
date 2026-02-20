@@ -87,6 +87,33 @@
                 document.addEventListener('DOMContentLoaded', () => {
                     Prism.highlightAll();
                 });
+
+                // Copy to clipboard functionality
+                async function copyCodeBlock(button) {
+                    const container = button.closest('.code-block-wrapper');
+                    const codeBlock = container.querySelector('code');
+                    const text = codeBlock.innerText;
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+
+                        // Visual feedback
+                        const textSpan = button.querySelector('.copy-text');
+                        const originalText = textSpan.innerText;
+                        textSpan.innerText = 'Copied!';
+                        button.classList.add('bg-green-600', 'text-white');
+                        button.classList.remove('bg-gray-800', 'text-gray-300');
+
+                        setTimeout(() => {
+                            textSpan.innerText = originalText;
+                            button.classList.remove('bg-green-600', 'text-white');
+                            button.classList.add('bg-gray-800', 'text-gray-300');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                        alert('Failed to copy to clipboard');
+                    }
+                }
             </script>
 
 </body>

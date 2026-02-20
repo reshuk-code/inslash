@@ -1,8 +1,10 @@
-<div class="max-w-6xl mx-auto py-12 px-4">
+<div class="max-w-7xl mx-auto py-12 px-4" x-data="{ activeSection: window.location.hash || '#getting-started' }"
+  @hashchange.window="activeSection = window.location.hash">
   <!-- Header -->
-  <div class="text-center mb-16">
+  <div class="mb-16">
     <h1 class="text-5xl font-extrabold text-gray-900 dark:text-white mb-4">Documentation</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400">Everything you need to integrate Inslash into your application
+    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl">Everything you need to integrate Inslash into your
+      application
     </p>
   </div>
 
@@ -14,133 +16,157 @@
           <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Getting
             Started</h3>
           <a href="#getting-started"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20">Getting
+            :class="activeSection === '#getting-started' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Getting
             Started</a>
           <a href="#integration"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Integration</a>
+            :class="activeSection === '#integration' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Integration</a>
           <a href="#features"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Features</a>
+            :class="activeSection === '#features' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+          <a href="#migration"
+            :class="activeSection === '#migration' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Migration
+            Guide</a>
         </div>
 
         <div>
           <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">API
             Reference</h3>
           <a href="#hash"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">hash()</a>
+            :class="activeSection === '#hash' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">hash()</a>
           <a href="#verify"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">verify()</a>
+            :class="activeSection === '#verify' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">verify()</a>
           <a href="#batch-verify"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">batchVerify()</a>
+            :class="activeSection === '#batch-verify' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">batchVerify()</a>
           <a href="#inspect-passport"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">inspectPassport()</a>
+            :class="activeSection === '#inspect-passport' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">inspectPassport()</a>
           <a href="#compare-passports"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">comparePassports()</a>
+            :class="activeSection === '#compare-passports' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">comparePassports()</a>
           <a href="#estimate-security"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">estimateSecurity()</a>
+            :class="activeSection === '#estimate-security' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">estimateSecurity()</a>
           <a href="#generate-api-key"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">generateApiKey()</a>
+            :class="activeSection === '#generate-api-key' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">generateApiKey()</a>
           <a href="#derive-key"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">deriveKey()</a>
+            :class="activeSection === '#derive-key' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">deriveKey()</a>
           <a href="#configuration"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Configuration</a>
+            :class="activeSection === '#configuration' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Configuration</a>
         </div>
 
         <div>
           <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Security
             Presets</h3>
           <a href="#security-presets"
-            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Presets</a>
+            :class="activeSection === '#security-presets' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Presets</a>
         </div>
-        <a href="#example-auth"
-          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Authentication
-          System</a>
-        <a href="#example-registration"
-          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">User
-          Registration</a>
-        <a href="#example-reset"
-          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Password
-          Reset</a>
-    </div>
-    </nav>
-  </div>
-
-  <!-- Content -->
-  <div class="lg:col-span-3 space-y-16">
-
-    <!-- Getting Started (API Key) -->
-    <section id="getting-started" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">1. Get Your Credentials</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Before using Inslash, you need an API key to access our secure
-        hashing infrastructure.</p>
-
-      <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-        <ol class="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-4">
-          <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Sign Up:</span> Create an account
-            at <a href="https://inslash-q5s6.vercel.app"
-              class="text-indigo-600 hover:underline">inslash-q5s6.vercel.app</a></li>
-          <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Get API Key:</span> Navigate to the
-            <strong>API Keys</strong> section in your dashboard.
-          </li>
-          <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Save It:</span> Copy the key
-            (starts with <code>sk_</code>) - you'll need it for the next step.</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Integration Toggles -->
-    <section id="integration" class="scroll-mt-24" x-data="{ mode: 'library' }">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">2. Choose Integration</h2>
-
-      <!-- Mode Toggle -->
-      <div class="flex p-1 space-x-1 bg-gray-100 dark:bg-gray-800 rounded-xl mb-8 w-fit">
-        <button @click="mode = 'library'"
-          class="px-6 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none"
-          :class="mode === 'library' ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'">
-          Integration via Library
-        </button>
-        <button @click="mode = 'api'"
-          class="px-6 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none"
-          :class="mode === 'api' ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'">
-          Integration via API
-        </button>
-      </div>
-
-      <!-- LIBRARY MODE -->
-      <div x-show="mode === 'library'" x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Option A: Node.js Library (Recommended)
-        </h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">Best for Node.js applications. Provides type safety,
-          automatic fallback, and utility helpers.</p>
-
-        <div class="mb-8">
-          <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Installation</h4>
-          <div
-            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-4 rounded-lg font-mono text-sm border border-gray-800">
-            npm install inslash
-          </div>
-        </div>
-
         <div>
-          <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Usage</h4>
-          <div class="code-block-wrapper relative group my-4">
+          <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Examples
+          </h3>
+          <a href="#example-auth"
+            :class="activeSection === '#example-auth' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Authentication
+            System</a>
+          <a href="#example-registration"
+            :class="activeSection === '#example-registration' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">User
+            Registration</a>
+          <a href="#example-reset"
+            :class="activeSection === '#example-reset' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="block px-3 py-2 rounded-md text-sm font-medium transition-colors">Password
+            Reset</a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Content -->
+    <div class="lg:col-span-3 space-y-16">
+
+      <!-- Getting Started (API Key) -->
+      <section id="getting-started" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">1. Get Your Credentials</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Before using Inslash, you need an API key to access our secure
+          hashing infrastructure.</p>
+
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+          <ol class="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-4">
+            <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Sign Up:</span> Create an account
+              at <a href="<%= apiUrl %>" class="text-indigo-600 hover:underline">
+                <%= apiUrl.replace('https://', '' ).replace('http://', '' ) %>
+              </a></li>
+            <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Get API Key:</span> Navigate to the
+              <strong>API Keys</strong> section in your dashboard.
+            </li>
+            <li class="pl-2"><span class="font-medium text-gray-900 dark:text-white">Save It:</span> Copy the key
+              (starts with <code>sk_</code>) - you'll need it for the next step.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Integration Toggles -->
+      <section id="integration" class="scroll-mt-24" x-data="{ mode: 'library' }">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">2. Choose Integration</h2>
+
+        <!-- Mode Toggle -->
+        <div class="flex p-1 space-x-1 bg-gray-100 dark:bg-gray-800 rounded-xl mb-8 w-fit">
+          <button @click="mode = 'library'"
+            class="px-6 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none"
+            :class="mode === 'library' ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'">
+            Integration via Library
+          </button>
+          <button @click="mode = 'api'"
+            class="px-6 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none"
+            :class="mode === 'api' ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'">
+            Integration via API
+          </button>
+        </div>
+
+        <!-- LIBRARY MODE -->
+        <div x-show="mode === 'library'" x-transition:enter="transition ease-out duration-200"
+          x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Option A: Node.js Library (Recommended)
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Best for Node.js applications. Provides type safety,
+            automatic fallback, and utility helpers.</p>
+
+          <div class="mb-8">
+            <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Installation</h4>
             <div
-              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-              <button onclick="copyCodeBlock(this)"
-                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                  </path>
-                </svg>
-                <span class="copy-text">Copy</span>
-              </button>
-              <pre><code class="language-javascript">const inslash = require('inslash');
+              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-4 rounded-lg font-mono text-sm border border-gray-800">
+              npm install inslash
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Usage</h4>
+            <div class="code-block-wrapper relative group my-4">
+              <div
+                class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+                <button onclick="copyCodeBlock(this)"
+                  class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                  <span class="copy-text">Copy</span>
+                </button>
+                <pre><code class="language-javascript">const inslash = require('inslash');
 
 // Configuration
 inslash.configure({
     apiKey: 'sk_test_51Mz...', 
-    apiUrl: 'https://inslash-q5s6.vercel.app'
+    apiUrl: '<%= apiUrl %>'
 });
 
 const { hash } = inslash;
@@ -152,77 +178,107 @@ async function example() {
     // Store passport in DB
     console.log(passport); 
 }</code></pre>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- API MODE -->
-      <div x-show="mode === 'api'" x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-        style="display: none;">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Option B: REST API</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">Best for non-Node.js environments (Python, Go, PHP) or
-          serverless functions.</p>
-
-        <div class="grid gap-4 mb-8">
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-2">
-              <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/hash</code>
-              <span
-                class="px-2 py-1 text-xs rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">Hash
-                Password</span>
-            </div>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Generates a secure hash (passport).</p>
-          </div>
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-2">
-              <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/verify</code>
-              <span
-                class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Verify
-                Password</span>
-            </div>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Verifies a password against a passport.</p>
-          </div>
-
-          <!-- Key Management Endpoints -->
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <h4
-              class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
-              Key Management</h4>
-            <div class="flex flex-col gap-3">
-              <div class="flex items-center justify-between">
-                <code class="text-sm font-bold text-gray-600 dark:text-gray-400">GET /api/keys</code>
-                <span class="text-xs text-gray-500">List API Keys</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <code class="text-sm font-bold text-gray-600 dark:text-gray-400">POST /api/keys/create</code>
-                <span class="text-xs text-gray-500">Create Key</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <code class="text-sm font-bold text-gray-600 dark:text-gray-400">POST /api/keys/:id/revoke</code>
-                <span class="text-xs text-gray-500">Revoke Key</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div>
-          <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Example Request
-            (JavaScript/Fetch)</h4>
-          <div class="code-block-wrapper relative group my-4">
-            <div
-              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-              <button onclick="copyCodeBlock(this)"
-                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                  </path>
-                </svg>
-                <span class="copy-text">Copy</span>
-              </button>
-              <pre><code class="language-javascript">const response = await fetch('https://inslash-q5s6.vercel.app/api/hash', {
+        <!-- API MODE -->
+        <div x-show="mode === 'api'" x-transition:enter="transition ease-out duration-200"
+          x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+          style="display: none;">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Option B: REST API</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Best for non-Node.js environments (Python, Go, PHP) or
+            serverless functions.</p>
+
+          <div class="grid gap-4 mb-8">
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2">
+                <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/hash</code>
+                <span
+                  class="px-2 py-1 text-xs rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">Hash
+                  Password</span>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Generates a secure hash (passport).</p>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2">
+                <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/verify</code>
+                <span
+                  class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Verify
+                  Password</span>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Verifies a password against a passport.</p>
+            </div>
+
+            <!-- v2.0 NEW Endpoints -->
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2">
+                <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/batch-verify</code>
+                <span
+                  class="px-2 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">Batch
+                  Verify</span>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Verify multiple users in a single request.</p>
+            </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2">
+                <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/inspect</code>
+                <span
+                  class="px-2 py-1 text-xs rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">Inspect</span>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Extract metadata and history from any passport.</p>
+            </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2">
+                <code class="text-sm font-bold text-indigo-600 dark:text-indigo-400">POST /api/security</code>
+                <span
+                  class="px-2 py-1 text-xs rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">Security
+                  Score</span>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Get a 0-100 security score and recommendations.</p>
+            </div>
+
+            <!-- Key Management Endpoints -->
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <h4
+                class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
+                Key Management</h4>
+              <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <code class="text-sm font-bold text-gray-600 dark:text-gray-400">GET /api/keys</code>
+                  <span class="text-xs text-gray-500">List API Keys</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <code class="text-sm font-bold text-gray-600 dark:text-gray-400">POST /api/keys/create</code>
+                  <span class="text-xs text-gray-500">Create Key</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <code class="text-sm font-bold text-gray-600 dark:text-gray-400">POST /api/keys/:id/revoke</code>
+                  <span class="text-xs text-gray-500">Revoke Key</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Example Request
+              (JavaScript/Fetch)</h4>
+            <div class="code-block-wrapper relative group my-4">
+              <div
+                class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+                <button onclick="copyCodeBlock(this)"
+                  class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                  <span class="copy-text">Copy</span>
+                </button>
+                <pre><code class="language-javascript">const response = await fetch('<%= apiUrl %>/api/hash', {
   method: 'POST',
   headers: {
     'x-api-key': 'sk_test_...', // Your API Key
@@ -235,201 +291,214 @@ async function example() {
 });
 
 const { passport } = await response.json();</code></pre>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Features -->
-    <section id="features" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Features</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔐 Multiple Algorithms</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Support for SHA-256, SHA-384, and SHA-512 HMAC
-            algorithms</p>
+      <!-- Features -->
+      <section id="features" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔐 Multiple Algorithms</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Support for SHA-256, SHA-384, and SHA-512 HMAC
+              algorithms</p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🎫 Passport Encoding</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">All metadata encoded in a single string for easy storage
+            </p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">⚡ Automatic Upgrades</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Detects when hashes need upgrading to stronger
+              algorithms</p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🛡️ Timing-Safe</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Protection against timing attacks with constant-time
+              comparison</p>
+          </div>
         </div>
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🎫 Passport Encoding</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">All metadata encoded in a single string for easy storage
-          </p>
-        </div>
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">⚡ Automatic Upgrades</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Detects when hashes need upgrading to stronger
-            algorithms</p>
-        </div>
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">🛡️ Timing-Safe</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Protection against timing attacks with constant-time
-            comparison</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- API Reference - hash() -->
-    <section id="hash" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">hash(value, secret, options)</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Creates a secure hash of a password.</p>
+      <!-- Migration Guide -->
+      <section id="migration" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Migration Guide</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Moving from legacy hashing (like bcrypt or manual PBKDF2) to
+          Inslash is designed to be zero-downtime.</p>
 
-      <%- include('partials/parameter-table', { parameters: [ { name: 'value' , type: 'string' , required: true,
-        description: 'The password to hash' }, { name: 'secret' , type: 'string' , required: true,
-        description: 'Secret key (pepper) for additional security' }, { name: 'options' , type: 'object' , required:
-        false, description: 'Configuration options' } ] }) %>
+        <div class="space-y-8">
+          <div
+            class="p-6 bg-indigo-50 dark:bg-indigo-900/10 rounded-xl border border-indigo-200 dark:border-indigo-800">
+            <h3 class="text-lg font-bold text-indigo-900 dark:text-indigo-300 mb-3">The "Lazy Migration" Strategy</h3>
+            <p class="text-sm text-indigo-800 dark:text-indigo-400 mb-4">You don't need to re-hash your entire database
+              at
+              once. Instead, upgrade users when they next log in.</p>
+            <div class="bg-gray-900 rounded-lg p-5 font-mono text-xs">
+              <pre class="text-slate-300"><code class="language-javascript">async function login(email, password) {
+    const user = await db.findUser(email);
 
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Options</h3>
-        <%- include('partials/parameter-table', { parameters: [ { name: 'algorithm' , type: 'string' , required: false,
-          description: 'Hash algorithm: "sha256", "sha384", or "sha512" (default: "sha256")' }, { name: 'iterations' ,
-          type: 'number' , required: false, description: 'Number of iterations (default: 100,000)' }, {
-          name: 'saltLength' , type: 'number' , required: false, description: 'Length of salt in bytes (default: 16)' },
-          { name: 'hashLength' , type: 'number' , required: false, description: 'Length of hash in bytes (default: 32)'
-          } ] }) %>
+    // 1. Check if user is already using Inslash
+    if (user.password_hash.startsWith('$inslash$')) {
+        const { valid, needsUpgrade, upgradedPassport } = await inslash.verify(password, user.password_hash, secret);
+        if (!valid) return false;
+        
+        if (needsUpgrade) {
+            await user.update({ password_hash: upgradedPassport });
+        }
+    } else {
+        // 2. Legacy check (e.g. bcrypt)
+        const isLegacyValid = await bcrypt.compare(password, user.password_hash);
+        if (!isLegacyValid) return false;
+
+        // 3. Transparently migrate to Inslash
+        const { passport } = await inslash.hash(password, secret);
+        await user.update({ password_hash: passport });
+    }
+    
+    return true;
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm">1. Update Schema</h4>
+              <p class="text-xs text-gray-500">Ensure your password column can hold ~128-256 chars (Passports are longer
+                than bcrypt).</p>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm">2. Standardize Pepper</h4>
+              <p class="text-xs text-gray-500">Pick a consistent secret key (pepper) to use for all new Inslash hashes.
+              </p>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm">3. Deploy & Profit</h4>
+              <p class="text-xs text-gray-500">Watch your database legacy hashes disappear as users log back in.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference - hash() -->
+      <section id="hash" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">hash(value, secret, options)</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Creates a secure hash of a password.</p>
+
+        <%- include('partials/parameter-table', { parameters: [ { name: 'value' , type: 'string' , required: true,
+          description: 'The password to hash' }, { name: 'secret' , type: 'string' , required: true,
+          description: 'Secret key (pepper) for additional security' }, { name: 'options' , type: 'object' , required:
+          false, description: 'Configuration options' } ] }) %>
+
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Options</h3>
+          <%- include('partials/parameter-table', { parameters: [ { name: 'algorithm' , type: 'string' , required:
+            false, description: 'Hash algorithm: "sha256", "sha384", or "sha512" (default: "sha256")' }, {
+            name: 'iterations' , type: 'number' , required: false,
+            description: 'Number of iterations (default: 100,000)' }, { name: 'saltLength' , type: 'number' , required:
+            false, description: 'Length of salt in bytes (default: 16)' }, { name: 'hashLength' , type: 'number' ,
+            required: false, description: 'Length of hash in bytes (default: 32)' } ] }) %>
+
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-2">Object containing:</p>
+            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+              <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">passport</code> - Encoded string
+                to store in database</li>
+              <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">hash</code> - The raw hash value
+              </li>
+              <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">salt</code> - The generated salt
+              </li>
+              <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> - Algorithm,
+                iterations, etc.</li>
+            </ul>
+      </section>
+
+      <!-- API Reference - verify() -->
+      <section id="verify" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">verify(value, passport, secret, options)</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Verifies a password against a stored passport.</p>
+
+        <%- include('partials/parameter-table', { parameters: [ { name: 'value' , type: 'string' , required: true,
+          description: 'The password to verify' }, { name: 'passport' , type: 'string' , required: true,
+          description: 'The stored passport from hash()' }, { name: 'secret' , type: 'string' , required: true,
+          description: 'Same secret key used for hashing' }, { name: 'options' , type: 'object' , required: false,
+          description: 'Upgrade configuration' } ] }) %>
 
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
           <p class="text-gray-600 dark:text-gray-400 mb-2">Object containing:</p>
           <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">passport</code> - Encoded string
-              to store in database</li>
-            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">hash</code> - The raw hash value
-            </li>
-            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">salt</code> - The generated salt
-            </li>
-            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> - Algorithm,
-              iterations, etc.</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> - Boolean indicating
+              if password is correct</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">needsUpgrade</code> - Boolean
+              indicating if hash should be upgraded</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">upgradedPassport</code> - New
+              passport if upgrade needed</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> - Current hash
+              metadata</li>
           </ul>
-    </section>
+      </section>
 
-    <!-- API Reference - verify() -->
-    <section id="verify" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">verify(value, passport, secret, options)</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Verifies a password against a stored passport.</p>
-
-      <%- include('partials/parameter-table', { parameters: [ { name: 'value' , type: 'string' , required: true,
-        description: 'The password to verify' }, { name: 'passport' , type: 'string' , required: true,
-        description: 'The stored passport from hash()' }, { name: 'secret' , type: 'string' , required: true,
-        description: 'Same secret key used for hashing' }, { name: 'options' , type: 'object' , required: false,
-        description: 'Upgrade configuration' } ] }) %>
-
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-2">Object containing:</p>
-        <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> - Boolean indicating
-            if password is correct</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">needsUpgrade</code> - Boolean
-            indicating if hash should be upgraded</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">upgradedPassport</code> - New
-            passport if upgrade needed</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> - Current hash
-            metadata</li>
-        </ul>
-    </section>
-
-    <!-- ── NEW: Security Presets ── -->
-    <section id="security-presets" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Security Presets</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">Use named presets instead of tuning options manually. Presets map
-        to battle-tested option sets.</p>
-      <div class="overflow-x-auto mb-6">
-        <table class="w-full text-left text-sm border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
-          <thead class="bg-gray-50 dark:bg-gray-900">
-            <tr>
-              <th class="px-4 py-3 font-semibold text-gray-900 dark:text-white">Preset</th>
-              <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Algorithm</th>
-              <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Iterations</th>
-              <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Salt</th>
-              <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Hash</th>
-              <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Use Case</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-            <tr>
-              <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">fast</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha256</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">50,000</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">16</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
-              <td class="px-4 py-3 text-gray-500 text-xs">Dev / low-stakes</td>
-            </tr>
-            <tr>
-              <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">balanced</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha256</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">100,000</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">16</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
-              <td class="px-4 py-3 text-gray-500 text-xs">Default / general use</td>
-            </tr>
-            <tr class="bg-green-50 dark:bg-green-900/10">
-              <td class="px-4 py-3 font-mono text-green-600 dark:text-green-400">strong ★</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha384</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">200,000</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">24</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">48</td>
-              <td class="px-4 py-3 text-gray-500 text-xs">Recommended for production</td>
-            </tr>
-            <tr>
-              <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">paranoid</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha512</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">400,000</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
-              <td class="px-4 py-3 text-gray-600 dark:text-gray-400">64</td>
-              <td class="px-4 py-3 text-gray-500 text-xs">High-security / financial</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const { hash, SECURITY_PRESETS } = require('inslash');
-
-// Use a named preset
-const result = await hash('myPassword', secret, { preset: 'strong' });
-
-// Or access preset values directly
-console.log(SECURITY_PRESETS.paranoid);
-// { iterations: 400000, saltLength: 32, hashLength: 64, algorithm: 'sha512' }</code></pre>
+      <!-- ── NEW: Security Presets ── -->
+      <section id="security-presets" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Security Presets</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
         </div>
-      </div>
-    </section>
-
-    <!-- ── NEW: batchVerify() ── -->
-    <section id="batch-verify" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">batchVerify(values, passport, secret, options?)
-        </h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Verify multiple values against the same passport. Runs with
-        concurrency control to avoid CPU starvation.</p>
-      <%- include('partials/parameter-table', { parameters: [ { name: 'values' , type: 'string[]' , required: true,
-        description: 'Array of values to verify (max 50 per API call)' }, { name: 'passport' , type: 'string' ,
-        required: true, description: 'The stored passport from hash()' }, { name: 'secret' , type: 'string' , required:
-        true, description: 'Same secret key used for hashing' }, { name: 'options.concurrency' , type: 'number' ,
-        required: false, description: 'Max parallel verifications (default: 4)' } ] }) %>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-2">Array of result objects, each containing:</p>
-        <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">value</code> — the input value</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> — boolean</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">needsUpgrade</code> — boolean</li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">error</code> — string (if that value
-            failed)</li>
-        </ul>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Use named presets instead of tuning options manually. Presets
+          map
+          to battle-tested option sets.</p>
+        <div class="overflow-x-auto mb-6">
+          <table
+            class="w-full text-left text-sm border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+            <thead class="bg-gray-50 dark:bg-gray-900">
+              <tr>
+                <th class="px-4 py-3 font-semibold text-gray-900 dark:text-white">Preset</th>
+                <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Algorithm</th>
+                <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Iterations</th>
+                <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Salt</th>
+                <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Hash</th>
+                <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Use Case</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+              <tr>
+                <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">fast</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha256</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">50,000</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">16</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
+                <td class="px-4 py-3 text-gray-500 text-xs">Dev / low-stakes</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">balanced</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha256</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">100,000</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">16</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
+                <td class="px-4 py-3 text-gray-500 text-xs">Default / general use</td>
+              </tr>
+              <tr class="bg-green-50 dark:bg-green-900/10">
+                <td class="px-4 py-3 font-mono text-green-600 dark:text-green-400">strong ★</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha384</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">200,000</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">24</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">48</td>
+                <td class="px-4 py-3 text-gray-500 text-xs">Recommended for production</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400">paranoid</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">sha512</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">400,000</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">32</td>
+                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">64</td>
+                <td class="px-4 py-3 text-gray-500 text-xs">High-security / financial</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="code-block-wrapper relative group my-4">
           <div
             class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
@@ -442,7 +511,56 @@ console.log(SECURITY_PRESETS.paranoid);
               </svg>
               <span class="copy-text">Copy</span>
             </button>
-            <pre><code class="language-javascript">const { batchVerify } = require('inslash');
+            <pre><code class="language-javascript">const { hash, SECURITY_PRESETS } = require('inslash');
+
+// Use a named preset
+const result = await hash('myPassword', secret, { preset: 'strong' });
+
+// Or access preset values directly
+console.log(SECURITY_PRESETS.paranoid);
+// { iterations: 400000, saltLength: 32, hashLength: 64, algorithm: 'sha512' }</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── NEW: batchVerify() ── -->
+      <section id="batch-verify" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">batchVerify(values, passport, secret, options?)
+          </h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Verify multiple values against the same passport. Runs with
+          concurrency control to avoid CPU starvation.</p>
+        <%- include('partials/parameter-table', { parameters: [ { name: 'values' , type: 'string[]' , required: true,
+          description: 'Array of values to verify (max 50 per API call)' }, { name: 'passport' , type: 'string' ,
+          required: true, description: 'The stored passport from hash()' }, { name: 'secret' , type: 'string' ,
+          required: true, description: 'Same secret key used for hashing' }, { name: 'options.concurrency' ,
+          type: 'number' , required: false, description: 'Max parallel verifications (default: 4)' } ] }) %>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-2">Array of result objects, each containing:</p>
+          <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">value</code> — the input value</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> — boolean</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">needsUpgrade</code> — boolean</li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">error</code> — string (if that
+              value
+              failed)</li>
+          </ul>
+          <div class="code-block-wrapper relative group my-4">
+            <div
+              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+              <button onclick="copyCodeBlock(this)"
+                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                <span class="copy-text">Copy</span>
+              </button>
+              <pre><code class="language-javascript">const { batchVerify } = require('inslash');
 
 const results = await batchVerify(
     ['guess1', 'guess2', 'correctPassword'],
@@ -451,30 +569,71 @@ const results = await batchVerify(
     { concurrency: 4 }
 );
 // [{ value: 'guess1', valid: false }, { value: 'correctPassword', valid: true, needsUpgrade: false }]</code></pre>
+            </div>
           </div>
-        </div>
-    </section>
+      </section>
 
-    <!-- ── NEW: inspectPassport() ── -->
-    <section id="inspect-passport" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">inspectPassport(passport)</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Decode a passport and read its metadata without verifying. Useful
-        for auditing, debugging, and admin tooling.</p>
-      <%- include('partials/parameter-table', { parameters: [ { name: 'passport' , type: 'string' , required: true,
-        description: 'The passport string to inspect' } ] }) %>
+      <!-- ── NEW: inspectPassport() ── -->
+      <section id="inspect-passport" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">inspectPassport(passport)</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Decode a passport and read its metadata without verifying.
+          Useful
+          for auditing, debugging, and admin tooling.</p>
+        <%- include('partials/parameter-table', { parameters: [ { name: 'passport' , type: 'string' , required: true,
+          description: 'The passport string to inspect' } ] }) %>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
+          <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> — boolean (false if
+              passport is malformed)</li>
+            <li><code
+                class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">version, algorithm, iterations, saltLength, hashLength, encoding</code>
+            </li>
+            <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">history</code> — full upgrade audit
+              trail</li>
+          </ul>
+          <div class="code-block-wrapper relative group my-4">
+            <div
+              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+              <button onclick="copyCodeBlock(this)"
+                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                <span class="copy-text">Copy</span>
+              </button>
+              <pre><code class="language-javascript">const { inspectPassport } = require('inslash');
+
+const info = inspectPassport(storedPassport);
+console.log(info.algorithm);  // 'sha384'
+console.log(info.iterations); // 200000
+console.log(info.history);    // [{ date, algorithm, event }]</code></pre>
+            </div>
+          </div>
+      </section>
+
+      <!-- ── NEW: comparePassports() ── -->
+      <section id="compare-passports" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">comparePassports(passport1, passport2)</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Structurally compare two passports. Does <strong>not</strong>
+          verify plaintext — only compares encoded metadata and hash values.</p>
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
         <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">valid</code> — boolean (false if
-            passport is malformed)</li>
           <li><code
-              class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">version, algorithm, iterations, saltLength, hashLength, encoding</code>
-          </li>
-          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">history</code> — full upgrade audit
-            trail</li>
+              class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">sameAlgorithm, sameIterations, sameEncoding, sameSalt, sameHash</code>
+            — booleans</li>
+          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">identical</code> — true when both
+            hash
+            AND salt match (same passport)</li>
         </ul>
         <div class="code-block-wrapper relative group my-4">
           <div
@@ -488,175 +647,136 @@ const results = await batchVerify(
               </svg>
               <span class="copy-text">Copy</span>
             </button>
-            <pre><code class="language-javascript">const { inspectPassport } = require('inslash');
-
-const info = inspectPassport(storedPassport);
-console.log(info.algorithm);  // 'sha384'
-console.log(info.iterations); // 200000
-console.log(info.history);    // [{ date, algorithm, event }]</code></pre>
-          </div>
-        </div>
-    </section>
-
-    <!-- ── NEW: comparePassports() ── -->
-    <section id="compare-passports" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">comparePassports(passport1, passport2)</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Structurally compare two passports. Does <strong>not</strong>
-        verify plaintext — only compares encoded metadata and hash values.</p>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-        <li><code
-            class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">sameAlgorithm, sameIterations, sameEncoding, sameSalt, sameHash</code>
-          — booleans</li>
-        <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">identical</code> — true when both hash
-          AND salt match (same passport)</li>
-      </ul>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const { comparePassports } = require('inslash');
+            <pre><code class="language-javascript">const { comparePassports } = require('inslash');
 
 const cmp = comparePassports(passportA, passportB);
 console.log(cmp.sameAlgorithm); // true
 console.log(cmp.identical);     // false (different salts)</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ── NEW: estimateSecurity() ── -->
-    <section id="estimate-security" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">estimateSecurity(passport)</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Score a passport's security strength (0–100) and get actionable
-        recommendations.</p>
-      <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 mb-6">
-        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Scoring Methodology</h4>
-        <div class="grid grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-400">
-          <div>Algorithm: sha256=25, sha384=35, sha512=40</div>
-          <div>Iterations: ≥400k=35, ≥200k=28, ≥100k=20, ≥50k=12</div>
-          <div>Salt length: ≥32=15, ≥16=10</div>
-          <div>Hash length: ≥64=10, ≥32=7</div>
-          <div class="col-span-2">Upgrade history bonus: +5 (shows active maintenance)</div>
+      <!-- ── NEW: estimateSecurity() ── -->
+      <section id="estimate-security" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">estimateSecurity(passport)</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
         </div>
-      </div>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
-        <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">score</code> — 0–100</li>
-        <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">level</code> — Excellent / Strong /
-          Good / Fair / Weak / Critical / Invalid</li>
-        <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">recommendations</code> — string[] of
-          actionable improvements</li>
-        <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> — algorithm,
-          iterations, saltLength, hashLength</li>
-      </ul>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const { estimateSecurity } = require('inslash');
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Score a passport's security strength (0–100) and get actionable
+          recommendations.</p>
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 mb-6">
+          <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Scoring Methodology</h4>
+          <div class="grid grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <div>Algorithm: sha256=25, sha384=35, sha512=40</div>
+            <div>Iterations: ≥400k=35, ≥200k=28, ≥100k=20, ≥50k=12</div>
+            <div>Salt length: ≥32=15, ≥16=10</div>
+            <div>Hash length: ≥64=10, ≥32=7</div>
+            <div class="col-span-2">Upgrade history bonus: +5 (shows active maintenance)</div>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
+        <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">score</code> — 0–100</li>
+          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">level</code> — Excellent / Strong /
+            Good / Fair / Weak / Critical / Invalid</li>
+          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">recommendations</code> — string[] of
+            actionable improvements</li>
+          <li><code class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">metadata</code> — algorithm,
+            iterations, saltLength, hashLength</li>
+        </ul>
+        <div class="code-block-wrapper relative group my-4">
+          <div
+            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+            <button onclick="copyCodeBlock(this)"
+              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="copy-text">Copy</span>
+            </button>
+            <pre><code class="language-javascript">const { estimateSecurity } = require('inslash');
 
 const { score, level, recommendations } = estimateSecurity(storedPassport);
 console.log(score);           // 78
 console.log(level);           // 'Strong'
 console.log(recommendations); // ['Consider upgrading to sha512']</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ── NEW: generateApiKey() ── -->
-    <section id="generate-api-key" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">generateApiKey(options?)</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Generate a cryptographically secure API key. Useful for
-        generating tokens, secrets, or session keys.</p>
-      <%- include('partials/parameter-table', { parameters: [ { name: 'prefix' , type: 'string' , required: false,
-        description: 'Key prefix (default: "inslash")' }, { name: 'byteLength' , type: 'number' , required: false,
-        description: 'Random bytes to generate (default: 32)' }, { name: 'encoding' , type: 'string' , required: false,
-        description: '"hex" | "base64" | "base64url" (default: "hex")' } ] }) %>
-        <div class="code-block-wrapper relative group my-4">
-          <div
-            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-            <button onclick="copyCodeBlock(this)"
-              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                </path>
-              </svg>
-              <span class="copy-text">Copy</span>
-            </button>
-            <pre><code class="language-javascript">const { generateApiKey } = require('inslash');
+      <!-- ── NEW: generateApiKey() ── -->
+      <section id="generate-api-key" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">generateApiKey(options?)</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Generate a cryptographically secure API key. Useful for
+          generating tokens, secrets, or session keys.</p>
+        <%- include('partials/parameter-table', { parameters: [ { name: 'prefix' , type: 'string' , required: false,
+          description: 'Key prefix (default: "inslash")' }, { name: 'byteLength' , type: 'number' , required: false,
+          description: 'Random bytes to generate (default: 32)' }, { name: 'encoding' , type: 'string' , required:
+          false, description: '"hex" | "base64" | "base64url" (default: "hex")' } ] }) %>
+          <div class="code-block-wrapper relative group my-4">
+            <div
+              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+              <button onclick="copyCodeBlock(this)"
+                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                <span class="copy-text">Copy</span>
+              </button>
+              <pre><code class="language-javascript">const { generateApiKey } = require('inslash');
 
 const key = generateApiKey({ prefix: 'myapp', byteLength: 32 });
 console.log(key); // 'myapp_a3f9b2c1...'</code></pre>
+            </div>
           </div>
-        </div>
-    </section>
+      </section>
 
-    <!-- ── NEW: deriveKey() ── -->
-    <section id="derive-key" class="scroll-mt-24">
-      <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">deriveKey(password, salt, opts?)</h2>
-        <span
-          class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Derive a deterministic encryption key from a password using
-        PBKDF2. Use this for <strong>symmetric encryption key derivation</strong>, not authentication.</p>
-      <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
-        <p class="text-sm text-yellow-700 dark:text-yellow-200"><strong>Note:</strong> Use <code>hash()</code> for
-          password authentication. Use <code>deriveKey()</code> only when you need a deterministic key for encryption
-          (e.g. AES-256).</p>
-      </div>
-      <%- include('partials/parameter-table', { parameters: [ { name: 'password' , type: 'string' , required: true,
-        description: 'The password to derive from' }, { name: 'salt' , type: 'string' , required: true,
-        description: 'Hex salt string' }, { name: 'opts.iterations' ,type: 'number' , required: false,
-        description: 'PBKDF2 iterations (default: 200,000)' }, { name: 'opts.keyLength' , type: 'number' , required:
-        false, description: 'Output key length in bytes (default: 32)' }, { name: 'opts.algorithm' , type: 'string' ,
-        required: false, description: 'sha256 | sha384 | sha512 (default: sha512)' } ] }) %>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-2"><code
-            class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">Promise&lt;Buffer&gt;</code> — the derived
-          key as a Node.js Buffer.</p>
-        <div class="code-block-wrapper relative group my-4">
-          <div
-            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-            <button onclick="copyCodeBlock(this)"
-              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                </path>
-              </svg>
-              <span class="copy-text">Copy</span>
-            </button>
-            <pre><code class="language-javascript">const { deriveKey } = require('inslash');
+      <!-- ── NEW: deriveKey() ── -->
+      <section id="derive-key" class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">deriveKey(password, salt, opts?)</h2>
+          <span
+            class="px-2 py-0.5 text-xs font-bold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded">v2.0</span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Derive a deterministic encryption key from a password using
+          PBKDF2. Use this for <strong>symmetric encryption key derivation</strong>, not authentication.</p>
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
+          <p class="text-sm text-yellow-700 dark:text-yellow-200"><strong>Note:</strong> Use <code>hash()</code> for
+            password authentication. Use <code>deriveKey()</code> only when you need a deterministic key for encryption
+            (e.g. AES-256).</p>
+        </div>
+        <%- include('partials/parameter-table', { parameters: [ { name: 'password' , type: 'string' , required: true,
+          description: 'The password to derive from' }, { name: 'salt' , type: 'string' , required: true,
+          description: 'Hex salt string' }, { name: 'opts.iterations' ,type: 'number' , required: false,
+          description: 'PBKDF2 iterations (default: 200,000)' }, { name: 'opts.keyLength' , type: 'number' , required:
+          false, description: 'Output key length in bytes (default: 32)' }, { name: 'opts.algorithm' , type: 'string' ,
+          required: false, description: 'sha256 | sha384 | sha512 (default: sha512)' } ] }) %>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">Returns</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-2"><code
+              class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">Promise&lt;Buffer&gt;</code> — the derived
+            key as a Node.js Buffer.</p>
+          <div class="code-block-wrapper relative group my-4">
+            <div
+              class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+              <button onclick="copyCodeBlock(this)"
+                class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                <span class="copy-text">Copy</span>
+              </button>
+              <pre><code class="language-javascript">const { deriveKey } = require('inslash');
 const crypto = require('crypto');
 
 const salt = crypto.randomBytes(16).toString('hex');
@@ -667,26 +787,26 @@ const keyBuffer = await deriveKey('userPassword', salt, {
 });
 
 // Use keyBuffer with AES-256-GCM for encryption</code></pre>
+            </div>
           </div>
-        </div>
-    </section>
-    <section id="example-auth" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: Complete Authentication System</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Full Express.js authentication with login, automatic upgrades,
-        and session management:</p>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const express = require('express');
+      </section>
+      <section id="example-auth" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: Complete Authentication System</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Full Express.js authentication with login, automatic upgrades,
+          and session management:</p>
+        <div class="code-block-wrapper relative group my-4">
+          <div
+            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+            <button onclick="copyCodeBlock(this)"
+              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="copy-text">Copy</span>
+            </button>
+            <pre><code class="language-javascript">const express = require('express');
 const session = require('express-session');
 const { hash, verify } = require('inslash');
 const User = require('./models/User');
@@ -741,28 +861,28 @@ app.get('/dashboard', requireAuth, (req, res) => {
 });
 
 app.listen(3000);</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Example 2: User Registration -->
-    <section id="example-registration" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: User Registration Flow</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Complete user registration with validation and secure password
-        storage:</p>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const { hash } = require('inslash');
+      <!-- Example 2: User Registration -->
+      <section id="example-registration" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: User Registration Flow</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Complete user registration with validation and secure password
+          storage:</p>
+        <div class="code-block-wrapper relative group my-4">
+          <div
+            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+            <button onclick="copyCodeBlock(this)"
+              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="copy-text">Copy</span>
+            </button>
+            <pre><code class="language-javascript">const { hash } = require('inslash');
 const User = require('./models/User');
 
 app.post('/signup', async (req, res) => {
@@ -807,27 +927,27 @@ app.post('/signup', async (req, res) => {
     req.session.userId = user._id;
     res.status(201).json({ success: true, user: { id: user._id, username: user.username, email: user.email } });
 });</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Example 3: Password Reset -->
-    <section id="example-reset" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: Password Reset System</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Secure password reset with email tokens:</p>
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">const crypto = require('crypto');
+      <!-- Example 3: Password Reset -->
+      <section id="example-reset" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Example: Password Reset System</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Secure password reset with email tokens:</p>
+        <div class="code-block-wrapper relative group my-4">
+          <div
+            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+            <button onclick="copyCodeBlock(this)"
+              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="copy-text">Copy</span>
+            </button>
+            <pre><code class="language-javascript">const crypto = require('crypto');
 const { hash } = require('inslash');
 const User = require('./models/User');
 const sendEmail = require('./utils/email');
@@ -895,44 +1015,44 @@ app.post('/reset-password/:token', async (req, res) => {
 
     res.json({ success: true, message: 'Password reset successful' });
 });</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Configuration -->
-    <section id="configuration" class="scroll-mt-24">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Configuration</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">Recommended security settings:</p>
-      <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <p class="text-sm text-yellow-700 dark:text-yellow-200">
-              <strong>Production Recommendation:</strong> Use SHA-512 with 150,000+ iterations for maximum security.
-            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="code-block-wrapper relative group my-4">
-        <div
-          class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
-          <button onclick="copyCodeBlock(this)"
-            class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-              </path>
-            </svg>
-            <span class="copy-text">Copy</span>
-          </button>
-          <pre><code class="language-javascript">// Production configuration
+      <!-- Configuration -->
+      <section id="configuration" class="scroll-mt-24">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Configuration</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Recommended security settings:</p>
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-yellow-700 dark:text-yellow-200">
+                <strong>Production Recommendation:</strong> Use SHA-512 with 150,000+ iterations for maximum security.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block-wrapper relative group my-4">
+          <div
+            class="bg-gray-900 dark:bg-gray-950 text-gray-300 p-6 rounded-lg font-mono text-sm border border-gray-800 overflow-x-auto">
+            <button onclick="copyCodeBlock(this)"
+              class="absolute top-4 right-4 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="copy-text">Copy</span>
+            </button>
+            <pre><code class="language-javascript">// Production configuration
 const productionConfig = {
     algorithm: 'sha512', // Strongest algorithm
     iterations: 150000, 
@@ -942,9 +1062,9 @@ const productionConfig = {
 
 // Use it
 const result = await hash(password, process.env.HASH_PEPPER, productionConfig);</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
-</div>
 </div>

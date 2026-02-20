@@ -455,6 +455,115 @@
         </div>
     </section>
 
+    <!-- Why Inslash? Value Grid -->
+    <section class="py-32 bg-[#020617] border-t border-white/5">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="gsap-reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
+                        Built for Developers <br />
+                        <span class="text-indigo-500">Obsessed with Security.</span>
+                    </h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-6">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Zero Metadata Management</h4>
+                                <p class="text-slate-400">Stop creating `password_salt` and `hash_version` columns.
+                                    Inslash packs every parameter into a single, portable Passport string.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Instant Security Upgrades</h4>
+                                <p class="text-slate-400">When security standards evolve, Inslash evolves with you.
+                                    Automatically upgrade user hashes to stronger algorithms on their next successful
+                                    login.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Edge-Ready Infrastructure</h4>
+                                <p class="text-slate-400">Built for modern stacks. Whether you use our NPM library or
+                                    global API, enjoy sub-millisecond hashing with zero performance bottlenecks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative gsap-reveal">
+                    <div class="absolute -inset-10 bg-indigo-500/10 blur-3xl rounded-full"></div>
+                    <div class="glass-card rounded-3xl p-8 border-white/10 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-8">
+                            <span
+                                class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider">One-Minute
+                                Migration</span>
+                            <div class="flex gap-1.5">
+                                <div class="w-2 h-2 rounded-full bg-slate-700"></div>
+                                <div class="w-2 h-2 rounded-full bg-slate-700"></div>
+                                <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="p-4 bg-slate-950/50 rounded-xl border border-white/5">
+                                <div class="text-[10px] text-slate-500 mb-2 uppercase font-bold tracking-widest">The
+                                    Legacy Way (bcrypt)</div>
+                                <pre class="text-xs text-red-400/80 line-through">const hash = await bcrypt.hash(pass, 10);
+await db.users.update({ pass_hash: hash });</pre>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                            </div>
+
+                            <div class="p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
+                                <div class="text-[10px] text-indigo-400 mb-2 uppercase font-bold tracking-widest">The
+                                    Inslash Way</div>
+                                <pre class="text-xs text-indigo-300">const { passport } = await inslash.hash(pass);
+await db.users.update({ passport });</pre>
+                                <div class="mt-4 flex items-center gap-2 text-[10px] text-slate-500 italic">
+                                    <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Migration complete. Salt, Pepper, and Meta handled.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials Section -->
     <section class="py-32 bg-[#020617] overflow-hidden">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 mb-16 text-center gsap-reveal">
