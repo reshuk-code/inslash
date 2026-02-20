@@ -1568,8 +1568,13 @@ const authenticateAPIKey = async (req, res, next) => {
         res.on('finish', () => {
             const duration = Date.now() - startTime;
             const status = res.statusCode >= 400 ? 'failed' : 'success';
-            // Determine type based on URL (hash or verify)
-            const type = req.url.includes('verify') ? 'verify' : 'hash';
+            // Determine type based on URL (hash, verify, inspect, batch-verify, security)
+            let type = 'other';
+            if (req.url.includes('hash')) type = 'hash';
+            else if (req.url.includes('verify')) type = 'verify';
+            else if (req.url.includes('inspect')) type = 'inspect';
+            else if (req.url.includes('batch-verify')) type = 'batch-verify';
+            else if (req.url.includes('security')) type = 'security';
 
             // Fire and forget log entry
             UsageLog.create({
@@ -1659,6 +1664,89 @@ app.post('/api/verify', authenticateAPIKey, async (req, res) => {
         console.error('API verify error:', error);
         res.status(500).json({
             error: 'VERIFY_FAILED',
+            message: error.message
+        });
+    }
+});
+
+// POST /api/inspect - Inspect a passport
+app.post('/api/inspect', authenticateAPIKey, async (req, res) => {
+    try {
+        const { passport } = req.body;
+
+        if (!passport) {
+            return res.status(400).json({
+                error: 'MISSING_PASSPORT',
+                message: 'Passport is required'
+            });
+        }
+
+        const result = inslash.inspectPassport(passport);
+        res.json(result);
+    } catch (error) {
+        console.error('API inspect error:', error);
+        res.status(500).json({
+            error: 'INSPECT_FAILED',
+            message: error.message
+        });
+    }
+});
+
+// POST /api/batch-verify - Batch verify multiple values
+app.post('/api/batch-verify', authenticateAPIKey, async (req, res) => {
+    try {
+        const { values, passport, secret, options } = req.body;
+
+        if (!values || !Array.isArray(values)) {
+            return res.status(400).json({
+                error: 'MISSING_VALUES',
+                message: 'Values array is required'
+            });
+        }
+
+        if (!passport) {
+            return res.status(400).json({
+                error: 'MISSING_PASSPORT',
+                message: 'Passport is required'
+            });
+        }
+
+        if (!secret) {
+            return res.status(400).json({
+                error: 'MISSING_SECRET',
+                message: 'Secret key is required'
+            });
+        }
+
+        const result = await inslash.batchVerify(values, passport, secret, options || {});
+        res.json(result);
+    } catch (error) {
+        console.error('API batch-verify error:', error);
+        res.status(500).json({
+            error: 'BATCH_VERIFY_FAILED',
+            message: error.message
+        });
+    }
+});
+
+// POST /api/security - Analyze passport security
+app.post('/api/security', authenticateAPIKey, async (req, res) => {
+    try {
+        const { passport } = req.body;
+
+        if (!passport) {
+            return res.status(400).json({
+                error: 'MISSING_PASSPORT',
+                message: 'Passport is required'
+            });
+        }
+
+        const result = inslash.estimateSecurity(passport);
+        res.json(result);
+    } catch (error) {
+        console.error('API security error:', error);
+        res.status(500).json({
+            error: 'SECURITY_FAILED',
             message: error.message
         });
     }

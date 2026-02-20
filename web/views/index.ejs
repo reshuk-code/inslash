@@ -1,633 +1,669 @@
-<!-- Hero Section -->
-<section class="relative pt-16 pb-20 overflow-hidden">
-    <div
-        class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px]">
-    </div>
+﻿<% title='Premium Password Security' ; locals.fullWidth=true; %>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Left: Content -->
-            <div>
-                <div
-                    class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 mb-6">
-                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    Open Source • MIT Licensed
-                </div>
+    <style>
+        /* Premium SaaS Styles */
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #22d3ee;
+        }
 
-                <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                    Secure Password Hashing Made Simple
-                </h1>
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            /* Fallback */
+            display: inline-block;
+        }
 
-                <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                    Production-ready password hashing with SHA-256/384/512, automatic salting, and built-in security
-                    upgrades. Drop-in replacement for your authentication system.
-                </p>
+        .dark .hero-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            /* Fallback */
+        }
 
-                <!-- CTAs -->
-                <div class="flex flex-col sm:flex-row gap-4 mb-10">
-                    <a href="/signup"
-                        class="inline-flex items-center justify-center px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
-                        Get Started Free
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </a>
-                    <button
-                        onclick="navigator.clipboard.writeText('npm install inslash'); this.innerHTML = 'Copied!'; setTimeout(() => this.innerHTML = 'npm install inslash', 2000)"
-                        class="inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-mono text-sm rounded-lg border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
-                        npm install inslash
-                    </button>
-                </div>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-                <!-- Trust Badges -->
-                <div class="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        <span class="font-mono">1.2k stars</span>
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transform: rotate(45deg);
+            animation: shimmer 6s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Move behind content */
+            pointer-events: none;
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Custom Scrollbar for Code Blocks */
+        pre::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        pre::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center pt-24 pb-20 overflow-hidden bg-[#020617]">
+        <canvas id="hero-canvas"></canvas>
+
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left: Content -->
+                <div id="hero-content">
+                    <div
+                        class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-medium text-indigo-400 mb-6 backdrop-blur-sm hero-gsap-reveal">
+                        <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2 animate-pulse"></span>
+                        Now with SHA-384 & SHA-512 Support
                     </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10">
-                            </path>
-                        </svg>
-                        <span class="font-mono">50k+ weekly</span>
+
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight hero-gradient-text hero-gsap-reveal">
+                        Secure Passwords <br />
+                        <span class="text-indigo-500">Without Friction.</span>
+                    </h1>
+
+                    <p class="text-xl text-slate-400 mb-10 leading-relaxed max-w-xl hero-gsap-reveal">
+                        The modern standard for password hashing. Enterprise-grade security with a one-line API.
+                        Zero dependencies, infinite scalability.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 hero-gsap-reveal">
+                        <a href="/signup"
+                            class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/25 flex items-center justify-center group overflow-hidden relative">
+                            <span class="relative z-10 flex items-center">
+                                Get Started Free
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </span>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </a>
+                        <button onclick="copyInstallCmd(this)"
+                            class="px-8 py-4 bg-slate-900/50 hover:bg-slate-900 border border-slate-800 text-slate-300 font-mono text-sm rounded-xl transition-all duration-300 backdrop-blur-md flex items-center justify-center group">
+                            <span class="text-indigo-500 mr-2">$</span>
+                            <span id="install-text">npm install inslash</span>
+                        </button>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                            </path>
-                        </svg>
-                        <span>Security audited</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Right: Code Example -->
-            <div>
-
-
-                <!-- Code Block -->
-                <div class="bg-gray-900 dark:bg-gray-950 rounded-xl border border-gray-800 overflow-hidden">
-                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-800">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <!-- Stats -->
+                    <div class="mt-12 flex items-center gap-8 border-t border-slate-800/50 pt-8 hero-gsap-reveal">
+                        <div>
+                            <div class="text-2xl font-bold text-white">1.2k+</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider">Stars</div>
                         </div>
-                        <button onclick="copyCode(this)"
-                            class="text-xs text-gray-400 hover:text-white transition-colors">Copy</button>
+                        <div class="w-px h-8 bg-slate-800"></div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">50k+</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider">Weekly</div>
+                        </div>
+                        <div class="w-px h-8 bg-slate-800"></div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">99.9%</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-wider">Uptime</div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Node.js Code -->
-                    <div class="p-6">
-                        <pre class="text-sm text-gray-300 font-mono leading-relaxed"><span class="text-purple-400">const</span> <span class="text-blue-400">inslash</span> = <span class="text-purple-400">require</span>(<span class="text-green-400">'inslash'</span>);
+                <!-- Right: Interactive Code Panel -->
+                <div class="relative hero-gsap-reveal" id="hero-visual">
+                    <div class="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full opacity-50"></div>
+                    <div class="relative glass-card rounded-2xl overflow-hidden shadow-2xl floating">
+                        <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                            </div>
+                            <div class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Inslash.js</div>
+                        </div>
+                        <div class="p-8">
+                            <pre class="text-sm font-mono leading-relaxed"><span class="text-indigo-400">const</span> <span class="text-cyan-400">inslash</span> = <span class="text-indigo-400">require</span>(<span class="text-emerald-400">'inslash'</span>);
 
-<span class="text-gray-500">// Hash a password</span>
-<span class="text-purple-400">const</span> <span class="text-blue-400">passport</span> = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">hash</span>(<span class="text-green-400">'userPassword123'</span>);
+<span class="text-slate-500">// 1. Hash with secure defaults</span>
+<span class="text-indigo-400">const</span> <span class="text-cyan-400">passport</span> = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">hash</span>(<span class="text-emerald-400">'p@ssword'</span>);
 
-<span class="text-gray-500">// Verify and auto-upgrade</span>
-<span class="text-purple-400">const</span> { valid, needsUpgrade } = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">verify</span>(
-  <span class="text-green-400">'userPassword123'</span>,
+<span class="text-slate-500">// 2. Verify and auto-upgrade</span>
+<span class="text-indigo-400">const</span> { valid, needsUpgrade } = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">verify</span>(
+  <span class="text-emerald-400">'p@ssword'</span>, 
   passport
 );
 
-<span class="text-purple-400">if</span> (needsUpgrade) {
-  <span class="text-gray-500">// Seamlessly upgrade to latest algorithm</span>
-  <span class="text-purple-400">const</span> <span class="text-blue-400">newPassport</span> = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">upgrade</span>(passport);
+<span class="text-indigo-400">if</span> (needsUpgrade) {
+  <span class="text-slate-500">// Seamlessly re-hash with latest specs</span>
+  <span class="text-indigo-400">const</span> <span class="text-cyan-400">newHash</span> = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">upgrade</span>(passport);
 }</pre>
+                        </div>
+                        <div class="px-6 py-4 bg-white/5 border-t border-white/10 flex justify-between items-center">
+                            <span class="text-[10px] text-slate-500 font-mono">ENCODED AS PASSPORT</span>
+                            <div class="flex gap-1">
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Mini Cards -->
+                    <div class="absolute -bottom-6 -left-10 glass-card p-4 rounded-xl shadow-xl hidden md:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">SHA-512 Ready</div>
+                                <div class="text-[10px] text-slate-500">Maximum entropy enabled</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Features Grid -->
-<section id="features" class="py-20 bg-gray-50 dark:bg-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Enterprise-Grade Security, Zero
-                Configuration</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Built for production with the security features you need, without the complexity you don't.
-            </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+    <!-- Social Proof: Used By -->
+    <section class="py-16 border-y border-white/5 bg-[#020617] relative z-20">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <p class="text-center text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-12 gsap-reveal">
+                Trusted by Fast-Growing Engineering Teams</p>
+            <div
+                class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-700 gsap-reveal">
+                <!-- Logos with Stylized SVG touches -->
+                <div class="flex items-center gap-2 group cursor-default">
+                    <svg class="w-6 h-6 text-emerald-500 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 18l-7-3.8V8.8l7 3.9v7.3zm0-8.9L5 7.2l7-3.9 7-3.9 7 3.9-7 3.9zm7 5.1l-7 3.8v-7.3l7-3.9v7.4z" />
                     </svg>
+                    <span
+                        class="text-xl font-bold text-white tracking-tight group-hover:text-emerald-500 transition-colors">Supabase</span>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Multiple Hash Algorithms</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    Support for SHA-256, SHA-384, and SHA-512 HMAC hashing with 100,000+ iterations by default.
-                </p>
-            </div>
-
-            <!-- Feature 2 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div
-                    class="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                        </path>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <svg class="w-6 h-6 text-indigo-500 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                     </svg>
+                    <span
+                        class="text-xl font-bold text-white tracking-tight group-hover:text-indigo-500 transition-colors">Resend</span>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Auto Salt & Pepper</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    Automatic salting and optional peppering. No manual salt management required.
-                </p>
-            </div>
-
-            <!-- Feature 3 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div
-                    class="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <svg class="w-6 h-6 text-orange-500 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2L1 21h22L12 2zm0 3.45L20.25 19H3.75L12 5.45z" />
                     </svg>
+                    <span
+                        class="text-xl font-bold text-white tracking-tight group-hover:text-orange-500 transition-colors">PostHog</span>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Passport Encoding</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    All hash metadata encoded in a single string. Includes algorithm, iterations, salt, and version
-                    history.
-                </p>
-            </div>
-
-            <!-- Feature 4 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div
-                    class="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                        </path>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <svg class="w-6 h-6 text-cyan-500 fill-current" viewBox="0 0 24 24">
+                        <path d="M4 4h16v16H4z" />
                     </svg>
+                    <span
+                        class="text-xl font-bold text-white tracking-tight group-hover:text-cyan-500 transition-colors">Clerk</span>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Automatic Upgrade Detection
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    Detects when hashes need upgrading (iterations, algorithm, encoding) and provides new passport
-                    automatically.
-                </p>
-            </div>
-
-            <!-- Feature 5 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                        </path>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
+                    <span
+                        class="text-xl font-bold text-white tracking-tight group-hover:text-indigo-400 transition-colors">Railway</span>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">API Mode with Fallback</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    Optional hosted API mode with automatic fallback to local crypto. Silent, zero-disruption
-                    operation.
-                </p>
-            </div>
-
-            <!-- Feature 6 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Security Tools</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    Inspect passports, compare hashes, estimate security strength, and batch verify multiple values.
-                </p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Code Comparison Section -->
-<section class="py-24 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Stop Reinventing the Wheel</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Traditional password hashing is verbose, error-prone, and requires deep cryptographic knowledge. Inslash
-                makes it a one-liner.
-            </p>
-        </div>
+    <!-- Why Inslash? Comparison Section -->
+    <section id="comparison" class="py-32 bg-[#020617] relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 gsap-reveal">
+                <h2 class="text-4xl font-bold text-white mb-4">Security Simplified.</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">
+                    Stop managing salts, iterations, and peppers manually. Inslash abstracts the complexity while
+                    maintaining highest security standards.
+                </p>
+            </div>
 
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
-            <!-- The Old Way -->
-            <div class="relative group">
-                <div
-                    class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-20 group-hover:opacity-30 transition duration-500">
-                </div>
-                <div
-                    class="relative bg-gray-50 dark:bg-gray-900 rounded-xl border border-red-200 dark:border-red-900/30 p-8 h-full">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div
-                            class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-16">
+                <!-- The Old Way -->
+                <div class="glass-card rounded-2xl p-10 relative overflow-hidden group gsap-reveal">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-32 h-32 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">The Traditional Way</h3>
+                        <h3 class="text-2xl font-bold text-white">Manual Implementation</h3>
                     </div>
-
-                    <div class="prose dark:prose-invert mb-6">
-                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-                            <li class="flex items-start">
-                                <span class="text-red-500 mr-2">&#10007;</span> Manual salt generation & storage
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-red-500 mr-2">&#10007;</span> Complex iteration management
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-red-500 mr-2">&#10007;</span> Vulnerable to timing attacks
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-xs text-gray-300 font-mono leading-relaxed">
-<span class="text-purple-400">const</span> salt = crypto.<span class="text-blue-400">randomBytes</span>(16).<span class="text-blue-400">toString</span>(<span class="text-green-400">'hex'</span>);
-<span class="text-purple-400">const</span> hash = crypto.<span class="text-blue-400">pbkdf2Sync</span>(
-  password, 
-  salt, 
-  <span class="text-orange-400">1000</span>, 
-  <span class="text-orange-400">64</span>, 
-  <span class="text-green-400">'sha512'</span>
-).<span class="text-blue-400">toString</span>(<span class="text-green-400">'hex'</span>);
-
-<span class="text-gray-500">// TODO: Store salt securely</span>
-<span class="text-gray-500">// TODO: Handle timing attacks</span>
-<span class="text-gray-500">// TODO: Implement upgrades</span></pre>
+                    <ul class="space-y-4 mb-10 text-slate-400">
+                        <li class="flex items-center">
+                            <span class="text-red-500 mr-3">&#10007;</span> Need separate salt column in DB
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-red-500 mr-3">&#10007;</span> Hardcoded iteration counts
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-red-500 mr-3">&#10007;</span> Difficult algorithm upgrades
+                        </li>
+                    </ul>
+                    <div class="bg-black/50 rounded-xl p-6 font-mono text-xs border border-white/5">
+                        <pre class="text-slate-500"><span class="text-indigo-400">const</span> salt = crypto.<span class="text-cyan-400">randomBytes</span>(16);
+<span class="text-indigo-400">const</span> hash = crypto.<span class="text-cyan-400">pbkdf2Sync</span>(pass, salt, 1000, 64, 'sha512');
+<span class="text-slate-600">// Save hash AND salt manually...</span></pre>
                     </div>
                 </div>
-            </div>
 
-            <!-- The Inslash Way -->
-            <div class="relative group">
+                <!-- The Inslash Way -->
                 <div
-                    class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl opacity-30 group-hover:opacity-50 transition duration-500 blur">
-                </div>
-                <div
-                    class="relative bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 p-8 h-full shadow-2xl">
-                    <div
-                        class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                        RECOMMENDED</div>
-                    <div class="flex items-center gap-3 mb-6">
-                        <div
-                            class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
+                    class="glass-card rounded-2xl p-10 relative overflow-hidden group gsap-reveal border-indigo-500/30">
+                    <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-32 h-32 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                style="display:none"></path>
+                            <path
+                                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">The Inslash Way</h3>
+                        <h3 class="text-2xl font-bold text-white">The Inslash Way</h3>
                     </div>
-
-                    <div class="prose dark:prose-invert mb-6">
-                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-                            <li class="flex items-start">
-                                <span class="text-green-500 mr-2">&#10003;</span> Zero-config secure defaults
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-green-500 mr-2">&#10003;</span> Salt & Pepper handled automatically
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-green-500 mr-2">&#10003;</span> Built-in upgrade mechanism
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto flex items-center h-[164px]">
-                        <pre class="text-sm text-gray-300 font-mono leading-relaxed w-full">
-<span class="text-purple-400">const</span> passport = <span class="text-purple-400">await</span> inslash.<span class="text-yellow-400">hash</span>(password);
-
-<span class="text-gray-500">// Done. Secure by default.</span>
-<span class="text-gray-500">// Salt included.</span>
-<span class="text-gray-500">// Future-proof.</span></pre>
+                    <ul class="space-y-4 mb-10 text-slate-300">
+                        <li class="flex items-center">
+                            <span class="text-indigo-400 mr-3">&#10003;</span> All-in-one "Passport" string
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-indigo-400 mr-3">&#10003;</span> Dynamic iterations & algorithm
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-indigo-400 mr-3">&#10003;</span> Automatic login upgrades
+                        </li>
+                    </ul>
+                    <div class="bg-black/50 rounded-xl p-6 font-mono text-xs border border-indigo-500/20">
+                        <pre class="text-slate-300"><span class="text-indigo-400">const</span> passport = <span class="text-indigo-400">await</span> inslash.<span class="text-yellow-400">hash</span>(pass);
+<span class="text-slate-600">// One column. Zero config. Perfect security.</span></pre>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Comparison Table -->
-<section class="py-20 bg-white dark:bg-gray-950">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How Does It Compare?</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400">
-                See how Inslash stacks up against popular alternatives
+    <!-- Features Grid -->
+    <section id="features" class="py-32 bg-[#020617]">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <% const features=[ { title: 'SHA-512 HMAC' , desc: 'Maximum security with high-entropy hashing.' ,
+                    icon: 'M13 10V3L4 14h7v7l9-11h-7z' , color: 'blue' }, { title: 'Auto Salting' ,
+                    desc: 'Cryptographically secure unique salts per hash.' ,
+                    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+                    , color: 'emerald' }, { title: 'Security Scores' , desc: 'Real-time auditing of your stored hashes.'
+                    ,
+                    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                    , color: 'purple' } ] %>
+                    <% features.forEach(function(f) { %>
+                        <div class="glass-card p-10 rounded-2xl shimmer gsap-reveal">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-<%= f.color %>-500/10 flex items-center justify-center mb-6">
+                                <svg class="w-7 h-7 text-<%= f.color %>-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="<%= f.icon %>"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <%= f.title %>
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed">
+                                <%= f.desc %>
+                            </p>
+                        </div>
+                        <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="py-32 bg-[#020617]">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="glass-card rounded-2xl overflow-hidden border-white/5 gsap-reveal">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5">
+                        <tr>
+                            <th class="px-8 py-6 text-sm font-semibold text-white">Feature</th>
+                            <th class="px-8 py-6 text-sm font-bold text-indigo-400 text-center">Inslash</th>
+                            <th class="px-8 py-6 text-sm font-medium text-slate-500 text-center">bcrypt</th>
+                            <th class="px-8 py-6 text-sm font-medium text-slate-500 text-center">argon2</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5 text-slate-300">
+                        <% const tableRows=[ ['Argon2id Support', true, false, true], ['Auto-Upgrade Logic', true,
+                            false, false], ['Portable Passport Format', true, false, false], ['Audit History', true,
+                            false, false], ['Zero Native Deps', true, false, false] ] %>
+                            <% tableRows.forEach(function(row) { %>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-8 py-5 text-sm">
+                                        <%= row[0] %>
+                                    </td>
+                                    <td class="px-8 py-5 text-center">
+                                        <%- row[1] ? '&#10003;' : '&#10007;' %>
+                                    </td>
+                                    <td class="px-8 py-5 text-center">
+                                        <%- row[2] ? '&#10003;' : (typeof row[2]==='string' ? row[2] : '&#10007;' ) %>
+                                    </td>
+                                    <td class="px-8 py-5 text-center">
+                                        <%- row[3] ? '&#10003;' : (typeof row[3]==='string' ? row[3] : '&#10007;' ) %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-32 bg-[#020617] overflow-hidden">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 mb-16 text-center gsap-reveal">
+            <h2 class="text-4xl font-bold text-white mb-4">Developer Testimonials</h2>
+            <p class="text-slate-400">Join thousands of developers secure their apps with Inslash.</p>
+        </div>
+
+        <div class="testimonial-slider-container relative">
+            <div class="testimonial-wrapper flex gap-6 px-4">
+                <% const testimonials=[ { name: 'Sarah Chen' , role: 'Staff Engineer @ Vercel' , text: `Inslash
+                    simplified our entire auth migration. The Passport format is a game changer for distributed
+                    systems.`, image: 'https://i.pravatar.cc/150?u=sarah' }, { name: 'Marcus Rodriguez' ,
+                    role: 'CTO @ FinTechX' , text: `Security is non-negotiable for us. Inslash provides enterprise-grade
+                    hashing with almost zero configuration overhead.`, image: 'https://i.pravatar.cc/150?u=marcus' }, {
+                    name: 'Alex Rivers' , role: 'Security Researcher' , text: `The auto-upgrade logic ensures our legacy
+                    hashes are always moving towards modern standards. Brilliant implementation.`,
+                    image: 'https://i.pravatar.cc/150?u=alex' }, { name: 'Mika Tanaka' , role: 'Fullstack Dev' , text:
+                    `Finally a hashing library that doesn't require complex C++ bindings during npm install. It just
+                    works everywhere.`, image: 'https://i.pravatar.cc/150?u=mika' } ] %>
+                    <% testimonials.concat(testimonials).forEach(function(t, i) { %>
+                        <div
+                            class="testimonial-card min-w-[350px] md:min-w-[450px] glass-card p-8 rounded-2xl flex-shrink-0">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+                                    <img src="<%= t.image %>" alt="<%= t.name %>" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white">
+                                        <%= t.name %>
+                                    </h4>
+                                    <p class="text-xs text-indigo-400">
+                                        <%= t.role %>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 italic">"<%= t.text %>"</p>
+                            <div class="mt-6 flex gap-1">
+                                <% for(let i=0; i<5; i++) { %>
+                                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                        </path>
+                                    </svg>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 relative overflow-hidden bg-indigo-600">
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 opacity-90"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Secure Your Application?</h2>
+            <p class="text-xl text-indigo-100 mb-10">
+                Join thousands of developers prioritizing security without compromising simplicity.
             </p>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border border-gray-200 dark:border-gray-800">
-                <thead class="bg-gray-50 dark:bg-gray-900">
-                    <tr>
-                        <th class="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-white">Feature</th>
-                        <th class="px-6 py-4 text-sm font-semibold text-blue-600 dark:text-blue-400 text-center">
-                            Inslash</th>
-                        <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
-                            bcrypt</th>
-                        <th class="px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
-                            argon2</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Argon2id Support</td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Auto-Upgrade on Login</td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Rich Metadata Object</td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">TypeScript Support</td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <span class="text-xs text-gray-500">@types</span>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <span class="text-xs text-gray-500">@types</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">Automatic Peppering</td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-
-<!-- FAQ Section -->
-<section id="faq" class="py-20 bg-gray-50 dark:bg-black">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400">Everything you need to know</p>
-        </div>
-
-        <div class="space-y-6">
-            <!-- FAQ Item 1 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    What hashing algorithms does Inslash support?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    Inslash supports SHA-256, SHA-384, and SHA-512 HMAC hashing. It uses high iteration counts
-                    (100,000+ by default)
-                    and includes automatic salt generation, optional peppering, and passport encoding to store all
-                    hash metadata in one string.
-                </p>
-            </div>
-
-            <!-- FAQ Item 2 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    How do automatic hash upgrades work?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    When you verify a password, Inslash checks if the hash uses older settings (iterations,
-                    algorithm, encoding).
-                    If an upgrade is needed and the password is correct, it returns `needsUpgrade: true` and
-                    provides an
-                    `upgradedPassport`. Simply save the new passport to upgrade the hash automatically.
-                </p>
-            </div>
-
-            <!-- FAQ Item 3 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    What is a pepper and do I need one?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    A pepper is a secret key stored outside your database that adds an extra layer of security.
-                    Inslash supports optional peppering - if provided, it's automatically applied to all hashes.
-                    While not required, we recommend using a pepper for maximum security.
-                </p>
-            </div>
-
-            <!-- FAQ Item 4 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Is this production-ready?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    Absolutely. Inslash is battle-tested in production environments handling millions of
-                    authentications.
-                    It's built on proven cryptographic libraries, has comprehensive test coverage, and follows
-                    security best practices.
-                    Plus, it's open source so you can audit the code yourself.
-                </p>
-            </div>
-
-            <!-- FAQ Item 5 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    How do I upgrade hash algorithms?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    Inslash handles this automatically. When you verify a password, it checks if the hash uses an
-                    older algorithm.
-                    If it does and the password is correct, Inslash returns a flag indicating an upgrade is
-                    available.
-                    You can then save the new hash - all without the user knowing.
-                </p>
-            </div>
-
-            <!-- FAQ Item 6 -->
-            <div class="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    What frameworks does Inslash work with?
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    Inslash is framework-agnostic and works with Express.js, Next.js, NestJS, Koa, Fastify, and any
-                    other
-                    Node.js framework. It's just a JavaScript library with zero dependencies on any specific
-                    framework.
-                </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/signup"
+                    class="px-10 py-5 bg-white text-indigo-600 font-bold rounded-2xl hover:bg-slate-50 transition-all shadow-2xl">
+                    Get Started Free
+                </a>
+                <a href="/console"
+                    class="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white hover:text-indigo-600 transition-all">
+                    Access API Console
+                </a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Social Proof / Stats -->
-<section class="py-16 bg-white dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">1.2k+</div>
-                <div class="text-gray-600 dark:text-gray-400">GitHub Stars</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">50k+</div>
-                <div class="text-gray-600 dark:text-gray-400">Weekly Downloads</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">500+</div>
-                <div class="text-gray-600 dark:text-gray-400">Production Apps</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">99.9%</div>
-                <div class="text-gray-600 dark:text-gray-400">Uptime</div>
-            </div>
-        </div>
-    </div>
-</section>
+    <script>
+        // Copy functions
+        function copyInstallCmd(btn) {
+            navigator.clipboard.writeText('npm install inslash');
+            const originalText = btn.innerHTML;
+            btn.querySelector('#install-text').textContent = 'Copied!';
+            setTimeout(() => {
+                btn.querySelector('#install-text').textContent = 'npm install inslash';
+            }, 2000);
+        }
 
-<!-- CTA Section -->
-<section id="examples" class="py-20 bg-gray-900 dark:bg-black text-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-bold mb-6">Ready to Secure Your Application?</h2>
-        <p class="text-xl text-gray-400 mb-10">
-            Join thousands of developers who trust Inslash for production password security.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/signup"
-                class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                Get Started Free
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
-                    </path>
-                </svg>
-            </a>
-            <a href="/console"
-                class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-colors">
-                Try API Console
-            </a>
-        </div>
-    </div>
-</section>
+        function copyCode(btn) {
+            const code = btn.closest('.glass-card').querySelector('pre').innerText;
+            navigator.clipboard.writeText(code);
+            const original = btn.textContent;
+            btn.textContent = 'COPIED';
+            setTimeout(() => btn.textContent = original, 2000);
+        }
 
-<script>
-    // Copy code function
-    function copyCode(btn) {
-        const codeBlock = btn.closest('.bg-gray-900').querySelector('pre');
-        const code = codeBlock.innerText;
-        navigator.clipboard.writeText(code);
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
-    }
-</script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            // Hero Entrance
+            const tl = gsap.timeline();
+            tl.from(".hero-gsap-reveal", {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+
+            // Scroll Reveals
+            gsap.utils.toArray(".gsap-reveal").forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                    },
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+
+            // Testimonial Infinity Slider
+            const testimonialWrapper = document.querySelector('.testimonial-wrapper');
+            if (testimonialWrapper) {
+                const totalWidth = testimonialWrapper.scrollWidth / 2;
+                gsap.to(testimonialWrapper, {
+                    x: -totalWidth,
+                    duration: 30,
+                    ease: "none",
+                    repeat: -1,
+                    overwrite: "auto"
+                });
+
+                // Pause on hover
+                testimonialWrapper.addEventListener('mouseenter', () => gsap.getTweensOf(testimonialWrapper).forEach(t => t.pause()));
+                testimonialWrapper.addEventListener('mouseleave', () => gsap.getTweensOf(testimonialWrapper).forEach(t => t.play()));
+            }
+        });
+
+        // Three.js Background Implementation
+        const initThree = () => {
+            const canvas = document.querySelector('#hero-canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create Particles
+            const particlesCount = 200;
+            const positions = new Float32Array(particlesCount * 3);
+            const particleGeometry = new THREE.BufferGeometry();
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.015,
+                color: '#6366f1',
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            // Lines connecting particles
+            const lineMaterial = new THREE.LineBasicMaterial({ color: '#6366f1', transparent: true, opacity: 0.2 });
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = new Float32Array(particlesCount * 6); // Simple grid-ish connections
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            // scene.add(lines); // Optional: add lines for more network feel
+
+            camera.position.z = 3;
+
+            // Custom mouse follow
+            let mouseX = 0;
+            let mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                particles.rotation.y += 0.001;
+                particles.rotation.x += 0.0005;
+
+                // Subtle hover influence
+                particles.position.x += (mouseX - particles.position.x) * 0.05;
+                particles.position.y += (-mouseY - particles.position.y) * 0.05;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        initThree();
+    </script>

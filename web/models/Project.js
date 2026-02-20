@@ -26,7 +26,10 @@ const projectSchema = new mongoose.Schema({
         usage: {
             count: { type: Number, default: 0 },
             hashes: { type: Number, default: 0 },
-            verifications: { type: Number, default: 0 }
+            verifications: { type: Number, default: 0 },
+            inspects: { type: Number, default: 0 },
+            batchVerifications: { type: Number, default: 0 },
+            securityChecks: { type: Number, default: 0 }
         }
     }],
     settings: {

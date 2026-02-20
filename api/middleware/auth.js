@@ -30,13 +30,20 @@ const authenticateApiKey = async (req, res, next) => {
         // Note: keyDoc.save() is a wrapper we made in Project.js to save the parent doc
         keyDoc.usage.count += 1;
 
-        // Track specific endpoint
+        // Track specific endpoints
         if (req.path.includes('/hash')) {
             keyDoc.usage.hashes += 1;
         } else if (req.path.includes('/verify')) {
             keyDoc.usage.verifications += 1;
+        } else if (req.path.includes('/inspect')) {
+            keyDoc.usage.inspects = (keyDoc.usage.inspects || 0) + 1;
+        } else if (req.path.includes('/batch-verify')) {
+            keyDoc.usage.batchVerifications = (keyDoc.usage.batchVerifications || 0) + 1;
+        } else if (req.path.includes('/security')) {
+            keyDoc.usage.securityChecks = (keyDoc.usage.securityChecks || 0) + 1;
         }
 
+        // Persist stats - keyDoc.save() is a helper from findByKey
         await keyDoc.save();
 
         // Attach to request
